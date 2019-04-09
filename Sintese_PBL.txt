@@ -1,0 +1,106 @@
+Sintese_PBL
+
+Model
+
+Record{
+	Data:Date
+	Tempo:String
+}
+
+Piloto{
+	Nome:String
+	Record:Record
+	Foto:Photo
+}
+
+Carro{
+	ID:String
+	Número:String
+	Equipe:String
+}
+
+Volta{
+	Carro:Carro
+	Tempo:String
+}
+
+Corrida{
+	Carros:Carros[]
+	Voltas:Int
+	VoltasCarro:Volta[]
+}
+
+Controller(Cliente Adm)
+
+Controller_Corrida{
+	cadastrar_corrida()
+	comecar_partida()
+	finalizar_corrida()
+	estaAcontecendo()
+	pausar_partida()
+}
+
+Controller_cadastro{
+	cadastrar_adm()
+	cadastrar_piloto()
+	cadastrar_carros()
+}
+
+Controller_remover{
+	remover_piloto()
+	remover_carros()
+}
+
+controller_dados{
+	receber_carros_server()
+	receber_pilotos_server()
+	editar_carros()
+}
+
+Controller(Client Corrida)
+
+Controller_Corrida{
+	receber_volta_server()
+	pode_ter_dado_uma_volta()
+	listar_voltas()
+}
+
+Controller_Record{
+	receber_records_dos_pilotos()
+	bateu_record_pessoal()
+	receber_record_geral()
+	bateu_record_geral()
+}
+
+Controller(Server)
+
+Controller_cadastro{
+	salvar_piloto()
+	salvar_carro()
+	salvar_adm()
+}
+
+Controller_dados{
+	ler_pilotos()
+	ler_adm()
+	ler_carros()
+	ler_records()
+}
+
+Controller_Rfid{
+	ligar_sensor()
+	desligar_sensor()
+	leitura_carro()
+}
+
+Controller_remover{
+	remover_piloto()
+	remover_carros()
+}
+
+
+---Ideias
+
+->Uso de threads
+->Api para Adm e Corrida
+->Codigo para gerar dados parecidos com o do sensor
