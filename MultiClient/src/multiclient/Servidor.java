@@ -5,6 +5,7 @@
  */
 package multiclient;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ServerSocket;
@@ -61,15 +62,17 @@ public class Servidor implements Runnable {
             } catch (IOException ex) {
                ex.printStackTrace();
             }
-            //nova thread que irá tratar um novo clientes que foi conectado.
+            //nova thread que irá tratar um novo cliente que foi conectado.
             new Thread(tc).start();
         }
     }
     
-    public void distribuiMensagem(String msg) {
+    public void distribuiMensagem(String msg, String opcao) throws IOException {
         // envia msg para todo mundo
         for (PrintStream cliente : this.clientes) {
-            cliente.println(msg);
+            //cliente.println(opcao +";"+msg);
+            DataOutputStream saida = new DataOutputStream(cliente);
+            saida.writeUTF(opcao +";"+msg);
         }
     }
 }

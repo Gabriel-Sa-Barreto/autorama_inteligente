@@ -17,11 +17,13 @@ public class Corrida {
     private List<Carro> competidores;
     private int voltas;
     private boolean comecou;
+    private boolean status;
 
     public Corrida(int voltas) {
         this.voltas = voltas;
         competidores = new ArrayList<>();
         comecou = false;
+        this.status = true;
     }
 
     public List<Carro> getCompetidores() {
@@ -40,14 +42,21 @@ public class Corrida {
         this.voltas = voltas;
     }
 
-    public boolean isEstado() {
+    public boolean isComecou() {
         return comecou;
     }
 
-    public void setEstado(boolean comecou) {
+    public void setComecou(boolean comecou) {
         this.comecou = comecou;
     }
-    
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
     
     @Override
     public String toString() {

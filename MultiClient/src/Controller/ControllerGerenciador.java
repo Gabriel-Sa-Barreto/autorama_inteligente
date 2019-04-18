@@ -18,9 +18,9 @@ import model.Piloto;
  */
 public class ControllerGerenciador {
     
-    List<Carro> carros;
-    List<Piloto> pilotos;
-    List<Administrador> adms;
+    private static List<Carro> carros;
+    private static List<Piloto> pilotos;
+    private static List<Administrador> adms;
 
     public ControllerGerenciador() {
         carros = new ArrayList<>();
@@ -30,10 +30,10 @@ public class ControllerGerenciador {
     
     
     
-    public Carro cadastrarCarro(String tag , String equipe , String numero){
-        Carro adicionar = new Carro(tag , equipe , numero);
-        carros.add(adicionar);
-        return adicionar;
+    public synchronized Carro cadastrarCarro(Carro novoCarro){
+        carros.add(novoCarro); //salva o novo carro em sua respectiva lista
+        carros.forEach(u -> System.out.println(u.getId()));
+        return novoCarro;
     }
     
     public boolean existeCarro(String id){
@@ -47,10 +47,9 @@ public class ControllerGerenciador {
         return false;
     }
     
-    public Piloto cadastrarPiloto(String nome){
-        Piloto adicionar = new Piloto(nome);
-        pilotos.add(adicionar);
-        return adicionar;
+    public synchronized void cadastrarPiloto(Piloto novoPiloto){
+        pilotos.add(novoPiloto); //salva um novo piloto em sua respectiva lista
+        pilotos.forEach(u -> System.out.println(u.getNome()));
     }
     
     public boolean existePiloto(String nome){
@@ -62,10 +61,9 @@ public class ControllerGerenciador {
         return false;
     }
     
-    public Administrador cadastrarAdministrador(String nome){
-        Administrador adicionar = new Administrador(nome);
-        adms.add(adicionar);
-        return adicionar;
+    public synchronized void cadastrarAdministrador(Administrador adm){
+        adms.add(adm); //salva um novo Adm em sua respectiva lista
+        adms.forEach(u -> System.out.println(u.getNome()));
     }
     
     public boolean existeAdm(String nome){
@@ -95,11 +93,12 @@ public class ControllerGerenciador {
         return null;
     }
     
-    public void removerPiloto(String nome){
+    /*Método para remoção de um carro do sistema*/
+    public synchronized void removerPiloto(String nome){
         pilotos.removeIf( u -> u.getNome().equals(nome));
     }
     
-    public void removerCarro(String id){
+    public synchronized void removerCarro(String id){
         carros.removeIf( u -> u.getId().equals(id));
     }
     

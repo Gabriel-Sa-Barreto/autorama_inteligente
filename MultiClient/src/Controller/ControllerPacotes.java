@@ -10,6 +10,7 @@ import java.util.List;
 import model.Carro;
 import model.Corrida;
 import model.Piloto;
+import model.Administrador;
 import model.Record;
 //import model.Volta;
 
@@ -19,10 +20,25 @@ import model.Record;
  */
 public class ControllerPacotes {
     
+    /*Método para pegar dados de uma corrida e posteriormente ser enviado para os outros Adm.*/
     public Corrida transformarCorrida(String pacote){
         String corrida[] = pacote.split(";");
         Corrida recebido = new Corrida(strToInt(corrida[1] , 10));
         return recebido;
+    }
+    
+    /*Método para pegar os dados recebidos de um cliente adm para cadastro de piloto*/
+    public Piloto transformarPiloto(String  pacote){
+        String dadosPiloto[] = pacote.split(";");
+        Piloto piloto = new Piloto(dadosPiloto[1]);
+        return piloto;
+    }
+    
+     /*Método para pegar os dados recebidos de um cliente adm para cadastro de piloto*/
+    public Administrador transformarAdm(String  pacote){
+        String dadosAdm[] = pacote.split(";");
+        Administrador adm = new Administrador(dadosAdm[1],dadosAdm[2]);
+        return adm;
     }
     
     /*public Volta transformarVolta(String pacote , List<Carro> competidores){
@@ -36,13 +52,11 @@ public class ControllerPacotes {
     
     public Carro transformarCarro(String pacote){
         String carro[] = pacote.split(";");
-        /*if(carro(competidores , carro[1]) == null){
-            Carro competidor = new Carro(carro[1] , carro[2] , carro[3]);
-            Piloto piloto = new Piloto(carro[4]);
-            competidor.setPiloto(piloto);
-            return competidor;
-        }*/
         Carro car = new Carro(carro[1] , carro[2] , carro[3]);
+        if(carro.length == 5){ //caso seja um pacote para competidor de uma corrida que seja iniciada
+            Piloto carPiloto = new Piloto(carro[4]);
+            car.setPiloto(carPiloto);
+        }
         return car;
     }
     
@@ -57,7 +71,7 @@ public class ControllerPacotes {
         return receber[0];
     }
         
-    private int strToInt(String valor, int padrao) {
+    public int strToInt(String valor, int padrao) {
         try {
             return Integer.valueOf(valor); // Para retornar um Integer, use Integer.parseInt
         } 

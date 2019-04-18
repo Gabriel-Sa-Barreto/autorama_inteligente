@@ -11,9 +11,11 @@ package model;
  */
 public class Administrador {
     private String nome;
-
-    public Administrador(String nome) {
-        this.nome = nome;
+    private String senha;
+    
+    public Administrador(String nome, String senha) {
+        this.nome  = nome;
+        this.senha = senha;
     }
 
     public String getNome() {
@@ -24,6 +26,14 @@ public class Administrador {
         this.nome = nome;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -36,7 +46,8 @@ public class Administrador {
             return false;
         }
         final Administrador comparar = (Administrador) obj;
-        return this.nome.equals(comparar.getNome());
+   
+        return (this.nome.equals(comparar.getNome()) && this.nome.equals(comparar.getSenha()));
     }
     
     @Override
