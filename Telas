@@ -1,18 +1,18 @@
 					Telas a serem feitas
 
 - Monitor Principal:
-	* tela de corrida         (Gabriel)
+	* tela de corrida         (Gabriel)  
 	* tela de qualificação    (Gabriel)
-	* tela de recordes (rank) Obs:aparece caso não tenha nenhum evento acontecendo  (Sam)
+	* tela de recordes (rank) (Sam)            OK
 
 - Cliente ADM:
-	* tela de cadastro de piloto   (Sam)
-	* tela de remoção de piloto    (Gabriel)
-	* tela de cadastro de ADM      (Gabriel)
-	* tela de cadastro de carro    (Sam)
-	* tela de remoção de carro     (Sam) 
-	* tela de selecionar piloto    (Gabriel)
-	* tela de selecionar carro     (Gabriel)
-	* Pausar/reiniciar a corrida   (Sam)
-	* tela de perfil do piloto     (Sam)
+	* tela de cadastro de piloto   (Sam)       OK
+	* tela de remoção de piloto    (Gabriel)   OK
+	* tela de cadastro de ADM      (Gabriel)   OK
+	* tela de cadastro de carro    (Sam)       OK
+	* tela de remoção de carro     (Sam)       OK
+	* tela de selecionar piloto    (Gabriel)   OK
+	* tela de selecionar carro     (Gabriel)   OK
+	* Pausar/reiniciar a corrida   (Sam)       OK        
+	* tela de perfil do piloto     (Sam)       OK
 	 
