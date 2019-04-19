@@ -21,17 +21,23 @@ public class ControllerCorrida {
     
     
     public Corrida cadastrarCorrida(int voltas){
-        corrida = new Corrida(voltas);
-        return corrida;
+        Corrida nova = new Corrida(voltas);
+        return nova;
+    }
+    
+    public void salvarCorrida(Corrida nova){
+        corrida = nova;
     }
     
     public Carro cadastraCompetidor(Carro carro , Piloto piloto){
             carro.setPiloto(piloto);
+            return carro;
+    }
+    
+    public void salvarCompetidor(Carro carro){
             List<Carro> carros = corrida.getCompetidores();
             carros.add(carro);
             corrida.setCompetidores(carros);
-            carros.forEach(u -> System.out.println(u.getId()));
-            return carro;
     }
     
     public boolean comecouCorrida(){
@@ -43,10 +49,8 @@ public class ControllerCorrida {
         for (Iterator<Carro> it = carros.iterator(); it.hasNext();) {
             Carro prova = it.next();
             System.out.println(prova.equals(carro));
-            if(prova.equals(carro)){
-                System.out.println("TEste");
+            if(prova.equals(carro))
                 return true;
-            }
         }
         return false;
     }
