@@ -18,9 +18,9 @@ import model.Piloto;
  */
 public class ControllerGerenciador {
     
-    List<Carro> carros;
-    List<Piloto> pilotos;
-    List<Administrador> adms;
+    private static List<Carro> carros;
+    private static List<Piloto> pilotos;
+    private static List<Administrador> adms;
 
     public ControllerGerenciador() {
         carros = new ArrayList<>();
@@ -30,10 +30,13 @@ public class ControllerGerenciador {
     
     
     
-    public Carro cadastrarCarro(String tag , String equipe , String numero){
+    public Carro cadastrarCarro(String tag , String equipe , String numero){ //cadastrando pessoalmente
         Carro adicionar = new Carro(tag , equipe , numero);
-        carros.add(adicionar);
         return adicionar;
+    }
+    
+    public void salvarCarro(Carro novo){ //receber pacote
+        carros.add(novo);
     }
     
     public boolean existeCarro(String id){
@@ -47,10 +50,13 @@ public class ControllerGerenciador {
         return false;
     }
     
-    public Piloto cadastrarPiloto(String nome){
+    public Piloto cadastrarPiloto(String nome){ //cadastrando pessoalmente
         Piloto adicionar = new Piloto(nome);
-        pilotos.add(adicionar);
         return adicionar;
+    }
+    
+    public void salvarPiloto(Piloto novo){ //receber pacote
+        pilotos.add(novo);
     }
     
     public boolean existePiloto(String nome){
@@ -62,10 +68,13 @@ public class ControllerGerenciador {
         return false;
     }
     
-    public Administrador cadastrarAdministrador(String nome){
-        Administrador adicionar = new Administrador(nome);
-        adms.add(adicionar);
+    public Administrador cadastrarAdministrador(String nome , String senha){ //cadastrando pessoalmente
+        Administrador adicionar = new Administrador(nome , senha);
         return adicionar;
+    }
+    
+    public void salvarAdm(Administrador novo){ //receber pacote
+        adms.add(novo);
     }
     
     public boolean existeAdm(String nome){
