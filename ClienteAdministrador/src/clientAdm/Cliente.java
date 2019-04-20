@@ -13,6 +13,7 @@ public class Cliente {
     private String host;
     private int porta;
     Socket cliente;
+    Recebedor receive;
     
     public Cliente (String host, int porta) throws IOException {
         this.host = host;
@@ -27,8 +28,8 @@ public class Cliente {
     
     public void executa() throws UnknownHostException, IOException {
         // thread para receber mensagens do servidor
-        Recebedor r = new Recebedor(cliente.getInputStream());
-        new Thread(r).start();
+        receive = new Recebedor(cliente.getInputStream());
+        new Thread(receive).start();
     }
 
     public Socket getCliente() {
@@ -40,6 +41,7 @@ public class Cliente {
     }
 
     public void fecharConexão() throws IOException{
+        receive.setStart(false);//encerra a thread antes de fechar a conexão.
         cliente.close();
     }
 }

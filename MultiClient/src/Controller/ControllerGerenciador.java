@@ -47,9 +47,10 @@ public class ControllerGerenciador {
         return false;
     }
     
-    public synchronized void cadastrarPiloto(Piloto novoPiloto){
+    public synchronized Piloto cadastrarPiloto(Piloto novoPiloto){
         pilotos.add(novoPiloto); //salva um novo piloto em sua respectiva lista
-        pilotos.forEach(u -> System.out.println(u.getNome()));
+        //pilotos.forEach(u -> System.out.println(u.getNome()));
+        return novoPiloto;
     }
     
     public boolean existePiloto(String nome){

@@ -47,8 +47,8 @@ public class TrataCliente implements Runnable {
                         servidor.distribuiMensagem(car.toString(), acao);
                         break;
                     case "12": //cadastro de piloto
-                        gerenciador.cadastrarPiloto(pacotes.transformarPiloto(pacote));
-                        
+                        Piloto piloto = gerenciador.cadastrarPiloto(pacotes.transformarPiloto(pacote));
+                        servidor.distribuiMensagem(piloto.toString(), acao);
                         break;
                     case "13": //cadastro de adm
                         gerenciador.cadastrarAdministrador(pacotes.transformarAdm(pacote));

@@ -25,7 +25,7 @@ public class Main {
         ControllerGerenciador gerenciador = new ControllerGerenciador();
         ControllerRede rede = new ControllerRede();
         ControllerCorrida corrida = new ControllerCorrida();
-        Cliente adm = new Cliente("10.0.0.118" , 12345);
+        Cliente adm = new Cliente("127.0.0.1" , 12345);
         adm.executa();
         int controlador = 0;
         String dado;
