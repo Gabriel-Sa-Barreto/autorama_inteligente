@@ -35,11 +35,12 @@ public class ControllerRecord {
                 records.removeIf(u -> u.getPiloto().equals(volta.getCarro().getPiloto().getNome()));
                 records.add(adicionar);
             }
-            if(bateuRecordGeral(volta.getTempo())){
+            /*if(bateuRecordGeral(volta.getTempo())){
+                System.out.println("Aqui3");
                 geral.setData(data);
                 geral.setPiloto(volta.getCarro().getPiloto().getNome());
                 geral.setTempo(volta.getTempo());
-            }
+            }*/
         }
         records.forEach(u -> System.out.println("r" + u.getPiloto() + "t" + u.getTempo()));    
     }
@@ -48,8 +49,8 @@ public class ControllerRecord {
         for (Iterator<Record> it = records.iterator(); it.hasNext();) {
             Record prova = it.next();
             if(prova.getPiloto().equals(volta.getCarro().getPiloto().getNome())){
-                if(prova.compareTo(volta.getTempo()) == -1)
-                    return true;
+                if(prova.compareTo(volta.getTempo()) == 1)
+                    return true; 
                 else
                     return false;
                 

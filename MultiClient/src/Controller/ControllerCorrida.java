@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import model.Carro;
 import model.Corrida;
-import model.Piloto;
+
 
 /**
  *
@@ -17,14 +17,20 @@ import model.Piloto;
  */
 public class ControllerCorrida {
     
-    private static Corrida corrida;
+    private static Corrida corrida = null;
     
     
     public synchronized void cadastrarCorrida(int voltas){
-        if(corrida.isStatus()){
-            return;
+        if(corrida != null){
+            if(corrida.isStatus()){
+                return;
+            }
         }
         corrida = new Corrida(voltas); //cadastra nova corrida
+    }
+    
+    public void comecarPartida(){
+        corrida.setComecou(true);
     }
     
     /*Método que salva um novo corredor na lista de competidores da nova corrida que será iniciada*/

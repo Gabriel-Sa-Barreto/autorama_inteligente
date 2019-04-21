@@ -58,9 +58,9 @@ public class Record {
         if(strToInt(este[0] , 10) > strToInt(comparar[0] , 10))
             return 1;
         else if(strToInt(este[0] , 10) == strToInt(comparar[0] , 10)){
-            if(strToInt(este[0] , 10) > strToInt(comparar[0] , 10))
+            if(strToInt(este[1] , 10) > strToInt(comparar[1] , 10))
                 return 1;
-            else if(strToInt(este[0] , 10) < strToInt(comparar[0] , 10))
+            else if(strToInt(este[1] , 10) < strToInt(comparar[1] , 10))
                 return -1;
             else
                 return 0;

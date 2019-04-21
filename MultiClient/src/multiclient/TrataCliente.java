@@ -43,54 +43,56 @@ public class TrataCliente implements Runnable {
                 acao = pacotes.acao(pacote); //devolve a ação que deve ser realizada.
                 switch(acao){
                     case "11": //cadastro de carro
-                        Carro car = gerenciador.cadastrarCarro(pacotes.transformarCarro(pacote));
-                        servidor.distribuiMensagem(car.toString(), acao);
+                        gerenciador.cadastrarCarro(pacotes.transformarCarro(pacote));
+                        servidor.distribuiMensagem(pacote);
                         break;
                     case "12": //cadastro de piloto
-                        Piloto piloto = gerenciador.cadastrarPiloto(pacotes.transformarPiloto(pacote));
-                        servidor.distribuiMensagem(piloto.toString(), acao);
+                        gerenciador.cadastrarPiloto(pacotes.transformarPiloto(pacote));
+                        servidor.distribuiMensagem(pacote);
                         break;
                     case "13": //cadastro de adm
                         gerenciador.cadastrarAdministrador(pacotes.transformarAdm(pacote));
+                        servidor.distribuiMensagem(pacote);
                         break;
                     case "21": //remoção de piloto
                         gerenciador.removerPiloto(pacotes.transformarPiloto(pacote).getNome());
+                        servidor.distribuiMensagem(pacote);
                         break;
-                    
                     case "22": //remoção de carro
                         String dadosCarro[] = pacote.split(";");
                         gerenciador.removerCarro(dadosCarro[1]); //remove carro do sistema
+                        servidor.distribuiMensagem(pacote);
                         break;
-                        
-                        
                     case "30": //cadastro de corrida feito por um Adm
                         String voltasCorrida[] = pacote.split(";");
                         int voltas = pacotes.strToInt(voltasCorrida[1], 10); //caso a conversão dê errado, um valor padrão de 10 voltas é colocado.
                         corridaController.cadastrarCorrida(voltas);
+                        servidor.distribuiMensagem(pacote);
                         break;
-                     
-                    case "31": //iniciar corrida
+                    case "31": //comecar corrida
+                        corridaController.comecarPartida();
+                        servidor.distribuiMensagem(pacote);
                         break;
-                        
                     case "32": //cadastro de corredor para a nova corrida
-                        corridaController.salvarCompetidor(pacotes.transformarCarro(pacote));
+                        if(!corridaController.comecouCorrida()){
+                            corridaController.salvarCompetidor(pacotes.transformarCarro(pacote));
+                            servidor.distribuiMensagem(pacote);
+                        }
                         break;
-                        
                     case "33": //pausar
                         corridaController.pausar_reiniciar();
+                        servidor.distribuiMensagem(pacote);
                         break;
-        
                     case "34":  //reiniciar
                         corridaController.pausar_reiniciar();
+                        servidor.distribuiMensagem(pacote);
                         break;
                     case "00": //sai da thread do cliente (desconectar)
                         start = false;
                         break;
-                        
                     case "41": //contagem de voltas do sensor
-                        
-                         break;
-                        
+                        servidor.distribuiMensagem(pacote);
+                        break;    
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
