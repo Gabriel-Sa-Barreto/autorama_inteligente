@@ -20,11 +20,12 @@ import model.Volta;
  */
 public class ControllerCorrida {
     
-    Corrida corrida;
-    ControllerRecord record = new ControllerRecord(); 
+    private Corrida corrida;
+    private static ControllerRecord record = new ControllerRecord(); 
     
     public void receberCorrida(Corrida nova){
 	corrida = nova;
+        System.out.println(corrida.isEstado());
     }
     
     public void voltaCompleta(Volta completada){
@@ -55,18 +56,28 @@ public class ControllerCorrida {
             }	
 	}
         voltas.sort(Comparator.comparingInt( u -> u.getQuantidade()));
-        voltas.forEach(u -> System.out.println( "v" + u.getCarro().getId() + u.getTempoVolta() + u.getQuantidade()));
+        System.out.println(voltas.size());
+        voltas.forEach(u -> System.out.println( "v id:" + u.getCarro().getId() + " " + "te: " + u.getTempoVolta() + " " + "volt: " + u.getQuantidade()));
         corrida.setVoltas(voltas);
         linhaFinal();
     }
     
-    public boolean deuUmaVolta(Volta teste , Volta anterior){
+    private boolean deuUmaVolta(Volta teste , Volta anterior){
 	String resultTest[] = teste.getTempo().split(":");
 	String resultAnterior[] = anterior.getTempo().split(":");
-        int secundosTeste = strToInt(resultTest[2] , 10);
-        int secundosAnterior = strToInt(resultAnterior[2] , 10);
-        int diferenca = secundosTeste - secundosAnterior;
-        if(diferenca < 2)
+        int minutosTeste = strToInt(resultTest[1] , 10);
+        int minutosAnterior = strToInt(resultAnterior[1] , 10);
+        int diferencaM = minutosTeste - minutosAnterior;
+        System.out.println(diferencaM);
+        if(diferencaM == 0){
+            int secundosTeste = strToInt(resultTest[2] , 10);
+            int secundosAnterior = strToInt(resultAnterior[2] , 10);
+            int diferencaS = secundosTeste - secundosAnterior;
+            System.out.println(diferencaS);
+            if(diferencaS < 8)
+                return false;
+        }
+        else if(diferencaM < 0)
             return false;
         return true;
     }
@@ -80,8 +91,11 @@ public class ControllerCorrida {
             corrida.setEstado(false);
     }
     
-    public void pausarCorrida(){
-        corrida.setPause(true);
+    public void pausar_reiniciarCorrida(){
+        if(!estaPausado())
+            corrida.setPause(true);
+        else
+            corrida.setPause(false);
     }
     
     public boolean estaPausado(){
@@ -90,6 +104,7 @@ public class ControllerCorrida {
     
     public void comecarPartida(){
         corrida.setEstado(true);
+        System.out.println(corrida.isEstado());
     }
     
     public List<Carro> competidores(){
@@ -105,7 +120,6 @@ public class ControllerCorrida {
             List<Carro> carros = corrida.getCompetidores();
             carros.add(carro);
             corrida.setCompetidores(carros);
-            carros.forEach(u -> System.out.println( "c" + u.getId() + "n" + u.getPiloto().getNome()));
         }
     }
     
@@ -138,12 +152,29 @@ public class ControllerCorrida {
         String tempoPosterior[] =  posterior.getTempo().split(":");
         int minutosAnterior = strToInt(tempoAnterior[1] , 10);
         int minutosPosterior = strToInt(tempoPosterior[1] , 10);
-        resultado = minutosPosterior - minutosAnterior;
-        tempo = Integer.toString(resultado) + ":";
         int secundosAnterior = strToInt(tempoAnterior[2] , 10);
         int secundosPosterior = strToInt(tempoPosterior[2] , 10);
-        resultado = secundosPosterior - secundosAnterior;
-        tempo = tempo + Integer.toString(resultado);
+        resultado = minutosPosterior - minutosAnterior;
+        if(minutosAnterior == minutosPosterior){
+            tempo = Integer.toString(resultado) + ":";
+            resultado = secundosPosterior - secundosAnterior;
+            tempo = tempo + Integer.toString(resultado);
+        }
+        else{
+            int minutosParaSegundo = resultado * 60;
+            resultado = secundosPosterior - secundosAnterior;
+            resultado = Math.abs(resultado);
+            resultado = minutosParaSegundo - resultado;
+            if(resultado < 60){
+                tempo = "00:";
+                tempo = tempo + Integer.toString(resultado);
+            }
+            else{
+                int minutos = resultado / 60;
+                int resto = resultado % 60;
+                tempo = Integer.toString(minutos) + ":" + Integer.toString(resto);
+            }
+        }    
         return tempo;
     }
 }
