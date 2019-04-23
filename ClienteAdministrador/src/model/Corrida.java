@@ -51,7 +51,7 @@ public class Corrida {
     
     @Override
     public String toString() {
-        String mandar = Integer.toString(voltas);
+        String mandar = Integer.toString(voltas) + ";" + comecou;
         return mandar;
     }
 }

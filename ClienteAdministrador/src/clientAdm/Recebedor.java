@@ -13,16 +13,10 @@ public class Recebedor implements Runnable {
 
     private InputStream servidor;
     private boolean start;
-    private ControllerPacote pacotes = null;
-    private static ControllerGerenciador gerenciador = null;
-    private static ControllerCorrida corrida = null;
     
     public Recebedor(InputStream servidor) {
         this.servidor = servidor;
         this.start    = true;
-        pacotes = new ControllerPacote();
-        gerenciador = new ControllerGerenciador();
-        corrida = new ControllerCorrida();
     }
 
     public void setStart(boolean start) {
@@ -34,6 +28,9 @@ public class Recebedor implements Runnable {
         while(start){
             // recebe msgs do servidor e imprime na tela    
             String pacote , opcao;
+            ControllerPacote pacotes = new ControllerPacote();
+            ControllerGerenciador gerenciador = new ControllerGerenciador();
+            ControllerCorrida corrida = new ControllerCorrida();
             DataInputStream entrada = new DataInputStream(this.servidor);
             try{
                 pacote = entrada.readUTF();
@@ -55,12 +52,8 @@ public class Recebedor implements Runnable {
                     case "22"://remover carro
                         gerenciador.removerCarro(pacotes.transformarCarro(pacote).getId());
                         break;
-                    case "30"://salvar corrida
-                        System.out.println("foi");
-                        corrida.salvarCorrida(pacotes.transformarCorrida(pacote));
-                        break;
-                    case "31":
-                        corrida.comecarPartida();
+                    case "31"://salvar corrida
+                        corrida.salvarCorrida(pacotes.trabsformarCorrida(pacote));
                         break;
                     case "32"://salvar competidor
                         corrida.salvarCompetidor(pacotes.transformarCarro(pacote));

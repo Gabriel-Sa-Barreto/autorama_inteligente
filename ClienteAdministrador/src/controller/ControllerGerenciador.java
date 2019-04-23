@@ -21,13 +21,14 @@ public class ControllerGerenciador {
     private static List<Carro> carros;
     private static List<Piloto> pilotos;
     private static List<Administrador> adms;
-    
 
     public ControllerGerenciador() {
         carros = new ArrayList<>();
         pilotos = new ArrayList<>();
         adms = new ArrayList<>();
     }
+    
+    
     
     public Carro cadastrarCarro(String tag , String equipe , String numero){ //cadastrando pessoalmente
         Carro adicionar = new Carro(tag , equipe , numero);
@@ -94,10 +95,10 @@ public class ControllerGerenciador {
         return null;
     }
     
-    public Carro carro(String idCarro){
+    public Carro carro(String nome){
         for (Iterator<Carro> it = carros.iterator(); it.hasNext();) {
             Carro carro = it.next();
-            if(carro.getId().equals(idCarro))
+            if(carro.getId().equals(nome))
                 return carro;
         }
         return null;
@@ -111,12 +112,5 @@ public class ControllerGerenciador {
         carros.removeIf( u -> u.getId().equals(id));
     }
     
-    public int strToInt(String valor, int padrao) {
-        try {
-            return Integer.valueOf(valor); // Para retornar um Integer, use Integer.parseInt
-        } 
-        catch (NumberFormatException e) {  // Se houver erro na conversão, retorna o valor padrão
-            return padrao;
-        }
-    }
+    
 }

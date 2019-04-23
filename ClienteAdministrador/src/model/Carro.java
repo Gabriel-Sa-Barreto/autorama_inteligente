@@ -65,7 +65,7 @@ public class Carro {
             return false;
         }
         final Carro comparar = (Carro) obj;
-        return this.id.equals(comparar.getId()) && this.piloto.getNome().equals(comparar.piloto.getNome());
+        return this.id.equals(comparar.getId());
     }
  
     @Override

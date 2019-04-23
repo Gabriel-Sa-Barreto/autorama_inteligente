@@ -17,7 +17,7 @@ import model.Piloto;
  */
 public class ControllerCorrida {
     
-    private static Corrida corrida;
+    Corrida corrida;
     
     
     public Corrida cadastrarCorrida(int voltas){
@@ -27,41 +27,28 @@ public class ControllerCorrida {
     
     public void salvarCorrida(Corrida nova){
         corrida = nova;
-        System.out.println(corrida.isEstado());
     }
     
-     /*Método que associa um carro ao seu piloto será enviado para uma corrida*/
     public Carro cadastraCompetidor(Carro carro , Piloto piloto){
             carro.setPiloto(piloto);
             return carro;
     }
     
-    /*Método que salva todos os pilotos que serão enviados para uma corrida*/
     public void salvarCompetidor(Carro carro){
             List<Carro> carros = corrida.getCompetidores();
             carros.add(carro);
             corrida.setCompetidores(carros);
     }
     
-    public boolean isNull(){
-        if(this.corrida == null){
-            return true;
-        }
-        return false;
-    }
-    
     public boolean comecouCorrida(){
         return corrida.isEstado();
-    }
-    
-     public void comecarPartida(){
-        corrida.setEstado(true);
     }
     
     public boolean estaNaCorrida(Carro carro){
         List<Carro> carros = corrida.getCompetidores();
         for (Iterator<Carro> it = carros.iterator(); it.hasNext();) {
             Carro prova = it.next();
+            System.out.println(prova.equals(carro));
             if(prova.equals(carro))
                 return true;
         }

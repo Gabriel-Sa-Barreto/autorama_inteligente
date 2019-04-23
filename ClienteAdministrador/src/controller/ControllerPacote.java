@@ -17,7 +17,7 @@ import model.Record;
  */
 public class ControllerPacote {
     
-    public Corrida transformarCorrida(String pacote){
+    public Corrida trabsformarCorrida(String pacote){
         String corrida[] = pacote.split(";");
         Corrida recebido = new Corrida(strToInt(corrida[1] , 10));
         return recebido;

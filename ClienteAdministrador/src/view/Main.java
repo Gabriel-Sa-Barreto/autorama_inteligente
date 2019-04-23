@@ -25,7 +25,7 @@ public class Main {
         ControllerGerenciador gerenciador = new ControllerGerenciador();
         ControllerRede rede = new ControllerRede();
         ControllerCorrida corrida = new ControllerCorrida();
-        Cliente adm = new Cliente("192.168.25.5" , 12345);
+        Cliente adm = new Cliente("127.0.0.1" , 12345);
         adm.executa();
         int controlador = 0;
         String dado;
@@ -33,34 +33,29 @@ public class Main {
         int escolha;
         int porta = 12345;
         while(controlador == 0){
-            System.out.println("<1> Adicionar Carro\n");      //OK
-            System.out.println("<2> Adicionar Piloto\n");     //OK
-            System.out.println("<3> Adicionar Adm\n");        //OK
-            System.out.println("<4> Remover piloto\n");       //OK
-            System.out.println("<5> Remover carro\n");        //OK
-            System.out.println("<6> Cadastrar corrida\n");    //OK
-            System.out.println("<7> Cadastrar competidor\n"); //OK
-            System.out.println("<8> Começar corrida\n");      
-            System.out.println("<9> Sair\n");                 //OK
+            System.out.println("<1> Adicionar Carro\n");
+            System.out.println("<2> Adicionar Piloto\n");
+            System.out.println("<3> Adicionar Adm\n");
+            System.out.println("<4> Remover piloto\n");
+            System.out.println("<5> Remover carro\n");
+            System.out.println("<6> Cadastrar corrida\n");
+            System.out.println("<7> Cadastrar competidor\n");
+            System.out.println("<8> Sair\n");
             escolha = scan.nextInt();
             switch(escolha){
                 case 1:
-                    /*if(!gerenciador.existeCarro("12345")){
+                    if(!gerenciador.existeCarro("12345")){
                         rede.enviarDado(adm.getCliente() , gerenciador.cadastrarCarro("12345", "Ferrari", "123").toString() , "11");
-                    }*/
-                    rede.enviarDado(adm.getCliente() , gerenciador.cadastrarCarro("100000", "Ferrari", "123").toString() , "11");
-                    rede.enviarDado(adm.getCliente() , gerenciador.cadastrarCarro("100001", "Mercedes","456").toString() , "11");
-                    rede.enviarDado(adm.getCliente() , gerenciador.cadastrarCarro("100002", "Ferrari", "789").toString() , "11");
-                    rede.enviarDado(adm.getCliente() , gerenciador.cadastrarCarro("100003", "Ferrari", "101").toString() , "11");
+                        //gerenciador.cadastrarCarro("12345", "Ferrari", "123");
+                        //gerenciador.cadastrarCarro("56789", "Ferrari", "124");
+                    }
                     break;
                 case 2:
-                    /*if(!gerenciador.existePiloto("Samuel")){
+                    if(!gerenciador.existePiloto("Samuel")){
                         rede.enviarDado(adm.getCliente() , gerenciador.cadastrarPiloto("Samuel").toString() , "12");
-                    }*/
-                    rede.enviarDado(adm.getCliente() , gerenciador.cadastrarPiloto("Samuel").toString() , "12");
-                    rede.enviarDado(adm.getCliente() , gerenciador.cadastrarPiloto("Rafael").toString() , "12");
-                    rede.enviarDado(adm.getCliente() , gerenciador.cadastrarPiloto("Gabriel").toString() , "12");
-                    rede.enviarDado(adm.getCliente() , gerenciador.cadastrarPiloto("Xande").toString() , "12");
+                        //gerenciador.cadastrarPiloto("Samuel");
+                        //gerenciador.cadastrarPiloto("Gabriel");
+                    }
                     break;
                 case 3:
                     if(!gerenciador.existeAdm("Rafel")){
@@ -80,23 +75,15 @@ public class Main {
                     }
                     break;    
                 case 6:
-                    rede.enviarDado(adm.getCliente() , corrida.cadastrarCorrida(20).toString() , "30");
+                    rede.enviarDado(adm.getCliente() , corrida.cadastrarCorrida(20).toString() , "31");
                     break;
                 case 7:
                     if(!corrida.comecouCorrida()){
-                        /*if(!corrida.estaNaCorrida(gerenciador.carro("12345"))){
-                            rede.enviarDado(adm.getCliente() , corrida.cadastraCompetidor(gerenciador.carro("12345"), gerenciador.piloto("Samuel")).toString() , "32");
-                        }*/
-                        rede.enviarDado(adm.getCliente() , corrida.cadastraCompetidor(gerenciador.carro("100000"), gerenciador.piloto("Samuel")).toString() , "32");
-                        rede.enviarDado(adm.getCliente() , corrida.cadastraCompetidor(gerenciador.carro("100001"), gerenciador.piloto("Rafael")).toString() , "32");
-                        rede.enviarDado(adm.getCliente() , corrida.cadastraCompetidor(gerenciador.carro("100002"), gerenciador.piloto("Gabriel")).toString() , "32");
-                        rede.enviarDado(adm.getCliente() , corrida.cadastraCompetidor(gerenciador.carro("100003"), gerenciador.piloto("Xande")).toString() , "32");
+                        if(!corrida.estaNaCorrida(gerenciador.carro("12345"))){
+                            rede.enviarDado(adm.getCliente() , corrida.cadastraCompetidor(gerenciador.carro("12345"), gerenciador.piloto("Samuel")).toString() , "31");
+                        }
                     }
-                    break;
                 case 8:
-                    rede.enviarDado(adm.getCliente(), "", "31");
-                    break;
-                case 9:
                     rede.enviarDado(adm.getCliente(), "", "00");
                     controlador = 1;
                     break;
