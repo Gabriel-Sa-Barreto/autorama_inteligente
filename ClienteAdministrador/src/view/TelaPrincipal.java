@@ -4,15 +4,25 @@
  * and open the template in the editor.
  */
 package view;
-
+import clientAdm.Cliente;
+import controller.*;
 import java.awt.CardLayout;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.*;
 
 /**
  *
  * @author lablenda3
  */
 public class TelaPrincipal extends javax.swing.JFrame {
-
+    
+    private static ControllerGerenciador gerenciador = new ControllerGerenciador();
+    private static ControllerRede rede               = new ControllerRede();
+    private static ControllerCorrida corrida         = new ControllerCorrida();
+    private static Cliente adm;
+    
     /**
      * Creates new form TelaPrincipal
      */
@@ -40,53 +50,57 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        idCarro = new javax.swing.JTextField();
+        equipeCarro = new javax.swing.JTextField();
+        numeroCarro = new javax.swing.JTextField();
+        salvarCarro = new javax.swing.JButton();
         jpCadAdm = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        nomeAdm = new javax.swing.JTextField();
+        salvarAdm = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        senhaAdm = new javax.swing.JPasswordField();
         JpPiloto = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        nomePiloto = new javax.swing.JTextField();
+        salvarPiloto = new javax.swing.JButton();
         JpRemoveCar = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
+        removeCar = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
+        removerCarro = new javax.swing.JButton();
         jpRemoverPiloto = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
+        pilotoRemover = new javax.swing.JTextField();
+        removerPiloto = new javax.swing.JButton();
         jpCriarCorrida = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jButton9 = new javax.swing.JButton();
+        voltasQualificacao = new javax.swing.JTextField();
+        voltasCorrida = new javax.swing.JTextField();
+        criarCorrida = new javax.swing.JButton();
+        jLabel22 = new javax.swing.JLabel();
+        confirmarPiloto = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        escolherPiloto = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        escolherCarro = new javax.swing.JTable();
         JpRank = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         JpgerenciarCorrida = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        comecarCorrida = new javax.swing.JButton();
+        pausarCorrida = new javax.swing.JButton();
+        reiniciarCorrida = new javax.swing.JButton();
         pilotosCad = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
@@ -107,16 +121,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         visualizarRank = new javax.swing.JMenuItem();
         outrasOpcoes = new javax.swing.JMenu();
         home_page = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        logout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cliente Administrador");
+        setPreferredSize(new java.awt.Dimension(750, 800));
         setResizable(false);
 
+        JpPrincipal.setPreferredSize(new java.awt.Dimension(821, 710));
         JpPrincipal.setLayout(new java.awt.CardLayout());
 
         jLabel30.setFont(new java.awt.Font("Ubuntu Condensed", 1, 48)); // NOI18N
-        jLabel30.setText("Bem-Vindo ao Autorama Inteligente ");
+        jLabel30.setText("Autorama Inteligente ");
 
         jLabel31.setFont(new java.awt.Font("Ubuntu Condensed", 1, 48)); // NOI18N
         jLabel31.setText("M.I Concorrência e Conectividade");
@@ -131,35 +147,34 @@ public class TelaPrincipal extends javax.swing.JFrame {
         JpHome.setLayout(JpHomeLayout);
         JpHomeLayout.setHorizontalGroup(
             JpHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpHomeLayout.createSequentialGroup()
-                .addGap(0, 87, Short.MAX_VALUE)
-                .addComponent(jLabel30)
-                .addGap(86, 86, 86))
             .addGroup(JpHomeLayout.createSequentialGroup()
                 .addGroup(JpHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(JpHomeLayout.createSequentialGroup()
-                        .addGap(408, 408, 408)
+                        .addGap(348, 348, 348)
                         .addComponent(jLabel32))
                     .addGroup(JpHomeLayout.createSequentialGroup()
-                        .addGap(117, 117, 117)
-                        .addComponent(jLabel31))
+                        .addGap(155, 155, 155)
+                        .addComponent(jLabel30))
                     .addGroup(JpHomeLayout.createSequentialGroup()
-                        .addGap(286, 286, 286)
-                        .addComponent(jLabel33)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(214, 214, 214)
+                        .addComponent(jLabel33))
+                    .addGroup(JpHomeLayout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jLabel31)))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
         JpHomeLayout.setVerticalGroup(
             JpHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JpHomeLayout.createSequentialGroup()
-                .addGap(72, 72, 72)
+                .addGap(65, 65, 65)
                 .addComponent(jLabel30)
-                .addGap(36, 36, 36)
+                .addGap(39, 39, 39)
                 .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(31, 31, 31)
                 .addComponent(jLabel31)
                 .addGap(151, 151, 151)
                 .addComponent(jLabel33)
-                .addContainerGap(246, Short.MAX_VALUE))
+                .addContainerGap(241, Short.MAX_VALUE))
         );
 
         JpPrincipal.add(JpHome, "home");
@@ -176,42 +191,45 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel7.setText("Número:");
 
-        jButton2.setText("Cadastrar");
+        salvarCarro.setText("Cadastrar");
+        salvarCarro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarCarroActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpCardCarroLayout = new javax.swing.GroupLayout(jpCardCarro);
         jpCardCarro.setLayout(jpCardCarroLayout);
         jpCardCarroLayout.setHorizontalGroup(
             jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpCardCarroLayout.createSequentialGroup()
-                .addContainerGap(346, Short.MAX_VALUE)
+                .addContainerGap(246, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(264, 264, 264))
             .addGroup(jpCardCarroLayout.createSequentialGroup()
                 .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpCardCarroLayout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jpCardCarroLayout.createSequentialGroup()
-                                .addGap(150, 150, 150)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE))
-                            .addGroup(jpCardCarroLayout.createSequentialGroup()
-                                .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jpCardCarroLayout.createSequentialGroup()
-                                            .addComponent(jLabel6)
-                                            .addGap(4, 4, 4))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCardCarroLayout.createSequentialGroup()
-                                            .addComponent(jLabel5)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                    .addGroup(jpCardCarroLayout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(4, 4, 4)))
-                                .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
-                                    .addComponent(jTextField2)))))
+                        .addGap(45, 45, 45)
+                        .addComponent(jLabel7))
+                    .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jpCardCarroLayout.createSequentialGroup()
+                            .addGap(59, 59, 59)
+                            .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jpCardCarroLayout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addGap(7, 7, 7))
+                                .addGroup(jpCardCarroLayout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addGap(7, 7, 7)))
+                            .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(idCarro, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+                                .addComponent(equipeCarro)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCardCarroLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(numeroCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jpCardCarroLayout.createSequentialGroup()
-                        .addGap(358, 358, 358)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(323, 323, 323)
+                        .addComponent(salvarCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpCardCarroLayout.setVerticalGroup(
@@ -221,19 +239,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(75, 75, 75)
                 .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(idCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(47, 47, 47)
                 .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(equipeCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(67, 67, 67)
                 .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(167, Short.MAX_VALUE))
+                    .addComponent(numeroCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addComponent(salvarCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(168, Short.MAX_VALUE))
         );
 
         JpPrincipal.add(jpCardCarro, "Cadastro de novo Carro");
@@ -246,13 +264,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel2.setText("Senha:");
 
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        salvarAdm.setText("Salvar");
+        salvarAdm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
+                salvarAdmActionPerformed(evt);
             }
         });
-
-        jButton1.setText("Salvar");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cadAdm.png"))); // NOI18N
 
@@ -261,26 +278,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jpCadAdmLayout.setHorizontalGroup(
             jpCadAdmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpCadAdmLayout.createSequentialGroup()
-                .addGroup(jpCadAdmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpCadAdmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jpCadAdmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jpCadAdmLayout.createSequentialGroup()
-                                .addGap(65, 65, 65)
-                                .addGroup(jpCadAdmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jpCadAdmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jLabel1))
-                                    .addGroup(jpCadAdmLayout.createSequentialGroup()
-                                        .addGap(3, 3, 3)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jpCadAdmLayout.createSequentialGroup()
-                                .addGap(353, 353, 353)
-                                .addComponent(jLabel3)))
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpCadAdmLayout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(264, Short.MAX_VALUE))
+                .addGroup(jpCadAdmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(senhaAdm, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpCadAdmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jpCadAdmLayout.createSequentialGroup()
+                            .addGap(65, 65, 65)
+                            .addGroup(jpCadAdmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jpCadAdmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1))
+                                .addGroup(jpCadAdmLayout.createSequentialGroup()
+                                    .addGap(3, 3, 3)
+                                    .addComponent(nomeAdm, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jpCadAdmLayout.createSequentialGroup()
+                            .addGap(353, 353, 353)
+                            .addComponent(jLabel3))
+                        .addGroup(jpCadAdmLayout.createSequentialGroup()
+                            .addGap(65, 65, 65)
+                            .addComponent(salvarAdm, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
         jpCadAdmLayout.setVerticalGroup(
             jpCadAdmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,14 +306,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nomeAdm, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(senhaAdm, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(salvarAdm, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(173, Short.MAX_VALUE))
         );
 
         JpPrincipal.add(jpCadAdm, "Cadastro de novo Administrador");
@@ -308,7 +324,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel9.setText("Nome:");
 
-        jButton3.setText("Cadastrar");
+        salvarPiloto.setText("Cadastrar");
+        salvarPiloto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarPilotoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout JpPilotoLayout = new javax.swing.GroupLayout(JpPiloto);
         JpPiloto.setLayout(JpPilotoLayout);
@@ -317,38 +338,35 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(JpPilotoLayout.createSequentialGroup()
                 .addGroup(JpPilotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(JpPilotoLayout.createSequentialGroup()
-                        .addGap(102, 102, 102)
+                        .addGap(56, 56, 56)
                         .addComponent(jLabel9)
-                        .addGroup(JpPilotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(JpPilotoLayout.createSequentialGroup()
-                                .addGap(38, 38, 38)
-                                .addComponent(jLabel8))
-                            .addGroup(JpPilotoLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nomePiloto, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(JpPilotoLayout.createSequentialGroup()
-                        .addGap(348, 348, 348)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(190, Short.MAX_VALUE))
+                        .addGap(318, 318, 318)
+                        .addComponent(salvarPiloto, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(JpPilotoLayout.createSequentialGroup()
+                        .addGap(232, 232, 232)
+                        .addComponent(jLabel8)))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
         JpPilotoLayout.setVerticalGroup(
             JpPilotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JpPilotoLayout.createSequentialGroup()
-                .addGap(68, 68, 68)
+                .addGap(66, 66, 66)
+                .addComponent(jLabel8)
+                .addGap(77, 77, 77)
                 .addGroup(JpPilotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel9)
-                    .addGroup(JpPilotoLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(75, 75, 75)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(46, 46, 46)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(395, Short.MAX_VALUE))
+                    .addComponent(nomePiloto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addComponent(salvarPiloto, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(391, Short.MAX_VALUE))
         );
 
         JpPrincipal.add(JpPiloto, "Cadastro de Piloto");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        removeCar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -356,17 +374,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 "ID", "Equipe", "Número"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jButton4.setText("Remover");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
+        jScrollPane1.setViewportView(removeCar);
 
         jLabel10.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel10.setText("Remover Carro");
+
+        removerCarro.setText("Remover");
+        removerCarro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removerCarroActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout JpRemoveCarLayout = new javax.swing.GroupLayout(JpRemoveCar);
         JpRemoveCar.setLayout(JpRemoveCarLayout);
@@ -377,14 +395,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel10)
                 .addGap(328, 328, 328))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpRemoveCarLayout.createSequentialGroup()
-                .addContainerGap(137, Short.MAX_VALUE)
-                .addGroup(JpRemoveCarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpRemoveCarLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(106, 106, 106))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpRemoveCarLayout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(401, 401, 401))))
+                .addContainerGap(37, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(106, 106, 106))
+            .addGroup(JpRemoveCarLayout.createSequentialGroup()
+                .addGap(306, 306, 306)
+                .addComponent(removerCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         JpRemoveCarLayout.setVerticalGroup(
             JpRemoveCarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,8 +411,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addComponent(removerCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         JpPrincipal.add(JpRemoveCar, "Remover carro");
@@ -406,24 +423,30 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel12.setText("Nome:");
 
-        jButton5.setText("Remover");
+        removerPiloto.setText("Remover");
+        removerPiloto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removerPilotoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpRemoverPilotoLayout = new javax.swing.GroupLayout(jpRemoverPiloto);
         jpRemoverPiloto.setLayout(jpRemoverPilotoLayout);
         jpRemoverPilotoLayout.setHorizontalGroup(
             jpRemoverPilotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpRemoverPilotoLayout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jLabel12)
-                .addGap(3, 3, 3)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpRemoverPilotoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addGap(325, 325, 325))
+            .addGroup(jpRemoverPilotoLayout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addGroup(jpRemoverPilotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(removerPiloto, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpRemoverPilotoLayout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(3, 3, 3)
+                        .addComponent(pilotoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         jpRemoverPilotoLayout.setVerticalGroup(
             jpRemoverPilotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -433,13 +456,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGap(78, 78, 78)
                 .addGroup(jpRemoverPilotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
-                    .addGroup(jpRemoverPilotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(480, Short.MAX_VALUE))
+                    .addComponent(pilotoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(removerPiloto, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(401, Short.MAX_VALUE))
         );
 
         JpPrincipal.add(jpRemoverPiloto, "Remover piloto");
+
+        jpCriarCorrida.setPreferredSize(new java.awt.Dimension(949, 800));
 
         jLabel13.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jLabel13.setText("Corrida:");
@@ -450,25 +475,67 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabel17.setText("Selecione os pilotos:");
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nome", "Equipe", "Carro", ""
-            }
-        ));
-        jTable3.setColumnSelectionAllowed(true);
-        jScrollPane3.setViewportView(jTable3);
-        jTable3.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-
         jLabel20.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabel20.setText("Quantidade de Voltas:");
 
         jLabel21.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jLabel21.setText("Sessão de Qualificação");
 
-        jButton9.setText("Criar");
+        criarCorrida.setText("Criar");
+        criarCorrida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                criarCorridaActionPerformed(evt);
+            }
+        });
+
+        jLabel22.setText("Associe um piloto a um carro e clique em confirmar, faça isso para todos os selecionados");
+
+        confirmarPiloto.setText("Confirmar");
+        confirmarPiloto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmarPilotoActionPerformed(evt);
+            }
+        });
+
+        escolherPiloto.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nome"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        escolherPiloto.setColumnSelectionAllowed(true);
+        escolherPiloto.getTableHeader().setReorderingAllowed(false);
+        jScrollPane5.setViewportView(escolherPiloto);
+        escolherPiloto.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        escolherCarro.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Carro ID", "Equipe"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        escolherCarro.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(escolherCarro);
 
         javax.swing.GroupLayout jpCriarCorridaLayout = new javax.swing.GroupLayout(jpCriarCorrida);
         jpCriarCorrida.setLayout(jpCriarCorridaLayout);
@@ -490,13 +557,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
                                     .addComponent(jLabel21))
                                 .addGap(18, 18, 18)
                                 .addGroup(jpCriarCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jpCriarCorridaLayout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(61, Short.MAX_VALUE))
+                                    .addComponent(voltasCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(voltasQualificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jpCriarCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jpCriarCorridaLayout.createSequentialGroup()
+                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jpCriarCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(confirmarPiloto)
+                                        .addComponent(criarCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(6, 6, 6))
+                                .addComponent(jLabel22)))))
+                .addContainerGap(105, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCriarCorridaLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel14)
@@ -512,20 +586,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpCriarCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(voltasCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jpCriarCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(voltasQualificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel17)
-                .addGap(18, 18, 18)
-                .addGroup(jpCriarCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(121, 121, 121)
+                .addGap(3, 3, 3)
+                .addComponent(jLabel22)
+                .addGap(12, 12, 12)
+                .addGroup(jpCriarCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                    .addGroup(jpCriarCorridaLayout.createSequentialGroup()
+                        .addComponent(confirmarPiloto, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(criarCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jLabel15)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(59, 59, 59))
         );
 
         JpPrincipal.add(jpCriarCorrida, "Cadastrar corrida");
@@ -569,7 +649,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         JpRankLayout.setHorizontalGroup(
             JpRankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JpRankLayout.createSequentialGroup()
-                .addContainerGap(141, Short.MAX_VALUE)
+                .addContainerGap(41, Short.MAX_VALUE)
                 .addGroup(JpRankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpRankLayout.createSequentialGroup()
                         .addComponent(jLabel16)
@@ -585,7 +665,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel16)
                 .addGap(33, 33, 33)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(274, Short.MAX_VALUE))
+                .addContainerGap(268, Short.MAX_VALUE))
         );
 
         JpPrincipal.add(JpRank, "Rank de pilotos");
@@ -593,11 +673,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel18.setText("Gerenciar Corrida");
 
-        jButton6.setText("Começar");
+        comecarCorrida.setText("Começar");
+        comecarCorrida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comecarCorridaActionPerformed(evt);
+            }
+        });
 
-        jButton11.setText("Começar");
+        pausarCorrida.setText("Pausar");
+        pausarCorrida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pausarCorridaActionPerformed(evt);
+            }
+        });
 
-        jButton12.setText("Começar");
+        reiniciarCorrida.setText("Reiniciar");
+        reiniciarCorrida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reiniciarCorridaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout JpgerenciarCorridaLayout = new javax.swing.GroupLayout(JpgerenciarCorrida);
         JpgerenciarCorrida.setLayout(JpgerenciarCorridaLayout);
@@ -606,29 +701,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(JpgerenciarCorridaLayout.createSequentialGroup()
                 .addGroup(JpgerenciarCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(JpgerenciarCorridaLayout.createSequentialGroup()
-                        .addGap(356, 356, 356)
-                        .addGroup(JpgerenciarCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(JpgerenciarCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                                .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(236, 236, 236)
+                        .addComponent(jLabel18))
                     .addGroup(JpgerenciarCorridaLayout.createSequentialGroup()
-                        .addGap(302, 302, 302)
-                        .addComponent(jLabel18)))
-                .addContainerGap(315, Short.MAX_VALUE))
+                        .addGap(297, 297, 297)
+                        .addGroup(JpgerenciarCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pausarCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comecarCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(reiniciarCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(281, Short.MAX_VALUE))
         );
         JpgerenciarCorridaLayout.setVerticalGroup(
             JpgerenciarCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JpgerenciarCorridaLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(43, 43, 43)
                 .addComponent(jLabel18)
-                .addGap(26, 26, 26)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(comecarCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
+                .addComponent(pausarCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(74, 74, 74)
-                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69)
-                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addComponent(reiniciarCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(177, Short.MAX_VALUE))
         );
 
         JpPrincipal.add(JpgerenciarCorrida, "Gerenciar Corrida");
@@ -651,7 +745,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         pilotosCadLayout.setHorizontalGroup(
             pilotosCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pilotosCadLayout.createSequentialGroup()
-                .addContainerGap(171, Short.MAX_VALUE)
+                .addContainerGap(71, Short.MAX_VALUE)
                 .addGroup(pilotosCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pilotosCadLayout.createSequentialGroup()
                         .addComponent(jLabel19)
@@ -667,7 +761,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel19)
                 .addGap(44, 44, 44)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
 
         JpPrincipal.add(pilotosCad, "Pilotos Cadastrados");
@@ -788,9 +882,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         outrasOpcoes.add(home_page);
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/door_out.png"))); // NOI18N
-        jMenuItem1.setText("Sair");
-        outrasOpcoes.add(jMenuItem1);
+        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/door_out.png"))); // NOI18N
+        logout.setText("Sair");
+        logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutActionPerformed(evt);
+            }
+        });
+        outrasOpcoes.add(logout);
 
         jMenuBar1.add(outrasOpcoes);
 
@@ -800,22 +899,29 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 59, Short.MAX_VALUE)
+                .addComponent(JpPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 59, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(JpPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 52, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(JpPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+        MÉTODOS QUE CHAMAM AS TELAS PARA SEREM VISUALIZADAS E OUTROS MÉTODOS REPONSÃVEIS PELAS AÇÕES DOS BUTÕES
+    */
     private void cadAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadAdmActionPerformed
         CardLayout cl = (CardLayout) JpPrincipal.getLayout();
-        cl.show(JpPrincipal, "Cadastro de novo Administrador");
+        cl.show(JpPrincipal, "Cadastro de novo Administrador");      
     }//GEN-LAST:event_cadAdmActionPerformed
 
     private void CadCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadCarroActionPerformed
@@ -826,10 +932,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void outrasOpcoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outrasOpcoesActionPerformed
         
     }//GEN-LAST:event_outrasOpcoesActionPerformed
-
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     private void cadPilotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadPilotoActionPerformed
         CardLayout cl = (CardLayout) JpPrincipal.getLayout();
@@ -871,41 +973,137 @@ public class TelaPrincipal extends javax.swing.JFrame {
         cl.show(JpPrincipal, "Pilotos Cadastrados");
     }//GEN-LAST:event_pilotosRegistersActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    /*Evento responsável por salvar um novo Adm cadastrado*/
+    private void salvarAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarAdmActionPerformed
+        String nome  = nomeAdm.getText();
+        String senha = new String(senhaAdm.getPassword()).trim();
+        if(!gerenciador.existeAdm(nome)){
+            //envia para o servidor realizar o cadastrado no sistema
+            rede.enviarDado(adm.getCliente() , gerenciador.cadastrarAdministrador(nome ,senha).toString() ,"13");
+        }else{
+            //rejeita os dados caso o adm já tenha sido cadastrado
+            JOptionPane.showMessageDialog(null,"Administrador já cadastrado. Por favor, tente outro!");
+        }
+    }//GEN-LAST:event_salvarAdmActionPerformed
 
+    private void salvarCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarCarroActionPerformed
+        String id     = idCarro.getText();
+        String equipe = equipeCarro.getText();
+        String numero = numeroCarro.getText();
+        if(!gerenciador.existeCarro(id)){
+            rede.enviarDado(adm.getCliente() , gerenciador.cadastrarCarro(id, equipe, numero).toString() , "11");
+        }else{
+            //rejeita os dados caso o carro já tenha sido cadastrado
+            JOptionPane.showMessageDialog(null,"Este carro já está cadastrado. Por favor, tente outro!");
+        }
+    }//GEN-LAST:event_salvarCarroActionPerformed
+
+    private void salvarPilotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarPilotoActionPerformed
+        String nome = nomePiloto.getText();
+        if(!gerenciador.existePiloto(nome)){
+            rede.enviarDado(adm.getCliente() , gerenciador.cadastrarPiloto(nome).toString() , "12");
+        }else{
+            //rejeita os dados caso o carro já tenha sido cadastrado
+            JOptionPane.showMessageDialog(null,"Este piloto já está cadastrado. Por favor, tente outro!");
+        }
+    }//GEN-LAST:event_salvarPilotoActionPerformed
+
+    private void removerPilotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerPilotoActionPerformed
+        String piloto = pilotoRemover.getText();
+        if(gerenciador.existePiloto(piloto)){
+            rede.enviarDado(adm.getCliente() , gerenciador.piloto(piloto).toString() , "21");
+            gerenciador.removerPiloto(piloto);
+            JOptionPane.showMessageDialog(null,"Piloto removido com sucesso!");
+        }else{
+            JOptionPane.showMessageDialog(null,"Este piloto não está cadastrado, ou campo nome não está preenchido corretamente!");
+        }
+    }//GEN-LAST:event_removerPilotoActionPerformed
+    
+    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+        rede.enviarDado(adm.getCliente(), "", "00"); //pacote para informar ao servidor que o cliente está sendo desconectado
+        try {
+            adm.fecharConexão();
+            JOptionPane.showMessageDialog(null,"Logout com sucesso!");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null,"Erro ao desconectar!");
+        }
+    }//GEN-LAST:event_logoutActionPerformed
+
+    private void removerCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerCarroActionPerformed
+        if(removeCar.getSelectedRow() != -1){
+            String carroId = removeCar.getValueAt(removeCar.getSelectedRow(),0).toString(); //pega a linha do carro selecionado na tabela
+            rede.enviarDado(adm.getCliente() , gerenciador.carro(carroId).toString() , "22"); //enviar pacote para o servidor informando que um carro será excluído
+            
+            //remove a linha da tabela
+            DefaultTableModel remove = (DefaultTableModel) removeCar.getModel();
+            remove.removeRow(removeCar.getSelectedRow());
+        }else{
+           JOptionPane.showMessageDialog(null,"Selecione um carro!");
+        }     
+    }//GEN-LAST:event_removerCarroActionPerformed
+
+    /*Método para associar um piloto a um carro e enviar os dados ao servidor*/
+    private void confirmarPilotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarPilotoActionPerformed
+        if(corrida.isNull()){
+            if(escolherPiloto.getSelectedRow() != -1){
+                String nome   = escolherPiloto.getValueAt(escolherPiloto.getSelectedRow(), 0).toString(); //pega Nome do piloto
+                String carroId  = escolherPiloto.getValueAt(escolherCarro.getSelectedRow(), 1).toString(); //pega coluna Carro ID
+            
+                Carro pilotoCarro = corrida.cadastraCompetidor(gerenciador.carro(carroId), gerenciador.piloto(nome));
+                rede.enviarDado(adm.getCliente(),pilotoCarro.toString(),"32"); //envia para o servidor o piloto associado ao carro
+            }else{
+                JOptionPane.showMessageDialog(null,"Associe um piloto a um carro!");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"Desculpe, mas já existe uma corrida cadastrada! Espero encerrar.");
+        }
+    }//GEN-LAST:event_confirmarPilotoActionPerformed
+
+    private void criarCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarCorridaActionPerformed
+        int voltasRace   = gerenciador.strToInt(voltasCorrida.getText(),10);
+        int qualificacao = gerenciador.strToInt(voltasQualificacao.getText(),10);
+
+        if(corrida.isNull()){
+            //envio de cadastro de uma corrida
+            rede.enviarDado(adm.getCliente() , corrida.cadastrarCorrida(voltasRace).toString() , "30");
+            
+            //falta enviar voltas da qualificação
+        }else{
+            JOptionPane.showMessageDialog(null,"Desculpe, mas já existe uma corrida cadastrada! Espero encerrar.");
+        }
+
+    }//GEN-LAST:event_criarCorridaActionPerformed
+
+    private void comecarCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comecarCorridaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comecarCorridaActionPerformed
+
+    private void pausarCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pausarCorridaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pausarCorridaActionPerformed
+
+    private void reiniciarCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reiniciarCorridaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reiniciarCorridaActionPerformed
+
+    
+    /*
+        FIM DOS MÉTODOS QUE CHAMAM AS TELAS PARA SEREM VISUALIZADAS E OUTROS MÉTODOS REPONSÃVEIS PELAS AÇÕES DOS BUTÕES
+    */
+    
+    
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
+    public static void main(String args[]) throws IOException {
+        //adm = new Cliente("192.168.25.5" , 12345); 
+        //adm.executa(); //conecta o cliente ADM ao servidor
+       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPrincipal().setVisible(true);
+                new TelaPrincipal().setVisible(true);    
             }
         });
     }
@@ -921,17 +1119,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem cadAdm;
     private javax.swing.JMenuItem cadCorrida;
     private javax.swing.JMenuItem cadPiloto;
+    private javax.swing.JButton comecarCorrida;
+    private javax.swing.JButton confirmarPiloto;
+    private javax.swing.JButton criarCorrida;
+    private javax.swing.JTextField equipeCarro;
+    private javax.swing.JTable escolherCarro;
+    private javax.swing.JTable escolherPiloto;
     private javax.swing.JMenuItem gerenciarRace;
     private javax.swing.JMenuItem home_page;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JTextField idCarro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -946,6 +1142,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
@@ -960,35 +1157,40 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JPanel jpCadAdm;
     private javax.swing.JPanel jpCardCarro;
     private javax.swing.JPanel jpCriarCorrida;
     private javax.swing.JPanel jpRemoverPiloto;
+    private javax.swing.JMenuItem logout;
+    private javax.swing.JTextField nomeAdm;
+    private javax.swing.JTextField nomePiloto;
+    private javax.swing.JTextField numeroCarro;
     private javax.swing.JMenu outrasOpcoes;
+    private javax.swing.JButton pausarCorrida;
+    private javax.swing.JTextField pilotoRemover;
     private javax.swing.JPanel pilotosCad;
     private javax.swing.JMenu pilotosCadastrados;
     private javax.swing.JMenuItem pilotosRegisters;
     private javax.swing.JMenu rank;
+    private javax.swing.JButton reiniciarCorrida;
+    private javax.swing.JTable removeCar;
     private javax.swing.JMenuItem removeCarro;
     private javax.swing.JMenuItem removePiloto;
+    private javax.swing.JButton removerCarro;
+    private javax.swing.JButton removerPiloto;
+    private javax.swing.JButton salvarAdm;
+    private javax.swing.JButton salvarCarro;
+    private javax.swing.JButton salvarPiloto;
+    private javax.swing.JPasswordField senhaAdm;
     private javax.swing.JMenuItem visualizarRank;
+    private javax.swing.JTextField voltasCorrida;
+    private javax.swing.JTextField voltasQualificacao;
     // End of variables declaration//GEN-END:variables
 }
