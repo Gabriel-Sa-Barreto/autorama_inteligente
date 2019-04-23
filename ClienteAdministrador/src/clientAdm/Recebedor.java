@@ -57,7 +57,7 @@ public class Recebedor implements Runnable {
                         break;
                     case "30"://salvar corrida
                         System.out.println("foi");
-                        corrida.salvarCorrida(pacotes.trabsformarCorrida(pacote));
+                        corrida.salvarCorrida(pacotes.transformarCorrida(pacote));
                         break;
                     case "31":
                         corrida.comecarPartida();

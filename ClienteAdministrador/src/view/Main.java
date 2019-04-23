@@ -33,15 +33,15 @@ public class Main {
         int escolha;
         int porta = 12345;
         while(controlador == 0){
-            System.out.println("<1> Adicionar Carro\n");
-            System.out.println("<2> Adicionar Piloto\n");
-            System.out.println("<3> Adicionar Adm\n");
-            System.out.println("<4> Remover piloto\n");
-            System.out.println("<5> Remover carro\n");
-            System.out.println("<6> Cadastrar corrida\n");
-            System.out.println("<7> Cadastrar competidor\n");
-            System.out.println("<8> Começar corrida\n");
-            System.out.println("<9> Sair\n");
+            System.out.println("<1> Adicionar Carro\n");      //OK
+            System.out.println("<2> Adicionar Piloto\n");     //OK
+            System.out.println("<3> Adicionar Adm\n");        //OK
+            System.out.println("<4> Remover piloto\n");       //OK
+            System.out.println("<5> Remover carro\n");        //OK
+            System.out.println("<6> Cadastrar corrida\n");    //OK
+            System.out.println("<7> Cadastrar competidor\n"); //OK
+            System.out.println("<8> Começar corrida\n");      
+            System.out.println("<9> Sair\n");                 //OK
             escolha = scan.nextInt();
             switch(escolha){
                 case 1:
