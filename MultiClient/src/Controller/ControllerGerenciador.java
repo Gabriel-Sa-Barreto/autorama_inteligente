@@ -30,10 +30,9 @@ public class ControllerGerenciador {
     
     
     
-    public synchronized Carro cadastrarCarro(Carro novoCarro){
+    public synchronized void cadastrarCarro(Carro novoCarro){
         carros.add(novoCarro); //salva o novo carro em sua respectiva lista
         carros.forEach(u -> System.out.println(u.getId()));
-        return novoCarro;
     }
     
     public boolean existeCarro(String id){
@@ -47,10 +46,9 @@ public class ControllerGerenciador {
         return false;
     }
     
-    public synchronized Piloto cadastrarPiloto(Piloto novoPiloto){
+    public synchronized void cadastrarPiloto(Piloto novoPiloto){
         pilotos.add(novoPiloto); //salva um novo piloto em sua respectiva lista
         //pilotos.forEach(u -> System.out.println(u.getNome()));
-        return novoPiloto;
     }
     
     public boolean existePiloto(String nome){

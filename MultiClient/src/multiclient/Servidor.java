@@ -67,13 +67,13 @@ public class Servidor implements Runnable {
         }
     }
     
-    public synchronized void distribuiMensagem(String msg, String opcao) throws IOException {
+    public synchronized void distribuiMensagem(String msg) throws IOException {
         // envia msg para todo mundo
         for (PrintStream cliente : this.clientes) {
             //cliente.println(opcao +";"+msg);
             //System.out.println("entra");
             DataOutputStream saida = new DataOutputStream(cliente);
-            saida.writeUTF(opcao +";"+msg);
+            saida.writeUTF(msg);
         }
     }
 }

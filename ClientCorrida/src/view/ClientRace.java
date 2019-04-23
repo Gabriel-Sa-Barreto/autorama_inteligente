@@ -5,14 +5,28 @@
  */
 package view;
 
+import cliente.Cliente;
+import controller.ControllerCorrida;
 import java.awt.CardLayout;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Record;
+import model.Volta;
 
 /**
  *
  * @author gabriel
  */
 public class ClientRace extends javax.swing.JFrame {
-
+    
+    public static ControllerCorrida corrida = null;
+    Cliente cliente;
+    
     /**
      * Creates new form ClientRace
      */
@@ -35,22 +49,25 @@ public class ClientRace extends javax.swing.JFrame {
         btnCorrida = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jButtonSairHome = new javax.swing.JButton();
         JpQualificação = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTQualificacao = new javax.swing.JTable();
         JpVoltarQualificação = new javax.swing.JButton();
+        jButtonSairQuali = new javax.swing.JButton();
         JpCorrida = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        jLabelSessao = new javax.swing.JLabel();
+        jLabelClass = new javax.swing.JLabel();
+        jLabelRecord = new javax.swing.JLabel();
+        jLabelAutor = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTCorrida = new javax.swing.JTable();
         btnVoltarCorrida = new javax.swing.JButton();
+        jButtonSairClass = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sessão de Corrida e Qualificação");
@@ -81,6 +98,13 @@ public class ClientRace extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel2.setText("M.I Concorrência e Conectividade");
 
+        jButtonSairHome.setText("Sair");
+        jButtonSairHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSairHomeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout JpMenuLayout = new javax.swing.GroupLayout(JpMenu);
         JpMenu.setLayout(JpMenuLayout);
         JpMenuLayout.setHorizontalGroup(
@@ -97,13 +121,20 @@ public class ClientRace extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpMenuLayout.createSequentialGroup()
                 .addContainerGap(208, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(173, 173, 173))
+                .addGroup(JpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpMenuLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(173, 173, 173))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpMenuLayout.createSequentialGroup()
+                        .addComponent(jButtonSairHome)
+                        .addContainerGap())))
         );
         JpMenuLayout.setVerticalGroup(
             JpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JpMenuLayout.createSequentialGroup()
-                .addGap(88, 88, 88)
+                .addContainerGap()
+                .addComponent(jButtonSairHome)
+                .addGap(47, 47, 47)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
@@ -131,8 +162,8 @@ public class ClientRace extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabel6.setText("Autor:");
 
-        jTable1.setBorder(new javax.swing.border.MatteBorder(null));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTQualificacao.setBorder(new javax.swing.border.MatteBorder(null));
+        jTQualificacao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -140,17 +171,24 @@ public class ClientRace extends javax.swing.JFrame {
                 "Pos", "Piloto", "Equipe", "Tempo de volta", "Voltas"
             }
         ));
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(5);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(60);
+        jTQualificacao.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTQualificacao);
+        if (jTQualificacao.getColumnModel().getColumnCount() > 0) {
+            jTQualificacao.getColumnModel().getColumn(0).setMinWidth(5);
+            jTQualificacao.getColumnModel().getColumn(0).setMaxWidth(60);
         }
 
         JpVoltarQualificação.setText("Voltar");
         JpVoltarQualificação.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JpVoltarQualificaçãoActionPerformed(evt);
+            }
+        });
+
+        jButtonSairQuali.setText("Sair");
+        jButtonSairQuali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSairQualiActionPerformed(evt);
             }
         });
 
@@ -164,8 +202,7 @@ public class ClientRace extends javax.swing.JFrame {
                     .addGroup(JpQualificaçãoLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 813, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JpVoltarQualificação, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addComponent(JpVoltarQualificação, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE))
                     .addGroup(JpQualificaçãoLayout.createSequentialGroup()
                         .addGroup(JpQualificaçãoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(JpQualificaçãoLayout.createSequentialGroup()
@@ -176,15 +213,16 @@ public class ClientRace extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel5)))
-                        .addGap(262, 262, 262))))
+                        .addGap(178, 178, 178)
+                        .addComponent(jButtonSairQuali)))
+                .addContainerGap())
         );
         JpQualificaçãoLayout.setVerticalGroup(
             JpQualificaçãoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JpQualificaçãoLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(JpQualificaçãoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(JpVoltarQualificação, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(JpQualificaçãoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(JpQualificaçãoLayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
                         .addGroup(JpQualificaçãoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -193,7 +231,12 @@ public class ClientRace extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(JpQualificaçãoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButtonSairQuali)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(JpVoltarQualificação, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -202,19 +245,19 @@ public class ClientRace extends javax.swing.JFrame {
         JpCorrida.setBackground(java.awt.Color.lightGray);
         JpCorrida.setBorder(new javax.swing.border.MatteBorder(null));
 
-        jLabel7.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
-        jLabel7.setText("Sessão de Corrida:");
+        jLabelSessao.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        jLabelSessao.setText("Sessão de Corrida:");
 
-        jLabel8.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
-        jLabel8.setText("Classificação:");
+        jLabelClass.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        jLabelClass.setText("Classificação:");
 
-        jLabel9.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
-        jLabel9.setText("Recorde:");
+        jLabelRecord.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        jLabelRecord.setText("Recorde:");
 
-        jLabel10.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
-        jLabel10.setText("Autor:");
+        jLabelAutor.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        jLabelAutor.setText("Autor:");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTCorrida.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -222,17 +265,24 @@ public class ClientRace extends javax.swing.JFrame {
                 "Pos", "Piloto", "Equipe", "Tempo de Volta", "Volta mais rápida", "Voltas"
             }
         ));
-        jTable2.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setMinWidth(5);
-            jTable2.getColumnModel().getColumn(0).setMaxWidth(60);
+        jTCorrida.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(jTCorrida);
+        if (jTCorrida.getColumnModel().getColumnCount() > 0) {
+            jTCorrida.getColumnModel().getColumn(0).setMinWidth(5);
+            jTCorrida.getColumnModel().getColumn(0).setMaxWidth(60);
         }
 
         btnVoltarCorrida.setText("Voltar");
         btnVoltarCorrida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVoltarCorridaActionPerformed(evt);
+            }
+        });
+
+        jButtonSairClass.setText("Sair");
+        jButtonSairClass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSairClassActionPerformed(evt);
             }
         });
 
@@ -246,36 +296,41 @@ public class ClientRace extends javax.swing.JFrame {
                     .addGroup(JpCorridaLayout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 828, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnVoltarCorrida, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addComponent(btnVoltarCorrida, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
                     .addGroup(JpCorridaLayout.createSequentialGroup()
                         .addGroup(JpCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(JpCorridaLayout.createSequentialGroup()
-                                .addComponent(jLabel8)
+                                .addComponent(jLabelClass)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel10))
+                                .addComponent(jLabelAutor))
                             .addGroup(JpCorridaLayout.createSequentialGroup()
-                                .addComponent(jLabel7)
+                                .addComponent(jLabelSessao)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel9)))
-                        .addGap(231, 231, 231))))
+                                .addComponent(jLabelRecord)))
+                        .addGap(147, 147, 147)
+                        .addComponent(jButtonSairClass)))
+                .addContainerGap())
         );
         JpCorridaLayout.setVerticalGroup(
             JpCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JpCorridaLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(JpCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnVoltarCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(JpCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(JpCorridaLayout.createSequentialGroup()
+                        .addGap(36, 36, 36)
                         .addGroup(JpCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel9))
+                            .addComponent(jLabelSessao)
+                            .addComponent(jLabelRecord))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(JpCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel10))
+                            .addComponent(jLabelClass)
+                            .addComponent(jLabelAutor))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(JpCorridaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButtonSairClass)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVoltarCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -303,11 +358,75 @@ public class ClientRace extends javax.swing.JFrame {
     private void btnQualificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQualificacaoActionPerformed
         CardLayout cl = (CardLayout) JpClienteCorrida.getLayout();
         cl.show(JpClienteCorrida, "Tela de Qualificação");
+        DefaultTableModel qualificacao = (DefaultTableModel) jTQualificacao.getModel();
+        while(true){
+            try{
+                if(corrida.partidaEmAdamento()){
+                    qualificacao.setRowCount(corrida.competidores().size());
+                    List<Volta> voltas = corrida.getVoltas();
+                    if(!voltas.isEmpty()){
+                        int i = 0;
+                        //jLabelSessao.setText("Sessão de Qualificacao: " + voltas.get(0).getQuantidade() + "/" + corrida.quantidadeTotal());
+                        for(Iterator<Volta> it2 = voltas.iterator(); it2.hasNext();){
+                            Volta volta = it2.next();
+                            String nome = volta.getCarro().getPiloto().getNome();
+                            jTQualificacao.setValueAt(i, i, 0);
+                            jTQualificacao.setValueAt(nome, i, 1);
+                            jTQualificacao.setValueAt(volta.getCarro().getEquipe() , i, 2);
+                            if(corrida.getRecord(nome) != null)
+                                jTQualificacao.setValueAt(corrida.getRecord(nome) , i, 3);
+                            else
+                                jTQualificacao.setValueAt("00:00" , i, 3);
+                            jTQualificacao.setValueAt(volta.getQuantidade() , i, 4);
+                            i++;
+                        }
+                    }    
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Não tem corrida no momento");
+                    break;
+                }
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(null,ex);
+            }    
+        }
     }//GEN-LAST:event_btnQualificacaoActionPerformed
 
     private void btnCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCorridaActionPerformed
         CardLayout cl = (CardLayout) JpClienteCorrida.getLayout();
         cl.show(JpClienteCorrida, "Tela de Corrida");
+        DefaultTableModel corridaTabel = (DefaultTableModel) jTCorrida.getModel();
+        while(true){
+            try{
+                if(corrida.partidaEmAdamento()){
+                    corridaTabel.setRowCount(corrida.competidores().size());
+                    List<Volta> voltas = corrida.getVoltas();
+                    if(voltas.isEmpty()){
+                        int i = 0;
+                        //jLabelSessao.setText("Sessão de Corrida: " + voltas.get(0).getQuantidade() + "/" + corrida.quantidadeTotal());
+                        for(Iterator<Volta> it3 = voltas.iterator(); it3.hasNext();){
+                            Volta volta = it3.next();
+                            String nome = volta.getCarro().getPiloto().getNome();
+                            jTCorrida.setValueAt(i, i, 0);
+                            jTCorrida.setValueAt(nome, i, 1);
+                            jTCorrida.setValueAt(volta.getCarro().getEquipe() , i, 2);
+                            jTCorrida.setValueAt(volta.getTempoVolta() , i, 3);
+                            if(corrida.getRecord(nome) != null)
+                                jTCorrida.setValueAt(corrida.getRecord(nome) , i, 4);
+                            else
+                                jTCorrida.setValueAt("00:00" , i, 4);
+                            jTCorrida.setValueAt(volta.getQuantidade() , i, 5);
+                            i++;
+                        }
+                    }    
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Não tem corrida no momento");
+                }
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(null,"Não tem corrida cadastrada");
+            }    
+        }
     }//GEN-LAST:event_btnCorridaActionPerformed
 
     private void JpVoltarQualificaçãoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JpVoltarQualificaçãoActionPerformed
@@ -320,33 +439,43 @@ public class ClientRace extends javax.swing.JFrame {
        cl.show(JpClienteCorrida, "Tela Principal");
     }//GEN-LAST:event_btnVoltarCorridaActionPerformed
 
+    private void jButtonSairHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairHomeActionPerformed
+        try {
+            // TODO add your handling code here:
+            cliente.fecharConexão();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientRace.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonSairHomeActionPerformed
+
+    private void jButtonSairQualiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairQualiActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            cliente.fecharConexão();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientRace.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonSairQualiActionPerformed
+
+    private void jButtonSairClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairClassActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            cliente.fecharConexão();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientRace.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonSairClassActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClientRace.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClientRace.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClientRace.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClientRace.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
+        corrida = new ControllerCorrida();
+        Cliente cliente = new Cliente("10.0.0.133",12345);
+        cliente.executa();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -364,19 +493,22 @@ public class ClientRace extends javax.swing.JFrame {
     private javax.swing.JButton btnCorrida;
     private javax.swing.JButton btnQualificacao;
     private javax.swing.JButton btnVoltarCorrida;
+    private javax.swing.JButton jButtonSairClass;
+    private javax.swing.JButton jButtonSairHome;
+    private javax.swing.JButton jButtonSairQuali;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelAutor;
+    private javax.swing.JLabel jLabelClass;
+    private javax.swing.JLabel jLabelRecord;
+    private javax.swing.JLabel jLabelSessao;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTCorrida;
+    private javax.swing.JTable jTQualificacao;
     // End of variables declaration//GEN-END:variables
 }

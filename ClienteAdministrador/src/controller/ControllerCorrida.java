@@ -17,7 +17,7 @@ import model.Piloto;
  */
 public class ControllerCorrida {
     
-    Corrida corrida;
+    private static Corrida corrida;
     
     
     public Corrida cadastrarCorrida(int voltas){
@@ -27,6 +27,7 @@ public class ControllerCorrida {
     
     public void salvarCorrida(Corrida nova){
         corrida = nova;
+        System.out.println(corrida.isEstado());
     }
     
     public Carro cadastraCompetidor(Carro carro , Piloto piloto){
@@ -42,6 +43,10 @@ public class ControllerCorrida {
     
     public boolean comecouCorrida(){
         return corrida.isEstado();
+    }
+    
+     public void comecarPartida(){
+        corrida.setEstado(true);
     }
     
     public boolean estaNaCorrida(Carro carro){
