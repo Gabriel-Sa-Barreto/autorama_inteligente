@@ -59,7 +59,6 @@ public class Recebedor implements Runnable {
                         Volta volta = pacotes.transformarVolta(pacote, corrida.competidores());
                         if(volta != null){
                             corrida.voltaCompleta(volta);
-                            System.out.println("Recebedor");
                         }
                         break;
                 }

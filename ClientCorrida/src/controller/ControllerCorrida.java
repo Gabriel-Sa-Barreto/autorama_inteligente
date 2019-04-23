@@ -20,27 +20,26 @@ import model.Volta;
  */
 public class ControllerCorrida {
     
-    private Corrida corrida;
+    private static Corrida corrida;
     private static ControllerRecord record = new ControllerRecord(); 
     
     public void receberCorrida(Corrida nova){
 	corrida = nova;
-        System.out.println(corrida.isEstado());
     }
     
     public void voltaCompleta(Volta completada){
-	List<Volta> voltas = corrida.getVoltas();
+	List<Volta> voltas = getVoltas();
         Volta volta;
         LocalDate data = LocalDate.now();
 	if(voltas.isEmpty()){
-            completada.setQuantidade(corrida.getTotaisDeVoltas());
+            completada.setQuantidade(quantidadeTotal());
             voltas.add(completada);
             //record.adicionarRecord(completada, data.toString());
 	}
 	else{
             volta = procurarVolta(voltas , completada);
             if(volta == null){
-                completada.setQuantidade(corrida.getTotaisDeVoltas());
+                completada.setQuantidade(quantidadeTotal());
 		voltas.add(completada);
                 //record.adicionarRecord(completada, data.toString());
             }
@@ -56,7 +55,7 @@ public class ControllerCorrida {
             }	
 	}
         voltas.sort(Comparator.comparingInt( u -> u.getQuantidade()));
-        System.out.println(voltas.size());
+        //System.out.println(voltas.size());
         voltas.forEach(u -> System.out.println( "v id:" + u.getCarro().getId() + " " + "te: " + u.getTempoVolta() + " " + "volt: " + u.getQuantidade()));
         corrida.setVoltas(voltas);
         linhaFinal();
@@ -86,6 +85,10 @@ public class ControllerCorrida {
         corrida.setEstado(false);
     }
     
+    public synchronized int quantidadeTotal(){//
+        return corrida.getTotaisDeVoltas();
+    }
+    
     public void linhaFinal(){
         if(corrida.getCompletadas() == corrida.getTotaisDeVoltas())
             corrida.setEstado(false);
@@ -111,8 +114,16 @@ public class ControllerCorrida {
         return corrida.getCompetidores();
     }
     
-    public boolean partidaEmAdamento(){
+    public synchronized boolean partidaEmAdamento(){ //
         return corrida.isEstado();
+    }
+    
+    public List<Volta> getVoltas(){ 
+        return corrida.getVoltas();
+    }
+    
+    public String getRecord(String piloto){ 
+        return record.recordPiloto(piloto);
     }
     
     public void adicionarCompetidor(Carro carro){
@@ -127,9 +138,10 @@ public class ControllerCorrida {
         record.cadastrarRecordGeral(geral);
     }
     
+    
     private Volta procurarVolta(List<Volta> lista , Volta comparar){
-        for (Iterator<Volta> it = lista.iterator(); it.hasNext();) {
-            Volta volta = it.next();
+        for (Iterator<Volta> it1 = lista.iterator(); it1.hasNext();) {
+            Volta volta = it1.next();
             if(volta.equals(comparar))
                 return volta;
         }
