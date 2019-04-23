@@ -45,9 +45,9 @@ public class ControllerRecord {
         records.forEach(u -> System.out.println("r" + u.getPiloto() + "t" + u.getTempo()));    
     }
     
-    public boolean bateuRecord(Volta volta){
-        for (Iterator<Record> it = records.iterator(); it.hasNext();) {
-            Record prova = it.next();
+    public boolean bateuRecord(Volta volta){ 
+        for (Iterator<Record> it4 = records.iterator(); it4.hasNext();) {
+            Record prova = it4.next();
             if(prova.getPiloto().equals(volta.getCarro().getPiloto().getNome())){
                 if(prova.compareTo(volta.getTempo()) == 1)
                     return true; 
@@ -59,10 +59,10 @@ public class ControllerRecord {
         return true;
     }
     
-    public String recordTempo(String tempo){
-        for (Iterator<Record> it = records.iterator(); it.hasNext();) {
-            Record prova = it.next();
-            if(prova.compareTo(tempo) == 0){
+    public String recordPiloto(String nome){ 
+        for (Iterator<Record> it5 = records.iterator(); it5.hasNext();) {
+            Record prova = it5.next();
+            if(prova.getPiloto().equals(nome)){
                 return prova.getTempo();
             }
         }
