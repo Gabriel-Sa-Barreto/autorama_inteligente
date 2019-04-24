@@ -36,6 +36,7 @@ public class ControllerGerenciador {
     
     public void salvarCarro(Carro novo){ //receber pacote
         carros.add(novo);
+        carros.forEach(u -> System.out.println(u.getId()));
     }
     
     public boolean existeCarro(String id){
@@ -56,6 +57,7 @@ public class ControllerGerenciador {
     
     public void salvarPiloto(Piloto novo){ //receber pacote
         pilotos.add(novo);
+        pilotos.forEach(u -> System.out.println(u.getNome()));
     }
     
     public boolean existePiloto(String nome){
@@ -74,6 +76,7 @@ public class ControllerGerenciador {
     
     public void salvarAdm(Administrador novo){ //receber pacote
         adms.add(novo);
+        adms.forEach(u -> System.out.println(u.getNome()));
     }
     
     public boolean existeAdm(String nome){

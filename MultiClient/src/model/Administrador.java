@@ -52,7 +52,7 @@ public class Administrador {
     
     @Override
     public String toString() {
-       return nome;
+       return nome + ";" + senha;
     }
     
     

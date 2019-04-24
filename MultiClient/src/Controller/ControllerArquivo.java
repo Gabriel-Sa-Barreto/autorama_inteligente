@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import model.Administrador;
 import model.Carro;
@@ -23,71 +24,79 @@ import model.Record;
  */
 public class ControllerArquivo {
     
-    public static void escreverPiloto(String caminho , List<Piloto> pilotos) throws IOException{
-        BufferedWriter write = new BufferedWriter(new FileWriter(caminho));
-        String linha = "";
-        for(Piloto piloto : pilotos){
-            write.append(piloto.toString()+ "\n");
-        }
+    public static void escreverPiloto(String caminho , Piloto piloto) throws IOException{
+        BufferedWriter write = new BufferedWriter(new FileWriter(caminho,true));
+        write.append(piloto.toString()+ "\n");
         write.close();
     }
     
-    public static void escreverCarro(String caminho , List<Carro> carros) throws IOException{
-        BufferedWriter write = new BufferedWriter(new FileWriter(caminho));
-        String linha = "";
-        for(Carro carro : carros){
-            write.append(carro.toString()+ "\n");
-        }
+    public static void escreverCarro(String caminho , Carro carro) throws IOException{
+        BufferedWriter write = new BufferedWriter(new FileWriter(caminho,true));
+        write.append(carro.toString()+ "\n");
         write.close();
     }
     
-    public static void escreverAdm(String caminho , List<Administrador> adms) throws IOException{
-        BufferedWriter write = new BufferedWriter(new FileWriter(caminho));
-        String linha = "";
-        for(Administrador adm : adms){
-            write.append(adms.toString()+ "\n");
-        }
+    public static void escreverAdm(String caminho , Administrador adm) throws IOException{
+        BufferedWriter write = new BufferedWriter(new FileWriter(caminho , true));
+        write.append(adm.toString()+ "\n");
         write.close();
     }
     
-    public static void leitorPiloto(String caminho , List<Piloto> pilotos) throws FileNotFoundException, IOException{
+    public static void removerPiloto(String caminho , Piloto piloto) throws IOException{
+        ArrayList<Piloto> pilotos = new ArrayList();
         BufferedReader read = new BufferedReader(new FileReader(caminho));
         String linha = "";
-        while(true){
-            if(linha != null){
-                pilotos.add(salvarPiloto(linha));
-            }
-            else
-                break;
-            linha = read.readLine();
+        while((linha = read.readLine()) != null){
+            pilotos.add(salvarPiloto(linha));
+        }
+        read.close();
+        pilotos.removeIf( u -> u.getNome().equals(piloto.getNome()));
+        BufferedWriter write = new BufferedWriter(new FileWriter(caminho , false));
+        for(Piloto inserir : pilotos){
+            write.append(inserir.toString() + "\n");
+        }
+        write.close();
+    }
+    
+    public static void removerCarro(String caminho , String id) throws IOException{
+        ArrayList<Carro> carros = new ArrayList();
+        BufferedReader read = new BufferedReader(new FileReader(caminho));
+        String linha = "";
+        while((linha = read.readLine()) != null){
+            carros.add(salvarCarro(linha));
+        }
+        read.close();
+        carros.removeIf( u -> u.getId().equals(id));
+        BufferedWriter write = new BufferedWriter(new FileWriter(caminho , false));
+        for(Carro inserir : carros){
+            write.append(inserir.toString() + "\n");
+        }
+        write.close();
+    }
+    
+    public static void leitorPiloto(String caminho , ControllerGerenciador gerenciador) throws FileNotFoundException, IOException{
+        BufferedReader read = new BufferedReader(new FileReader(caminho));
+        String linha = "";
+        while((linha = read.readLine()) != null){
+            gerenciador.cadastrarPiloto(salvarPiloto(linha));
         }
         read.close();
     }
     
-    public static void leitorCarro(String caminho , List<Carro> carros) throws FileNotFoundException, IOException{
+    public static void leitorCarro(String caminho , ControllerGerenciador gerenciador) throws FileNotFoundException, IOException{
         BufferedReader read = new BufferedReader(new FileReader(caminho));
         String linha = "";
-        while(true){
-            if(linha != null){
-                carros.add(salvarCarro(linha));
-            }
-            else
-                break;
-            linha = read.readLine();
+        while((linha = read.readLine()) != null){
+            gerenciador.cadastrarCarro(salvarCarro(linha));
         }
         read.close();
     }
     
-    public static void leitorAdm(String caminho , List<Administrador> adms) throws FileNotFoundException, IOException{
+    public static void leitorAdm(String caminho , ControllerGerenciador gerenciador) throws FileNotFoundException, IOException{
         BufferedReader read = new BufferedReader(new FileReader(caminho));
         String linha = "";
-        while(true){
-            if(linha != null){
-                adms.add(salvarAdm(linha));
-            }
-            else
-                break;
-            linha = read.readLine();
+        while((linha = read.readLine()) != null){
+            gerenciador.cadastrarAdministrador(salvarAdm(linha));
         }
         read.close();
     } 

@@ -5,6 +5,8 @@
  */
 package multiclient;
 
+import Controller.ControllerArquivo;
+import Controller.ControllerGerenciador;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -21,11 +23,15 @@ public class Servidor implements Runnable {
     private int porta;
     private List<PrintStream> clientes;
     private ServerSocket servidor;
+    private static ControllerGerenciador gerenciador = new ControllerGerenciador();
     
     public Servidor (int porta) throws IOException{
         this.porta = porta; //Porta ao qual o servidor irá se associar.
         this.clientes = new ArrayList<PrintStream>();
         criarConexão();
+        ControllerArquivo.leitorAdm("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\adms.txt",gerenciador);
+        ControllerArquivo.leitorCarro("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\carros.txt",gerenciador);
+        ControllerArquivo.leitorPiloto("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\pilotos.txt",gerenciador);
         new Thread(this).start(); //executa a thread do servidor 
     }
     
@@ -58,7 +64,7 @@ public class Servidor implements Runnable {
             // cria tratador de cliente numa nova thread
             TrataCliente tc = null;
             try {
-               tc = new TrataCliente(cliente.getInputStream(), this);
+               tc = new TrataCliente(cliente.getInputStream(), this , gerenciador);
             } catch (IOException ex) {
                ex.printStackTrace();
             }

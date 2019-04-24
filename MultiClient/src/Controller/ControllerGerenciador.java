@@ -5,12 +5,14 @@
  */
 package Controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import model.Administrador;
 import model.Carro;
 import model.Piloto;
+import multiclient.Servidor;
 
 /**
  *
@@ -28,11 +30,8 @@ public class ControllerGerenciador {
         adms = new ArrayList<>();
     }
     
-    
-    
     public synchronized void cadastrarCarro(Carro novoCarro){
         carros.add(novoCarro); //salva o novo carro em sua respectiva lista
-        carros.forEach(u -> System.out.println(u.getId()));
     }
     
     public boolean existeCarro(String id){
@@ -62,7 +61,7 @@ public class ControllerGerenciador {
     
     public synchronized void cadastrarAdministrador(Administrador adm){
         adms.add(adm); //salva um novo Adm em sua respectiva lista
-        adms.forEach(u -> System.out.println(u.getNome()));
+        //adms.forEach(u -> System.out.println(u.getNome()));
     }
     
     public boolean existeAdm(String nome){
@@ -101,5 +100,15 @@ public class ControllerGerenciador {
         carros.removeIf( u -> u.getId().equals(id));
     }
     
-    
+    public void atualizarCliente(Servidor servidor) throws IOException{
+        for(Carro carro : carros){
+            servidor.distribuiMensagem("11;"+carro.toString());
+        }
+        for(Piloto piloto : pilotos){
+            servidor.distribuiMensagem("12;"+piloto.toString());
+        }
+        for(Administrador adm : adms){
+            servidor.distribuiMensagem("13;"+adm.toString());
+        }
+    }
 }
