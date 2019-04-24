@@ -36,7 +36,7 @@ public class Record {
 
     @Override
     public String toString() {
-        return data + ";" + tempo + ";";
+        return data + ";" + tempo;
     }
 
     public int compareTo(String tempo) {
@@ -64,5 +64,5 @@ public class Record {
         }
     }
     
-    
+   
 }
