@@ -33,7 +33,7 @@ public class Qualificacao implements Runnable {
                 if(corrida.partidaEmAdamento()){
                     qualificacao.setRowCount(corrida.competidores().size());
                     List<Volta> voltas = corrida.getVoltas();
-                    //synchronized(voltas){
+                    //synchronized(voltas){ não precisa
                         if(!voltas.isEmpty()){
                             int i = 0;
                             //jLabelSessao.setText("Sessão de Qualificacao: " + voltas.get(0).getQuantidade() + "/" + corrida.quantidadeTotal());
