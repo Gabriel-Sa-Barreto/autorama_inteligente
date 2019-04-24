@@ -7,6 +7,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import model.Record;
@@ -18,31 +19,33 @@ import model.Volta;
  */
 public class ControllerRecord {
     
-    List<Record> records;
+    private static List<Record> records;
     Record geral;
 
     public ControllerRecord() {
-        records = new ArrayList<>();
+        records = Collections.synchronizedList(new ArrayList<Record>());
     }
     
     public void adicionarRecord(Volta volta , String data){
         Record adicionar = new Record(data , volta.getTempoVolta() , volta.getCarro().getPiloto().getNome());
-        if(records.isEmpty()){
-            records.add(adicionar);
-        }
-        else{
-            if(bateuRecord(volta)){
-                records.removeIf(u -> u.getPiloto().equals(volta.getCarro().getPiloto().getNome()));
+        synchronized(records()){
+            if(records.isEmpty()){
                 records.add(adicionar);
             }
-            /*if(bateuRecordGeral(volta.getTempo())){
-                System.out.println("Aqui3");
-                geral.setData(data);
-                geral.setPiloto(volta.getCarro().getPiloto().getNome());
-                geral.setTempo(volta.getTempo());
-            }*/
-        }
-        records.forEach(u -> System.out.println("r" + u.getPiloto() + "t" + u.getTempo()));    
+            else{
+                if(bateuRecord(volta)){
+                    records.removeIf(u -> u.getPiloto().equals(volta.getCarro().getPiloto().getNome()));
+                    records.add(adicionar);
+                }
+                /*if(bateuRecordGeral(volta.getTempo())){
+                    System.out.println("Aqui3");
+                    geral.setData(data);
+                    geral.setPiloto(volta.getCarro().getPiloto().getNome());
+                    geral.setTempo(volta.getTempo());
+                }*/
+            }
+            records.forEach(u -> System.out.println("r" + u.getPiloto() + "t" + u.getTempo()));
+        }    
     }
     
     public boolean bateuRecord(Volta volta){ 
@@ -60,10 +63,12 @@ public class ControllerRecord {
     }
     
     public String recordPiloto(String nome){ 
-        for (Iterator<Record> it5 = records.iterator(); it5.hasNext();) {
-            Record prova = it5.next();
-            if(prova.getPiloto().equals(nome)){
-                return prova.getTempo();
+        synchronized(records()){
+            for (Iterator<Record> it5 = records.iterator(); it5.hasNext();) {
+                Record prova = it5.next();
+                if(prova.getPiloto().equals(nome)){
+                    return prova.getTempo();
+                }
             }
         }
         return null;

@@ -6,6 +6,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ public class Corrida {
     public Corrida(int voltas) {
         this.totaisDeVoltas = voltas;
         competidores = new ArrayList<>();
-        this.voltas = new ArrayList<>();
+        this.voltas = Collections.synchronizedList(new ArrayList<Volta>());
         comecou = false;
         completadas = 0;
         pause = false;

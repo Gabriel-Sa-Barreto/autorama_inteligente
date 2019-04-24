@@ -9,12 +9,15 @@ import cliente.Cliente;
 import controller.ControllerCorrida;
 import java.awt.CardLayout;
 import java.io.IOException;
+import static java.lang.Thread.sleep;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.ClassCorrida;
+import model.Qualificacao;
 import model.Record;
 import model.Volta;
 
@@ -25,8 +28,9 @@ import model.Volta;
 public class ClientRace extends javax.swing.JFrame {
     
     public static ControllerCorrida corrida = null;
-    Cliente cliente;
-    
+    private Cliente cliente;
+    private Qualificacao threadQualificacao;
+    private ClassCorrida threadRace;
     /**
      * Creates new form ClientRace
      */
@@ -50,7 +54,7 @@ public class ClientRace extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButtonSairHome = new javax.swing.JButton();
-        JpQualificação = new javax.swing.JPanel();
+        JpQualificacao = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -147,8 +151,8 @@ public class ClientRace extends javax.swing.JFrame {
 
         JpClienteCorrida.add(JpMenu, "Tela Principal");
 
-        JpQualificação.setBackground(java.awt.Color.lightGray);
-        JpQualificação.setBorder(new javax.swing.border.MatteBorder(null));
+        JpQualificacao.setBackground(java.awt.Color.lightGray);
+        JpQualificacao.setBorder(new javax.swing.border.MatteBorder(null));
 
         jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabel3.setText("Sessão de Qualificação:");
@@ -192,24 +196,24 @@ public class ClientRace extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout JpQualificaçãoLayout = new javax.swing.GroupLayout(JpQualificação);
-        JpQualificação.setLayout(JpQualificaçãoLayout);
-        JpQualificaçãoLayout.setHorizontalGroup(
-            JpQualificaçãoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(JpQualificaçãoLayout.createSequentialGroup()
+        javax.swing.GroupLayout JpQualificacaoLayout = new javax.swing.GroupLayout(JpQualificacao);
+        JpQualificacao.setLayout(JpQualificacaoLayout);
+        JpQualificacaoLayout.setHorizontalGroup(
+            JpQualificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JpQualificacaoLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(JpQualificaçãoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(JpQualificaçãoLayout.createSequentialGroup()
+                .addGroup(JpQualificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(JpQualificacaoLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 813, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JpVoltarQualificação, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE))
-                    .addGroup(JpQualificaçãoLayout.createSequentialGroup()
-                        .addGroup(JpQualificaçãoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(JpQualificaçãoLayout.createSequentialGroup()
+                    .addGroup(JpQualificacaoLayout.createSequentialGroup()
+                        .addGroup(JpQualificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(JpQualificacaoLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel6))
-                            .addGroup(JpQualificaçãoLayout.createSequentialGroup()
+                            .addGroup(JpQualificacaoLayout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel5)))
@@ -217,22 +221,22 @@ public class ClientRace extends javax.swing.JFrame {
                         .addComponent(jButtonSairQuali)))
                 .addContainerGap())
         );
-        JpQualificaçãoLayout.setVerticalGroup(
-            JpQualificaçãoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(JpQualificaçãoLayout.createSequentialGroup()
-                .addGroup(JpQualificaçãoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(JpQualificaçãoLayout.createSequentialGroup()
+        JpQualificacaoLayout.setVerticalGroup(
+            JpQualificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JpQualificacaoLayout.createSequentialGroup()
+                .addGroup(JpQualificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(JpQualificacaoLayout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addGroup(JpQualificaçãoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(JpQualificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(JpQualificaçãoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(JpQualificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(JpQualificaçãoLayout.createSequentialGroup()
+                    .addGroup(JpQualificacaoLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButtonSairQuali)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -240,7 +244,7 @@ public class ClientRace extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        JpClienteCorrida.add(JpQualificação, "Tela de Qualificação");
+        JpClienteCorrida.add(JpQualificacao, "Tela de Qualificação");
 
         JpCorrida.setBackground(java.awt.Color.lightGray);
         JpCorrida.setBorder(new javax.swing.border.MatteBorder(null));
@@ -358,29 +362,34 @@ public class ClientRace extends javax.swing.JFrame {
     private void btnQualificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQualificacaoActionPerformed
         CardLayout cl = (CardLayout) JpClienteCorrida.getLayout();
         cl.show(JpClienteCorrida, "Tela de Qualificação");
-        DefaultTableModel qualificacao = (DefaultTableModel) jTQualificacao.getModel();
+        
+        threadQualificacao(); //inicia a sessão de qualificação
+        /*DefaultTableModel qualificacao = (DefaultTableModel) jTQualificacao.getModel();
         while(true){
             try{
                 if(corrida.partidaEmAdamento()){
                     qualificacao.setRowCount(corrida.competidores().size());
                     List<Volta> voltas = corrida.getVoltas();
-                    if(!voltas.isEmpty()){
-                        int i = 0;
-                        //jLabelSessao.setText("Sessão de Qualificacao: " + voltas.get(0).getQuantidade() + "/" + corrida.quantidadeTotal());
-                        for(Iterator<Volta> it2 = voltas.iterator(); it2.hasNext();){
-                            Volta volta = it2.next();
-                            String nome = volta.getCarro().getPiloto().getNome();
-                            jTQualificacao.setValueAt(i, i, 0);
-                            jTQualificacao.setValueAt(nome, i, 1);
-                            jTQualificacao.setValueAt(volta.getCarro().getEquipe() , i, 2);
-                            if(corrida.getRecord(nome) != null)
-                                jTQualificacao.setValueAt(corrida.getRecord(nome) , i, 3);
-                            else
-                                jTQualificacao.setValueAt("00:00" , i, 3);
-                            jTQualificacao.setValueAt(volta.getQuantidade() , i, 4);
-                            i++;
+                    //synchronized(voltas){
+                        if(!voltas.isEmpty()){
+                            int i = 0;
+                            //jLabelSessao.setText("Sessão de Qualificacao: " + voltas.get(0).getQuantidade() + "/" + corrida.quantidadeTotal());
+                            for(Iterator<Volta> it2 = voltas.iterator(); it2.hasNext();){
+                                Volta volta = it2.next();
+                                String nome = volta.getCarro().getPiloto().getNome();
+                                jTQualificacao.setValueAt(i, i, 0);
+                                jTQualificacao.setValueAt(nome, i, 1);
+                                jTQualificacao.setValueAt(volta.getCarro().getEquipe() , i, 2);
+                                if(corrida.getRecord(nome) != null)
+                                    jTQualificacao.setValueAt(corrida.getRecord(nome) , i, 3);
+                                else
+                                    jTQualificacao.setValueAt("00:00" , i, 3);
+                                jTQualificacao.setValueAt(volta.getQuantidade() , i, 4);
+                                i++;
+                            }
                         }
-                    }    
+                    //}
+                    
                 }
                 else{
                     JOptionPane.showMessageDialog(null,"Não tem corrida no momento");
@@ -389,44 +398,48 @@ public class ClientRace extends javax.swing.JFrame {
             }catch(Exception ex){
                 JOptionPane.showMessageDialog(null,ex);
             }    
-        }
+        }*/
     }//GEN-LAST:event_btnQualificacaoActionPerformed
 
     private void btnCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCorridaActionPerformed
         CardLayout cl = (CardLayout) JpClienteCorrida.getLayout();
         cl.show(JpClienteCorrida, "Tela de Corrida");
-        DefaultTableModel corridaTabel = (DefaultTableModel) jTCorrida.getModel();
+        threadCorrida();
+        /*DefaultTableModel corridaTabel = (DefaultTableModel) jTCorrida.getModel();
         while(true){
             try{
                 if(corrida.partidaEmAdamento()){
                     corridaTabel.setRowCount(corrida.competidores().size());
                     List<Volta> voltas = corrida.getVoltas();
-                    if(voltas.isEmpty()){
-                        int i = 0;
-                        //jLabelSessao.setText("Sessão de Corrida: " + voltas.get(0).getQuantidade() + "/" + corrida.quantidadeTotal());
-                        for(Iterator<Volta> it3 = voltas.iterator(); it3.hasNext();){
-                            Volta volta = it3.next();
-                            String nome = volta.getCarro().getPiloto().getNome();
-                            jTCorrida.setValueAt(i, i, 0);
-                            jTCorrida.setValueAt(nome, i, 1);
-                            jTCorrida.setValueAt(volta.getCarro().getEquipe() , i, 2);
-                            jTCorrida.setValueAt(volta.getTempoVolta() , i, 3);
-                            if(corrida.getRecord(nome) != null)
-                                jTCorrida.setValueAt(corrida.getRecord(nome) , i, 4);
-                            else
-                                jTCorrida.setValueAt("00:00" , i, 4);
-                            jTCorrida.setValueAt(volta.getQuantidade() , i, 5);
-                            i++;
-                        }
-                    }    
+                    synchronized(voltas){
+                        if(voltas.isEmpty()){
+                            int i = 0;
+                            jLabelSessao.setText("Sessão de Corrida: " + voltas.get(0).getQuantidade() + "/" + corrida.quantidadeTotal());
+                            for(Iterator<Volta> it3 = voltas.iterator(); it3.hasNext();){
+                                Volta volta = it3.next();
+                                String nome = volta.getCarro().getPiloto().getNome();
+                                jTCorrida.setValueAt(i+1, i, 0);
+                                jTCorrida.setValueAt(nome, i, 1);
+                                jTCorrida.setValueAt(volta.getCarro().getEquipe() , i, 2);
+                                jTCorrida.setValueAt(volta.getTempoVolta() , i, 3);
+                                if(corrida.getRecord(nome) != null)
+                                    jTCorrida.setValueAt(corrida.getRecord(nome) , i, 4);
+                                else
+                                    jTCorrida.setValueAt("00:00" , i, 4);
+                                jTCorrida.setValueAt(volta.getQuantidade() , i, 5);
+                                i++;
+                            }
+                        }    
+                    }
                 }
                 else{
                     JOptionPane.showMessageDialog(null,"Não tem corrida no momento");
                 }
+                sleep(200);
             }catch(Exception ex){
                 JOptionPane.showMessageDialog(null,"Não tem corrida cadastrada");
             }    
-        }
+        }*/
     }//GEN-LAST:event_btnCorridaActionPerformed
 
     private void JpVoltarQualificaçãoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JpVoltarQualificaçãoActionPerformed
@@ -467,28 +480,38 @@ public class ClientRace extends javax.swing.JFrame {
             Logger.getLogger(ClientRace.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonSairClassActionPerformed
-
+    
+    private void threadQualificacao(){
+        threadQualificacao = new Qualificacao(corrida, jTQualificacao);
+        new Thread(threadQualificacao,"qualificacao").start();
+    }
+    
+    private void threadCorrida(){
+        threadRace = new ClassCorrida(corrida, jTCorrida);
+        new Thread(threadRace,"corrida").start();
+    }
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) throws IOException {
         /* Set the Nimbus look and feel */
         corrida = new ControllerCorrida();
-        Cliente cliente = new Cliente("10.0.0.133",12345);
-        cliente.executa();
+        Cliente cliente = new Cliente("192.168.25.5",12345);
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ClientRace().setVisible(true);
             }
         });
+        cliente.executa();
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JpClienteCorrida;
     private javax.swing.JPanel JpCorrida;
     private javax.swing.JPanel JpMenu;
-    private javax.swing.JPanel JpQualificação;
+    private javax.swing.JPanel JpQualificacao;
     private javax.swing.JButton JpVoltarQualificação;
     private javax.swing.JButton btnCorrida;
     private javax.swing.JButton btnQualificacao;

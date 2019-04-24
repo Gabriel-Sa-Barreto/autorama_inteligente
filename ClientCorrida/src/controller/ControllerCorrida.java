@@ -21,44 +21,53 @@ import model.Volta;
 public class ControllerCorrida {
     
     private static Corrida corrida;
-    private static ControllerRecord record = new ControllerRecord(); 
+    private static ControllerRecord record = new ControllerRecord();
+    private static boolean pacoteSensor = false;
     
     public void receberCorrida(Corrida nova){
 	corrida = nova;
     }
+
+    public static boolean isPacoteSensor() {
+        return pacoteSensor;
+    }
+
+    public static void setPacoteSensor(boolean pacoteSensor) {
+        ControllerCorrida.pacoteSensor = pacoteSensor;
+    }
     
     public void voltaCompleta(Volta completada){
-	List<Volta> voltas = getVoltas();
-        Volta volta;
-        LocalDate data = LocalDate.now();
-	if(voltas.isEmpty()){
-            completada.setQuantidade(quantidadeTotal());
-            voltas.add(completada);
-            //record.adicionarRecord(completada, data.toString());
-	}
-	else{
-            volta = procurarVolta(voltas , completada);
-            if(volta == null){
+            List<Volta> voltas = getVoltas();
+            Volta volta;
+            LocalDate data = LocalDate.now();
+            if(voltas.isEmpty()){
                 completada.setQuantidade(quantidadeTotal());
-		voltas.add(completada);
+                voltas.add(completada);
                 //record.adicionarRecord(completada, data.toString());
             }
             else{
-                if(deuUmaVolta(completada , volta)){
-                    completada.setTempoVolta(tempoVolta(volta , completada));
-                    completada.setQuantidade(volta.getQuantidade() - 1);
-                    corrida.setCompletadas(volta.getQuantidade() - 1);
-                    voltas.removeIf(u -> u.equals(completada));
+                volta = procurarVolta(voltas , completada);
+                if(volta == null){
+                    completada.setQuantidade(quantidadeTotal());
                     voltas.add(completada);
-                    record.adicionarRecord(completada, data.toString());
+                    //record.adicionarRecord(completada, data.toString());
                 }
-            }	
-	}
-        voltas.sort(Comparator.comparingInt( u -> u.getQuantidade()));
-        //System.out.println(voltas.size());
-        voltas.forEach(u -> System.out.println( "v id:" + u.getCarro().getId() + " " + "te: " + u.getTempoVolta() + " " + "volt: " + u.getQuantidade()));
-        corrida.setVoltas(voltas);
-        linhaFinal();
+                else{
+                    if(deuUmaVolta(completada , volta)){
+                        completada.setTempoVolta(tempoVolta(volta , completada));
+                        completada.setQuantidade(volta.getQuantidade() - 1);
+                        corrida.setCompletadas(volta.getQuantidade() - 1);
+                        voltas.removeIf(u -> u.equals(completada));
+                        voltas.add(completada);
+                        record.adicionarRecord(completada, data.toString());
+                    }
+                }	
+            }
+            voltas.sort(Comparator.comparingInt( u -> u.getQuantidade()));
+            System.out.println(voltas.size());
+            voltas.forEach(u -> System.out.println( "v id:" + u.getCarro().getId() + " " + "te: " + u.getTempoVolta() + " " + "volt: " + u.getQuantidade()));
+            corrida.setVoltas(voltas);
+            linhaFinal();
     }
     
     private boolean deuUmaVolta(Volta teste , Volta anterior){
@@ -85,12 +94,12 @@ public class ControllerCorrida {
         corrida.setEstado(false);
     }
     
-    public synchronized int quantidadeTotal(){//
+    public int quantidadeTotal(){
         return corrida.getTotaisDeVoltas();
     }
     
     public void linhaFinal(){
-        if(corrida.getCompletadas() == corrida.getTotaisDeVoltas())
+        if(corrida.getCompletadas() == 0)
             corrida.setEstado(false);
     }
     
@@ -107,18 +116,17 @@ public class ControllerCorrida {
     
     public void comecarPartida(){
         corrida.setEstado(true);
-        System.out.println(corrida.isEstado());
     }
     
     public List<Carro> competidores(){
         return corrida.getCompetidores();
     }
     
-    public synchronized boolean partidaEmAdamento(){ //
+    public boolean partidaEmAdamento(){ 
         return corrida.isEstado();
     }
     
-    public List<Volta> getVoltas(){ 
+    public List<Volta> getVoltas(){
         return corrida.getVoltas();
     }
     

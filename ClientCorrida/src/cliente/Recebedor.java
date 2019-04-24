@@ -5,6 +5,9 @@ import controller.ControllerPacotes;
 import controller.ControllerRecord;
 import model.Volta;
 import java.io.*;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -58,12 +61,21 @@ public class Recebedor implements Runnable {
                     case "41":
                         Volta volta = pacotes.transformarVolta(pacote, corrida.competidores());
                         if(volta != null){
+                            ControllerCorrida.setPacoteSensor(true);
+                            Thread.sleep(500);
                             corrida.voltaCompleta(volta);
+                            ControllerCorrida.setPacoteSensor(false);
                         }
                         break;
                 }
             }catch(Exception ex){
                 System.out.println(ex.toString());
+            }
+            
+            try {
+                sleep(200);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Recebedor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
