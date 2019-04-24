@@ -17,7 +17,7 @@ import model.Piloto;
  */
 public class ControllerCorrida {
     
-    private static Corrida corrida;
+    private static Corrida corrida = null;
     
     
     public Corrida cadastrarCorrida(int voltas){
@@ -30,9 +30,12 @@ public class ControllerCorrida {
         System.out.println(corrida.isEstado());
     }
     
-     /*Método que associa um carro ao seu piloto será enviado para uma corrida*/
+     /*Método que associa um carro ao seu piloto que será enviado para uma corrida*/
     public Carro cadastraCompetidor(Carro carro , Piloto piloto){
-            carro.setPiloto(piloto);
+            carro.setPiloto(piloto); //associação de um piloto ao carro
+            if(estaNaCorrida(carro)){//verifica se já está cadastrado na corrida
+                return null;
+            }
             return carro;
     }
     

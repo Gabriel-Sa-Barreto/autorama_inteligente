@@ -56,10 +56,9 @@ public class Recebedor implements Runnable {
                         gerenciador.removerCarro(pacotes.transformarCarro(pacote).getId());
                         break;
                     case "30"://salvar corrida
-                        System.out.println("foi");
                         corrida.salvarCorrida(pacotes.transformarCorrida(pacote));
                         break;
-                    case "31":
+                    case "31"://aviso que uma corrida começou
                         corrida.comecarPartida();
                         break;
                     case "32"://salvar competidor
