@@ -8,6 +8,8 @@ import clientAdm.Cliente;
 import controller.*;
 import java.awt.CardLayout;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.*;
@@ -26,8 +28,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form TelaPrincipal
      */
-    public TelaPrincipal() {
+    public TelaPrincipal() throws IOException {
         initComponents();
+        mostrarMenuPrincipal(false);
+        conectarCliente();
     }
 
     /**
@@ -40,6 +44,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         JpPrincipal = new javax.swing.JPanel();
+        telaLogin = new javax.swing.JPanel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        userAdmLogin = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        senhaAdmLogin = new javax.swing.JPasswordField();
+        loginAdm = new javax.swing.JButton();
         JpHome = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
@@ -92,6 +105,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         escolherPiloto = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         escolherCarro = new javax.swing.JTable();
+        jLabel28 = new javax.swing.JLabel();
         JpRank = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -103,9 +117,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         reiniciarCorrida = new javax.swing.JButton();
         pilotosCad = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        verPilotosCadastrados = new javax.swing.JTable();
         jLabel19 = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        menuPrincipal = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         cadAdm = new javax.swing.JMenuItem();
         CadCarro = new javax.swing.JMenuItem();
@@ -125,11 +139,82 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cliente Administrador");
-        setPreferredSize(new java.awt.Dimension(750, 800));
         setResizable(false);
 
         JpPrincipal.setPreferredSize(new java.awt.Dimension(821, 710));
         JpPrincipal.setLayout(new java.awt.CardLayout());
+
+        telaLogin.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cadAdm.png"))); // NOI18N
+
+        jLabel24.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel24.setText("Login");
+
+        jLabel26.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel26.setText("Usuário:");
+
+        jLabel27.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel27.setText("Senha:");
+
+        loginAdm.setText("Login");
+        loginAdm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginAdmActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout telaLoginLayout = new javax.swing.GroupLayout(telaLogin);
+        telaLogin.setLayout(telaLoginLayout);
+        telaLoginLayout.setHorizontalGroup(
+            telaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(telaLoginLayout.createSequentialGroup()
+                .addGroup(telaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(telaLoginLayout.createSequentialGroup()
+                        .addGap(360, 360, 360)
+                        .addComponent(jLabel23))
+                    .addGroup(telaLoginLayout.createSequentialGroup()
+                        .addGap(370, 370, 370)
+                        .addComponent(jLabel24))
+                    .addGroup(telaLoginLayout.createSequentialGroup()
+                        .addGroup(telaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(telaLoginLayout.createSequentialGroup()
+                                .addGap(306, 306, 306)
+                                .addComponent(jLabel25))
+                            .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(telaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(userAdmLogin)
+                            .addComponent(senhaAdmLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)))
+                    .addGroup(telaLoginLayout.createSequentialGroup()
+                        .addGap(372, 372, 372)
+                        .addComponent(loginAdm, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(272, Short.MAX_VALUE))
+        );
+        telaLoginLayout.setVerticalGroup(
+            telaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(telaLoginLayout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(jLabel23)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel24)
+                .addGap(38, 38, 38)
+                .addGroup(telaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(userAdmLogin))
+                .addGap(25, 25, 25)
+                .addGroup(telaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27)
+                    .addComponent(senhaAdmLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(loginAdm, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel25)
+                .addGap(322, 322, 322))
+        );
+
+        JpPrincipal.add(telaLogin, "tela de login");
 
         jLabel30.setFont(new java.awt.Font("Ubuntu Condensed", 1, 48)); // NOI18N
         jLabel30.setText("Autorama Inteligente ");
@@ -215,12 +300,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addGroup(jpCardCarroLayout.createSequentialGroup()
                             .addGap(59, 59, 59)
                             .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jpCardCarroLayout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addGap(7, 7, 7))
-                                .addGroup(jpCardCarroLayout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addGap(7, 7, 7)))
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel6))
+                            .addGap(7, 7, 7)
                             .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(idCarro, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
                                 .addComponent(equipeCarro)))
@@ -537,6 +619,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         escolherCarro.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(escolherCarro);
 
+        jLabel28.setText("Primeiro clique em \"Criar\" para cadastrar uma corrida.");
+
         javax.swing.GroupLayout jpCriarCorridaLayout = new javax.swing.GroupLayout(jpCriarCorrida);
         jpCriarCorrida.setLayout(jpCriarCorridaLayout);
         jpCriarCorridaLayout.setHorizontalGroup(
@@ -549,7 +633,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addGroup(jpCriarCorridaLayout.createSequentialGroup()
                         .addGap(85, 85, 85)
                         .addGroup(jpCriarCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel17)
+                            .addGroup(jpCriarCorridaLayout.createSequentialGroup()
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel28))
                             .addGroup(jpCriarCorridaLayout.createSequentialGroup()
                                 .addGroup(jpCriarCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel20)
@@ -570,7 +657,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                                         .addComponent(criarCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(6, 6, 6))
                                 .addComponent(jLabel22)))))
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCriarCorridaLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel14)
@@ -592,7 +679,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(jLabel21)
                     .addComponent(voltasQualificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel17)
+                .addGroup(jpCriarCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel28))
                 .addGap(3, 3, 3)
                 .addComponent(jLabel22)
                 .addGap(12, 12, 12)
@@ -727,15 +816,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         JpPrincipal.add(JpgerenciarCorrida, "Gerenciar Corrida");
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        verPilotosCadastrados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nome", "Equipe", "Volta mais rápida"
+                "Nome", "Volta mais rápida"
             }
-        ));
-        jScrollPane4.setViewportView(jTable4);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        verPilotosCadastrados.getTableHeader().setReorderingAllowed(false);
+        jScrollPane4.setViewportView(verPilotosCadastrados);
 
         jLabel19.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel19.setText("Pilotos Cadastrados");
@@ -761,13 +859,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel19)
                 .addGap(44, 44, 44)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
 
         JpPrincipal.add(pilotosCad, "Pilotos Cadastrados");
 
-        jMenuBar1.setMaximumSize(new java.awt.Dimension(120, 32769));
-        jMenuBar1.setMinimumSize(new java.awt.Dimension(120, 15));
+        menuPrincipal.setMaximumSize(new java.awt.Dimension(120, 32769));
+        menuPrincipal.setMinimumSize(new java.awt.Dimension(120, 15));
 
         jMenu1.setText("Cadastro");
 
@@ -798,7 +896,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(cadPiloto);
 
-        jMenuBar1.add(jMenu1);
+        menuPrincipal.add(jMenu1);
 
         pilotosCadastrados.setText("Corrida");
 
@@ -829,7 +927,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         pilotosCadastrados.add(pilotosRegisters);
 
-        jMenuBar1.add(pilotosCadastrados);
+        menuPrincipal.add(pilotosCadastrados);
 
         jMenu4.setText("Remover");
 
@@ -851,7 +949,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu4.add(removeCarro);
 
-        jMenuBar1.add(jMenu4);
+        menuPrincipal.add(jMenu4);
 
         rank.setText("Rank");
 
@@ -864,7 +962,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         rank.add(visualizarRank);
 
-        jMenuBar1.add(rank);
+        menuPrincipal.add(rank);
 
         outrasOpcoes.setText("Outras..");
         outrasOpcoes.addActionListener(new java.awt.event.ActionListener() {
@@ -891,9 +989,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         outrasOpcoes.add(logout);
 
-        jMenuBar1.add(outrasOpcoes);
+        menuPrincipal.add(outrasOpcoes);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -946,6 +1044,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void removeCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCarroActionPerformed
         CardLayout cl = (CardLayout) JpPrincipal.getLayout();
         cl.show(JpPrincipal, "Remover carro");
+        
+        List<Carro> carrosCadastrados    = gerenciador.getCarros();
+        DefaultTableModel  mostrarCarros = (DefaultTableModel) removeCar.getModel();
+        gerenciador.limpaTabela(removeCar);
+        synchronized(carrosCadastrados){
+            //iterador para percorrer a lista e mostrar os carros cadastrados
+            for (Iterator<Carro> it = carrosCadastrados.iterator(); it.hasNext();) {
+                Carro car = it.next();
+                Object[] dados = {car.getId(), car.getEquipe(), car.getNumero()};
+                mostrarCarros.addRow(dados); //adiciona nova linha na tabela de carros cadastrados.
+            }
+        }
     }//GEN-LAST:event_removeCarroActionPerformed
 
     private void removePilotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removePilotoActionPerformed
@@ -956,6 +1066,36 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void cadCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadCorridaActionPerformed
         CardLayout cl = (CardLayout) JpPrincipal.getLayout();
         cl.show(JpPrincipal, "Cadastrar corrida");
+        
+        List<Carro> carrosCadastrados    = gerenciador.getCarros(); //lista de carros cadastrados
+        DefaultTableModel  mostrar = (DefaultTableModel) escolherCarro.getModel();
+        gerenciador.limpaTabela(escolherCarro); //limpa a tabela de carros disṕoníveis com o objetivo de atualizar
+        synchronized(carrosCadastrados){
+            //iterador para percorrer a lista e mostrar os carros cadastrados
+            for (Iterator<Carro> it = carrosCadastrados.iterator(); it.hasNext();) {
+                Carro car = it.next();
+                Object[] dados = {car.getId(), car.getEquipe()};
+                mostrar.addRow(dados); //adiciona nova linha na tabela de carros para associar com um piloto.
+            }
+        }
+        
+        mostrar = (DefaultTableModel) escolherPiloto.getModel();
+        List<Piloto> pilotosCadastrados = gerenciador.getPilotos();  //lista de pilotos cadastrados
+        gerenciador.limpaTabela(escolherPiloto); //limpa a tabela de pilotos com  o objetivo de atualizar
+        synchronized(pilotosCadastrados){
+            //iterador para percorrer a lista e mostrar os pilotos cadastrados
+            for (Iterator<Piloto> it = pilotosCadastrados.iterator(); it.hasNext();) {
+                Piloto piloto = it.next();
+               
+                if(piloto.getRecord() == null){
+                    Object[] dados = {piloto.getNome(),"sem valor por enquanto"};
+                    mostrar.addRow(dados); //adiciona nova linha na tabela de pilotos para escolher.
+                }else{
+                    Object[] dados = {piloto.getNome(),piloto.getRecord().getTempo()};
+                    mostrar.addRow(dados); //adiciona nova linha na tabela de pilotos para escolher.
+                }
+            }
+        }       
     }//GEN-LAST:event_cadCorridaActionPerformed
 
     private void visualizarRankActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarRankActionPerformed
@@ -971,13 +1111,30 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void pilotosRegistersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pilotosRegistersActionPerformed
         CardLayout cl = (CardLayout) JpPrincipal.getLayout();
         cl.show(JpPrincipal, "Pilotos Cadastrados");
+        List<Piloto> pilotosCadastrados = gerenciador.getPilotos();
+        DefaultTableModel  mostrarPilotos = (DefaultTableModel) verPilotosCadastrados.getModel();
+        gerenciador.limpaTabela(verPilotosCadastrados);
+        synchronized(pilotosCadastrados){
+            //iterador para percorrer a lista e mostrar os pilotos cadastrados
+            for (Iterator<Piloto> it = pilotosCadastrados.iterator(); it.hasNext();) {
+                Piloto piloto = it.next();
+               
+                if(piloto.getRecord() == null){
+                    Object[] dados = {piloto.getNome(),"sem valor por enquanto"};
+                    mostrarPilotos.addRow(dados); //adiciona nova linha na tabela de pilotos cadastrados.
+                }else{
+                    Object[] dados = {piloto.getNome(),piloto.getRecord().getTempo()};
+                    mostrarPilotos.addRow(dados); //adiciona nova linha na tabela de pilotos cadastrados.
+                }
+            }
+        }
     }//GEN-LAST:event_pilotosRegistersActionPerformed
 
     /*Evento responsável por salvar um novo Adm cadastrado*/
     private void salvarAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarAdmActionPerformed
         String nome  = nomeAdm.getText();
         String senha = new String(senhaAdm.getPassword()).trim();
-        if(!gerenciador.existeAdm(nome)){
+        if(!gerenciador.existeAdm(nome,senha)){
             //envia para o servidor realizar o cadastrado no sistema
             rede.enviarDado(adm.getCliente() , gerenciador.cadastrarAdministrador(nome ,senha).toString() ,"13");
         }else{
@@ -1044,66 +1201,109 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     /*Método para associar um piloto a um carro e enviar os dados ao servidor*/
     private void confirmarPilotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarPilotoActionPerformed
-        if(corrida.isNull()){
-            if(escolherPiloto.getSelectedRow() != -1){
-                String nome   = escolherPiloto.getValueAt(escolherPiloto.getSelectedRow(), 0).toString(); //pega Nome do piloto
-                String carroId  = escolherPiloto.getValueAt(escolherCarro.getSelectedRow(), 1).toString(); //pega coluna Carro ID
+        if(!corrida.isNull()){ //se já tiver uma corrida cadastrada
+            if(( escolherPiloto.getSelectedRow() != -1) && (escolherCarro.getSelectedRow() != -1)){//verifica se alguma linha das tabelas foram selecionadas
+                String nome     = escolherPiloto.getValueAt(escolherPiloto.getSelectedRow(), 0).toString(); //pega Nome do piloto
+                String carroId  = escolherCarro.getValueAt(escolherCarro.getSelectedRow(), 0).toString(); //pega coluna Carro ID
             
                 Carro pilotoCarro = corrida.cadastraCompetidor(gerenciador.carro(carroId), gerenciador.piloto(nome));
-                rede.enviarDado(adm.getCliente(),pilotoCarro.toString(),"32"); //envia para o servidor o piloto associado ao carro
+                if(pilotoCarro != null){
+                    rede.enviarDado(adm.getCliente(),pilotoCarro.toString(),"32"); //envia para o servidor o piloto associado ao carro
+                    JOptionPane.showMessageDialog(null,"Associação Confirmada!");
+                }else{
+                    JOptionPane.showMessageDialog(null,"O carro ou piloto selecionado já estão na corrida!");
+                }
             }else{
                 JOptionPane.showMessageDialog(null,"Associe um piloto a um carro!");
             }
         }else{
-            JOptionPane.showMessageDialog(null,"Desculpe, mas já existe uma corrida cadastrada! Espero encerrar.");
+            JOptionPane.showMessageDialog(null,"Desculpe, mas não existe corrida cadastrada.");
         }
     }//GEN-LAST:event_confirmarPilotoActionPerformed
 
     private void criarCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarCorridaActionPerformed
-        int voltasRace   = gerenciador.strToInt(voltasCorrida.getText(),10);
-        int qualificacao = gerenciador.strToInt(voltasQualificacao.getText(),10);
-
-        if(corrida.isNull()){
-            //envio de cadastro de uma corrida
-            rede.enviarDado(adm.getCliente() , corrida.cadastrarCorrida(voltasRace).toString() , "30");
-            
-            //falta enviar voltas da qualificação
+        int voltasRace   = gerenciador.strToInt(voltasCorrida.getText(),0);
+        int qualificacao = gerenciador.strToInt(voltasQualificacao.getText(),0);
+        if( (qualificacao == 0) || (voltasRace == 0) ){
+            JOptionPane.showMessageDialog(null,"Preencha os campos de volta!" );
         }else{
-            JOptionPane.showMessageDialog(null,"Desculpe, mas já existe uma corrida cadastrada! Espero encerrar.");
+            if(corrida.isNull()){
+                //envio de cadastro de uma corrida
+                rede.enviarDado(adm.getCliente() , corrida.cadastrarCorrida(voltasRace).toString() , "30");
+                JOptionPane.showMessageDialog(null,"Corrida criada com sucesso!");
+                //falta enviar voltas da qualificação
+            }else{
+                JOptionPane.showMessageDialog(null,"Desculpe, mas já existe uma corrida cadastrada! Espere encerrar.");
+            }
         }
 
     }//GEN-LAST:event_criarCorridaActionPerformed
 
+    
     private void comecarCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comecarCorridaActionPerformed
-        // TODO add your handling code here:
+        if(corrida.isNull()){
+            JOptionPane.showMessageDialog(null,"Desculpe, mas não existe corrida cadastrada.");
+        }else{
+            rede.enviarDado(adm.getCliente(), "", "31");
+        }
     }//GEN-LAST:event_comecarCorridaActionPerformed
 
     private void pausarCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pausarCorridaActionPerformed
-        // TODO add your handling code here:
+        if(corrida.isNull()){
+            JOptionPane.showMessageDialog(null,"Desculpe, mas não existe corrida cadastrada.");
+        }else{
+            rede.enviarDado(adm.getCliente(), "", "33");
+        }
     }//GEN-LAST:event_pausarCorridaActionPerformed
 
     private void reiniciarCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reiniciarCorridaActionPerformed
-        // TODO add your handling code here:
+        if(corrida.isNull()){
+            JOptionPane.showMessageDialog(null,"Desculpe, mas não existe corrida cadastrada.");
+        }else{
+            rede.enviarDado(adm.getCliente(), "", "34");
+        }
     }//GEN-LAST:event_reiniciarCorridaActionPerformed
 
-    
+    /*Método para login do cliente Administrador no sistema*/
+    private void loginAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginAdmActionPerformed
+        String nomeAdm  = userAdmLogin.getText();
+        String senhaAdm = new String( senhaAdmLogin.getPassword()).trim();
+        if(gerenciador.existeAdm(nomeAdm, senhaAdm)){
+            JOptionPane.showMessageDialog(null,"Login feito com sucesso");
+            CardLayout cl = (CardLayout) JpPrincipal.getLayout();
+            cl.show(JpPrincipal, "home");
+            mostrarMenuPrincipal(true); //inicia o menu principal
+        }else{
+            JOptionPane.showMessageDialog(null,"Desculpe, mas este Adm não está cadastrado.");
+        }
+    }//GEN-LAST:event_loginAdmActionPerformed
+
     /*
         FIM DOS MÉTODOS QUE CHAMAM AS TELAS PARA SEREM VISUALIZADAS E OUTROS MÉTODOS REPONSÃVEIS PELAS AÇÕES DOS BUTÕES
     */
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void mostrarMenuPrincipal(boolean mostrar){
+        menuPrincipal.setVisible(mostrar);
+    }
     
-    
-    
+    public void conectarCliente() throws IOException{
+        adm = new Cliente("127.0.0.1" , 12345); 
+        adm.executa(); //conecta o cliente ADM ao servidor
+    }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) throws IOException {
-        //adm = new Cliente("192.168.25.5" , 12345); 
-        //adm.executa(); //conecta o cliente ADM ao servidor
        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPrincipal().setVisible(true);    
+                try { 
+                    new TelaPrincipal().setVisible(true);
+                } catch (IOException ex) {
+                   JOptionPane.showMessageDialog(null,"Desculpe, erro ao conectar com o servidor!!");
+                }
             }
         });
     }
@@ -1143,6 +1343,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
@@ -1156,19 +1362,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable4;
     private javax.swing.JPanel jpCadAdm;
     private javax.swing.JPanel jpCardCarro;
     private javax.swing.JPanel jpCriarCorrida;
     private javax.swing.JPanel jpRemoverPiloto;
+    private javax.swing.JButton loginAdm;
     private javax.swing.JMenuItem logout;
+    private javax.swing.JMenuBar menuPrincipal;
     private javax.swing.JTextField nomeAdm;
     private javax.swing.JTextField nomePiloto;
     private javax.swing.JTextField numeroCarro;
@@ -1189,6 +1395,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton salvarCarro;
     private javax.swing.JButton salvarPiloto;
     private javax.swing.JPasswordField senhaAdm;
+    private javax.swing.JPasswordField senhaAdmLogin;
+    private javax.swing.JPanel telaLogin;
+    private javax.swing.JTextField userAdmLogin;
+    private javax.swing.JTable verPilotosCadastrados;
     private javax.swing.JMenuItem visualizarRank;
     private javax.swing.JTextField voltasCorrida;
     private javax.swing.JTextField voltasQualificacao;

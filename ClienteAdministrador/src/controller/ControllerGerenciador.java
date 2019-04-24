@@ -6,8 +6,10 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import model.Administrador;
 import model.Carro;
 import model.Piloto;
@@ -21,12 +23,11 @@ public class ControllerGerenciador {
     private static List<Carro> carros;
     private static List<Piloto> pilotos;
     private static List<Administrador> adms;
-    
 
     public ControllerGerenciador() {
-        carros = new ArrayList<>();
-        pilotos = new ArrayList<>();
-        adms = new ArrayList<>();
+        carros = Collections.synchronizedList(new ArrayList<Carro>());
+        pilotos = Collections.synchronizedList(new ArrayList<Piloto>());
+        adms = Collections.synchronizedList(new ArrayList<Administrador>());
     }
     
     public Carro cadastrarCarro(String tag , String equipe , String numero){ //cadastrando pessoalmente
@@ -35,7 +36,9 @@ public class ControllerGerenciador {
     }
     
     public void salvarCarro(Carro novo){ //receber pacote
-        carros.add(novo);
+        synchronized(carros){ //sincroniza o acesso à lista de carro
+            carros.add(novo);
+        }
     }
     
     public boolean existeCarro(String id){
@@ -55,7 +58,9 @@ public class ControllerGerenciador {
     }
     
     public void salvarPiloto(Piloto novo){ //receber pacote
-        pilotos.add(novo);
+        synchronized(pilotos){ //sincroniza o acesso à lista de piloto
+            pilotos.add(novo);
+        }
     }
     
     public boolean existePiloto(String nome){
@@ -67,19 +72,29 @@ public class ControllerGerenciador {
         return false;
     }
     
+    public List<Piloto> getPilotos(){
+        return pilotos;
+    }
+    
+    public List<Carro> getCarros(){
+        return carros;
+    }
+                    
     public Administrador cadastrarAdministrador(String nome , String senha){ //cadastrando pessoalmente
         Administrador adicionar = new Administrador(nome , senha);
         return adicionar;
     }
     
     public void salvarAdm(Administrador novo){ //receber pacote
-        adms.add(novo);
+        synchronized(adms){
+            adms.add(novo);
+        }
     }
     
-    public boolean existeAdm(String nome){
+    public boolean existeAdm(String nome, String senha){
         for (Iterator<Administrador> it = adms.iterator(); it.hasNext();) {
             Administrador adm = it.next();
-            if(adm.getNome().equals(nome))
+            if(adm.getNome().equals(nome) && adm.getSenha().equals(senha))
                 return true;
         }
         return false;
@@ -104,11 +119,15 @@ public class ControllerGerenciador {
     }
     
     public void removerPiloto(String nome){
-        pilotos.removeIf( u -> u.getNome().equals(nome));
+        synchronized(pilotos){
+            pilotos.removeIf( u -> u.getNome().equals(nome));
+        }
     }
     
     public void removerCarro(String id){
-        carros.removeIf( u -> u.getId().equals(id));
+        synchronized(carros){
+            carros.removeIf( u -> u.getId().equals(id));
+        }
     }
     
     public int strToInt(String valor, int padrao) {
@@ -118,5 +137,13 @@ public class ControllerGerenciador {
         catch (NumberFormatException e) {  // Se houver erro na conversão, retorna o valor padrão
             return padrao;
         }
+    }
+    
+    /*Método que limpa a tabela nas interfaces*/
+    public void limpaTabela(javax.swing.JTable table){
+        DefaultTableModel tblRemove = (DefaultTableModel) table.getModel();
+        while(tblRemove.getRowCount() != 0){
+            tblRemove.removeRow(0);
+        }            
     }
 }
