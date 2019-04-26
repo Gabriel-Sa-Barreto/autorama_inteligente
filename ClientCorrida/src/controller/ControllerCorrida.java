@@ -5,6 +5,7 @@
  */
 package controller;
 
+import java.net.Socket;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -22,9 +23,19 @@ public class ControllerCorrida {
     
     private static Corrida corrida;
     private static ControllerRecord record = new ControllerRecord(); 
+    private static ControllerRede rede = new ControllerRede();
+    private static boolean pacoteSensor = false;
     
     public void receberCorrida(Corrida nova){
 	corrida = nova;
+    }
+    
+    public static boolean isPacoteSensor() {
+        return pacoteSensor;
+    }
+
+    public static void setPacoteSensor(boolean mudar) {
+        pacoteSensor = mudar;
     }
     
     public void voltaCompleta(Volta completada){
@@ -58,7 +69,6 @@ public class ControllerCorrida {
         //System.out.println(voltas.size());
         voltas.forEach(u -> System.out.println( "v id:" + u.getCarro().getId() + " " + "te: " + u.getTempoVolta() + " " + "volt: " + u.getQuantidade()));
         corrida.setVoltas(voltas);
-        linhaFinal();
     }
     
     private boolean deuUmaVolta(Volta teste , Volta anterior){
@@ -89,9 +99,13 @@ public class ControllerCorrida {
         return corrida.getTotaisDeVoltas();
     }
     
-    public void linhaFinal(){
-        if(corrida.getCompletadas() == corrida.getTotaisDeVoltas())
+    public void linhaFinal(Socket socket){
+        if(corrida.getCompletadas() == 0){
             corrida.setEstado(false);
+            enviarRecords(socket);
+            corrida.limparCompetidores();
+            corrida.limparVoltas();
+        }    
     }
     
     public void pausar_reiniciarCorrida(){
@@ -114,7 +128,7 @@ public class ControllerCorrida {
         return corrida.getCompetidores();
     }
     
-    public synchronized boolean partidaEmAdamento(){ //
+    public boolean partidaEmAdamento(){ 
         return corrida.isEstado();
     }
     
@@ -188,5 +202,12 @@ public class ControllerCorrida {
             }
         }    
         return tempo;
+    }
+    
+    private void enviarRecords(Socket socket){
+        List<Record> records = record.records();
+        for(Record record : records){
+            rede.enviarDado(socket, record.toString(), "50");
+        }
     }
 }

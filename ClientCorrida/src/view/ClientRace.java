@@ -7,6 +7,7 @@ package view;
 
 import cliente.Cliente;
 import controller.ControllerCorrida;
+import controller.ControllerRede;
 import java.awt.CardLayout;
 import java.io.IOException;
 import java.util.Iterator;
@@ -15,6 +16,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.PainelCorrida;
+import model.Qualificacao;
 import model.Record;
 import model.Volta;
 
@@ -25,8 +28,10 @@ import model.Volta;
 public class ClientRace extends javax.swing.JFrame {
     
     public static ControllerCorrida corrida = null;
+    public static ControllerRede rede = null;
     Cliente cliente;
-    
+    Qualificacao threadQualificacao;
+    PainelCorrida threadCorrida;
     /**
      * Creates new form ClientRace
      */
@@ -358,75 +363,15 @@ public class ClientRace extends javax.swing.JFrame {
     private void btnQualificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQualificacaoActionPerformed
         CardLayout cl = (CardLayout) JpClienteCorrida.getLayout();
         cl.show(JpClienteCorrida, "Tela de Qualificação");
-        DefaultTableModel qualificacao = (DefaultTableModel) jTQualificacao.getModel();
-        while(true){
-            try{
-                if(corrida.partidaEmAdamento()){
-                    qualificacao.setRowCount(corrida.competidores().size());
-                    List<Volta> voltas = corrida.getVoltas();
-                    if(!voltas.isEmpty()){
-                        int i = 0;
-                        //jLabelSessao.setText("Sessão de Qualificacao: " + voltas.get(0).getQuantidade() + "/" + corrida.quantidadeTotal());
-                        for(Iterator<Volta> it2 = voltas.iterator(); it2.hasNext();){
-                            Volta volta = it2.next();
-                            String nome = volta.getCarro().getPiloto().getNome();
-                            jTQualificacao.setValueAt(i, i, 0);
-                            jTQualificacao.setValueAt(nome, i, 1);
-                            jTQualificacao.setValueAt(volta.getCarro().getEquipe() , i, 2);
-                            if(corrida.getRecord(nome) != null)
-                                jTQualificacao.setValueAt(corrida.getRecord(nome) , i, 3);
-                            else
-                                jTQualificacao.setValueAt("00:00" , i, 3);
-                            jTQualificacao.setValueAt(volta.getQuantidade() , i, 4);
-                            i++;
-                        }
-                    }    
-                }
-                else{
-                    JOptionPane.showMessageDialog(null,"Não tem corrida no momento");
-                    break;
-                }
-            }catch(Exception ex){
-                JOptionPane.showMessageDialog(null,ex);
-            }    
-        }
+        threadQualificacao();
+        corrida.linhaFinal(cliente.getCliente());
     }//GEN-LAST:event_btnQualificacaoActionPerformed
 
     private void btnCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCorridaActionPerformed
         CardLayout cl = (CardLayout) JpClienteCorrida.getLayout();
         cl.show(JpClienteCorrida, "Tela de Corrida");
-        DefaultTableModel corridaTabel = (DefaultTableModel) jTCorrida.getModel();
-        while(true){
-            try{
-                if(corrida.partidaEmAdamento()){
-                    corridaTabel.setRowCount(corrida.competidores().size());
-                    List<Volta> voltas = corrida.getVoltas();
-                    if(voltas.isEmpty()){
-                        int i = 0;
-                        //jLabelSessao.setText("Sessão de Corrida: " + voltas.get(0).getQuantidade() + "/" + corrida.quantidadeTotal());
-                        for(Iterator<Volta> it3 = voltas.iterator(); it3.hasNext();){
-                            Volta volta = it3.next();
-                            String nome = volta.getCarro().getPiloto().getNome();
-                            jTCorrida.setValueAt(i, i, 0);
-                            jTCorrida.setValueAt(nome, i, 1);
-                            jTCorrida.setValueAt(volta.getCarro().getEquipe() , i, 2);
-                            jTCorrida.setValueAt(volta.getTempoVolta() , i, 3);
-                            if(corrida.getRecord(nome) != null)
-                                jTCorrida.setValueAt(corrida.getRecord(nome) , i, 4);
-                            else
-                                jTCorrida.setValueAt("00:00" , i, 4);
-                            jTCorrida.setValueAt(volta.getQuantidade() , i, 5);
-                            i++;
-                        }
-                    }    
-                }
-                else{
-                    JOptionPane.showMessageDialog(null,"Não tem corrida no momento");
-                }
-            }catch(Exception ex){
-                JOptionPane.showMessageDialog(null,"Não tem corrida cadastrada");
-            }    
-        }
+        threadCorrida();
+        corrida.linhaFinal(cliente.getCliente());
     }//GEN-LAST:event_btnCorridaActionPerformed
 
     private void JpVoltarQualificaçãoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JpVoltarQualificaçãoActionPerformed
@@ -462,19 +407,31 @@ public class ClientRace extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
+            rede.enviarDado(cliente.getCliente(),"", "00");
             cliente.fecharConexão();
         } catch (IOException ex) {
             Logger.getLogger(ClientRace.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonSairClassActionPerformed
-
+    
+    private void threadQualificacao(){
+        threadQualificacao = new Qualificacao(corrida, jTQualificacao);
+        new Thread(threadQualificacao,"qualificacao").start();
+    }
+    
+    private void threadCorrida(){
+        threadCorrida = new PainelCorrida(corrida, jTCorrida);
+        new Thread(threadCorrida,"corrida").start();
+    }
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) throws IOException {
         /* Set the Nimbus look and feel */
         corrida = new ControllerCorrida();
-        Cliente cliente = new Cliente("10.0.0.133",12345);
+        rede = new ControllerRede();
+        Cliente cliente = new Cliente("192.168.25.3",12345);
         cliente.executa();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

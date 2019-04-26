@@ -78,4 +78,12 @@ public class Corrida {
         this.pause = pause;
     }
     
+    public void limparCompetidores(){
+        competidores.clear();
+    }
+    
+    public void limparVoltas(){
+        voltas.clear();
+    }
+    
 }

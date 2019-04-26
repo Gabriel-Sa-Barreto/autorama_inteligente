@@ -25,7 +25,7 @@ public class Main {
         ControllerGerenciador gerenciador = new ControllerGerenciador();
         ControllerRede rede = new ControllerRede();
         ControllerCorrida corrida = new ControllerCorrida();
-        Cliente adm = new Cliente("127.0.0.1" , 12345);
+        Cliente adm = new Cliente("192.168.25.3" , 12345);
         adm.executa();
         int controlador = 0;
         String dado;
@@ -41,7 +41,8 @@ public class Main {
             System.out.println("<6> Cadastrar corrida\n");    //OK
             System.out.println("<7> Cadastrar competidor\n"); //OK
             System.out.println("<8> Começar corrida\n");      //OK  (comerçar,pausar,reiniciar)
-            System.out.println("<9> Sair\n");                 //OK
+            System.out.println("<9> Atualizar\n");
+            System.out.println("<10> Sair\n");                 //OK
             escolha = scan.nextInt();
             switch(escolha){
                 case 1:
@@ -101,6 +102,9 @@ public class Main {
                     rede.enviarDado(adm.getCliente(), "", "31");
                     break;
                 case 9:
+                    rede.enviarDado(adm.getCliente(),"", "100");
+                    break;
+                case 10:
                     rede.enviarDado(adm.getCliente(), "", "00");
                     controlador = 1;
                     break;

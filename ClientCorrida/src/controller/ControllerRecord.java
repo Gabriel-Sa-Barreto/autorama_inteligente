@@ -35,12 +35,13 @@ public class ControllerRecord {
                 records.removeIf(u -> u.getPiloto().equals(volta.getCarro().getPiloto().getNome()));
                 records.add(adicionar);
             }
-            /*if(bateuRecordGeral(volta.getTempo())){
-                System.out.println("Aqui3");
-                geral.setData(data);
-                geral.setPiloto(volta.getCarro().getPiloto().getNome());
-                geral.setTempo(volta.getTempo());
-            }*/
+            if(geral != null){
+                if(bateuRecordGeral(volta.getTempo())){
+                    geral.setData(data);
+                    geral.setPiloto(volta.getCarro().getPiloto().getNome());
+                    geral.setTempo(volta.getTempo());
+                }    
+            }
         }
         records.forEach(u -> System.out.println("r" + u.getPiloto() + "t" + u.getTempo()));    
     }
@@ -79,6 +80,10 @@ public class ControllerRecord {
     
     public List<Record> records(){
         return records;
+    }
+    
+    public void limparRecord(){
+        records.clear();
     }
     
     public Record recordGeral(){

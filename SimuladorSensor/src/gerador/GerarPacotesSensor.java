@@ -30,7 +30,7 @@ public class GerarPacotesSensor {
        int idEscolhido;
        int i = 0;
        
-       Cliente cliente = new Cliente("192.168.25.5" , 12345);
+       Cliente cliente = new Cliente("192.168.25.3" , 12345);
        ControllerRede rede = new ControllerRede();
       
        while(i < 11){
@@ -44,7 +44,7 @@ public class GerarPacotesSensor {
                rede.enviarDado(cliente.getCliente(), pacote);
                System.out.println(pacote);
            }
-           Thread.sleep(2000);
+           Thread.sleep(4000);
            i++;
        }
        rede.enviarDado(cliente.getCliente(), "00;");
