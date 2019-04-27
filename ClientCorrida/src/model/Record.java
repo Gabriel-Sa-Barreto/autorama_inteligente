@@ -49,7 +49,7 @@ public class Record {
 
     @Override
     public String toString() {
-        return data + ";" + tempo + ";";
+        return data + ";" + tempo + ";"+ piloto;
     }
 
     public int compareTo(String tempo) {

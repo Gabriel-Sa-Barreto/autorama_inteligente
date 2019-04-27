@@ -57,7 +57,7 @@ public class Recebedor implements Runnable {
                         break;
                     case "41":
                         Volta volta = pacotes.transformarVolta(pacote, corrida.competidores());
-                        if(volta != null){
+                        if(volta != null && !corrida.estaPausado()){
                             ControllerCorrida.setPacoteSensor(true);
                             corrida.voltaCompleta(volta);
                             ControllerCorrida.setPacoteSensor(false);

@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
-/**
- *
- * @author lsjsa
- */
+/**Classe para objetos do tipo Carro, onde serão contidos, valores e métodos primarios(getter , setter , equals e toString).
+* @author Manoel Pimentel
+* @version 1.05
+* @since Release 02 da aplicação
+*/
 public class Carro {
     
     private String id;
@@ -21,7 +17,7 @@ public class Carro {
         this.equipe = equipe;
         this.numero = numero;
     }
-
+    
     public String getId() {
         return id;
     }
@@ -29,7 +25,7 @@ public class Carro {
     public void setId(String id) {
         this.id = id;
     }
-
+    
     public String getEquipe() {
         return equipe;
     }
