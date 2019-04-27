@@ -120,7 +120,7 @@ public class ControllerGerenciador {
         return carros;
     }
      
-    /**Método para cadastrar piloto.
+    /**Método para cadastrar adm.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param nome String - nome do adm
     * @param senha String - senha do adm

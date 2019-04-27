@@ -23,40 +23,66 @@ import model.Record;
  */
 public class ControllerArquivo {
     
+    /**Método para escrever os pilotos no arquivo
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param caminho String - caminho onde estara o arquivo
+    * @param piloto Piloto - piloto a ser salvo
+    */
     public static void escreverPiloto(String caminho , Piloto piloto) throws IOException{
         BufferedWriter write = new BufferedWriter(new FileWriter(caminho,true));
         write.append(piloto.toString()+ "\n");
         write.close();
     }
     
+    /**Método para escrever os carros no arquivo
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param caminho String - caminho onde estara o arquivo
+    * @param carro Carro - carro a ser salvo
+    */
     public static void escreverCarro(String caminho , Carro carro) throws IOException{
         BufferedWriter write = new BufferedWriter(new FileWriter(caminho,true));
         write.append(carro.toString()+ "\n");
         write.close();
     }
     
+    /**Método para escrever os adms no arquivo
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param caminho String - caminho onde estara o arquivo
+    * @param adm Administrador - administrador a ser salvo
+    */
     public static void escreverAdm(String caminho , Administrador adm) throws IOException{
         BufferedWriter write = new BufferedWriter(new FileWriter(caminho , true));
         write.append(adm.toString()+ "\n");
         write.close();
     }
     
+    
+    /**Método para escrever os adms no arquivo
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param caminho String - caminho onde estara o arquivo
+    * @param piloto Piloto - piloto a ser excluido
+    */
     public static void removerPiloto(String caminho , Piloto piloto) throws IOException{
-        ArrayList<Piloto> pilotos = new ArrayList();
+        ArrayList<Piloto> pilotos = new ArrayList(); //vetor para salvar o que esta armazenado
         BufferedReader read = new BufferedReader(new FileReader(caminho));
         String linha = "";
         while((linha = read.readLine()) != null){
-            pilotos.add(salvarPiloto(linha));
+            pilotos.add(salvarPiloto(linha)); //salva no vetor
         }
         read.close();
-        pilotos.removeIf( u -> u.getNome().equals(piloto.getNome()));
+        pilotos.removeIf( u -> u.getNome().equals(piloto.getNome())); //exclui o piloto desejado via lambda
         BufferedWriter write = new BufferedWriter(new FileWriter(caminho , false));
         for(Piloto inserir : pilotos){
-            write.append(inserir.toString() + "\n");
+            write.append(inserir.toString() + "\n"); //reescrever com a lista atualizada
         }
         write.close();
     }
     
+    /**Método para escrever os adms no arquivo
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param caminho String - caminho onde estara o arquivo
+    * @param id String - id do carro a ser excluido
+    */
     public static void removerCarro(String caminho , String id) throws IOException{
         ArrayList<Carro> carros = new ArrayList();
         BufferedReader read = new BufferedReader(new FileReader(caminho));
@@ -73,6 +99,11 @@ public class ControllerArquivo {
         write.close();
     }
     
+    /**Método para ler do arquivo e salvar na lista de pilotos quando o server for iniciado
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param caminho String - caminho onde estara o arquivo
+    * @param gerenciador ControllerGerenciador - instancia do controller para salvar 
+    */
     public static void leitorPiloto(String caminho , ControllerGerenciador gerenciador) throws FileNotFoundException, IOException{
         BufferedReader read = new BufferedReader(new FileReader(caminho));
         String linha = "";
@@ -82,6 +113,11 @@ public class ControllerArquivo {
         read.close();
     }
     
+    /**Método para ler do arquivo e salvar na lista de carro quando o server for iniciado
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param caminho String - caminho onde estara o arquivo
+    * @param gerenciador ControllerGerenciador - instancia do controller para salvar 
+    */
     public static void leitorCarro(String caminho , ControllerGerenciador gerenciador) throws FileNotFoundException, IOException{
         BufferedReader read = new BufferedReader(new FileReader(caminho));
         String linha = "";
@@ -91,6 +127,11 @@ public class ControllerArquivo {
         read.close();
     }
     
+    /**Método para ler do arquivo e salvar na lista de adms quando o server for iniciado
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param caminho String - caminho onde estara o arquivo
+    * @param gerenciador ControllerGerenciador - instancia do controller para salvar 
+    */
     public static void leitorAdm(String caminho , ControllerGerenciador gerenciador) throws FileNotFoundException, IOException{
         BufferedReader read = new BufferedReader(new FileReader(caminho));
         String linha = "";
@@ -100,6 +141,10 @@ public class ControllerArquivo {
         read.close();
     } 
     
+    /**Método para ler do arquivo a linha e criar instância de piloto quando o server for iniciado
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param linha String - caminho onde estara o arquivo
+    */
     private static Piloto salvarPiloto(String linha){
         String[] split = linha.split(";");
         Piloto piloto;
@@ -111,6 +156,10 @@ public class ControllerArquivo {
         return piloto;
     }
     
+    /**Método para ler do arquivo a linha e criar instância de carro quando o server for iniciado
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param linha String - caminho onde estara o arquivo
+    */
     private static Carro salvarCarro(String linha){
         String[] split = linha.split(";");
         Carro carro;
@@ -118,6 +167,10 @@ public class ControllerArquivo {
         return carro;
     }
     
+    /**Método para ler do arquivo a linha e criar instância de administrador quando o server for iniciado
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param linha String - caminho onde estara o arquivo
+    */
     private static Administrador salvarAdm(String linha){
         String[] split = linha.split(";");
         Administrador adm;
