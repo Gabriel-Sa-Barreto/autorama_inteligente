@@ -49,7 +49,7 @@ public class ControllerPacotes {
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param pacote String - pacote enviado pelo server.
     * @param competidores List - lista com os competidores da corrida.
-    * @return Volta - detecção da passagem de um carro pelo sensor
+    * @return Carro - competidor enviado pelo server
     */
     public Carro transformarCarro(String pacote , List<Carro> competidores){
         String carro[] = pacote.split(";");

@@ -17,12 +17,22 @@ import model.Record;
  */
 public class ControllerPacote {
     
+    /**Método para transformar o pacote em uma Corrida.
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param pacote String - pacote enviado pelo server.
+    * @return Corrida - corrida a ser realizada
+    */
     public Corrida transformarCorrida(String pacote){
         String corrida[] = pacote.split(";");
         Corrida recebido = new Corrida(strToInt(corrida[1] , 10));
         return recebido;
     }
     
+    /**Método para transformar o pacote em uma Carro.
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param pacote String - pacote enviado pelo server.
+    * @return Carro - carro enviado pelo server
+    */
     public Carro transformarCarro(String pacote){
         String carro[] = pacote.split(";");
         Carro car = new Carro(carro[1] , carro[2] , carro[3]);
@@ -33,6 +43,11 @@ public class ControllerPacote {
         return car;
     }
     
+    /**Método para transformar o pacote em uma Piloto.
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param pacote String - pacote enviado pelo server.
+    * @return Piloto - piloto enviado pelo server
+    */
     public Piloto transformarPiloto(String pacote){
         Piloto novo;
         String piloto[] = pacote.split(";");
@@ -44,6 +59,11 @@ public class ControllerPacote {
         return novo;
     }
     
+    /**Método para transformar o pacote em uma Administrador.
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param pacote String - pacote enviado pelo server.
+    * @return Administrador - administrador enviado pelo server
+    */
     public Administrador transformarAdm(String pacote){
         Administrador novo;
         String adm[] = pacote.split(";");
@@ -52,11 +72,22 @@ public class ControllerPacote {
     }
     
     
+    /**Método para transformar o pacote em uma Volta.
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param pacote String - pacote enviado pelo server.
+    * @return String  - o tipo do pacote
+    */
     public String acao(String pacote){
         String receber[] = pacote.split(";");
         return receber[0];
     }
     
+    /**Método private para auxiliar na conversao de String para int
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param valor List - receber a String a ser convertida.
+    * @param padrao int - caso aconteça uma exceção um valor padrão que possa ser inserido.
+    * @return int - retornar o inteiro.
+    */
     private int strToInt(String valor, int padrao) {
         try {
             return Integer.valueOf(valor); // Para retornar um Integer, use Integer.parseInt

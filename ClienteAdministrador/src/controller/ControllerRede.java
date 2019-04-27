@@ -14,6 +14,12 @@ import java.net.Socket;
  */
 public class ControllerRede {
     
+    /**Método para retornar o recod geral
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param conexao Socket - obter a conexao com o server para enviar os pacotes para ele via TCP
+    * @param dado String - o dado a ser enviado
+    * @param opcao String - o tipo do pacote
+    */
     public void enviarDado(Socket conexao , String dado , String opcao){
         try{
             String mandar = opcao + ";" + dado;
