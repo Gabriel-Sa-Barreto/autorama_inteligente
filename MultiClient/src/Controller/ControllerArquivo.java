@@ -27,6 +27,7 @@ public class ControllerArquivo {
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param caminho String - caminho onde estara o arquivo
     * @param piloto Piloto - piloto a ser salvo
+     * @throws java.io.IOException
     */
     public static void escreverPiloto(String caminho , Piloto piloto) throws IOException{
         BufferedWriter write = new BufferedWriter(new FileWriter(caminho,true));
@@ -38,6 +39,7 @@ public class ControllerArquivo {
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param caminho String - caminho onde estara o arquivo
     * @param carro Carro - carro a ser salvo
+     * @throws java.io.IOException
     */
     public static void escreverCarro(String caminho , Carro carro) throws IOException{
         BufferedWriter write = new BufferedWriter(new FileWriter(caminho,true));
@@ -49,6 +51,7 @@ public class ControllerArquivo {
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param caminho String - caminho onde estara o arquivo
     * @param adm Administrador - administrador a ser salvo
+     * @throws java.io.IOException
     */
     public static void escreverAdm(String caminho , Administrador adm) throws IOException{
         BufferedWriter write = new BufferedWriter(new FileWriter(caminho , true));
@@ -57,10 +60,11 @@ public class ControllerArquivo {
     }
     
     
-    /**Método para escrever os adms no arquivo
+    /**Método para remover piloto do arquivo
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param caminho String - caminho onde estara o arquivo
     * @param piloto Piloto - piloto a ser excluido
+     * @throws java.io.IOException
     */
     public static void removerPiloto(String caminho , Piloto piloto) throws IOException{
         ArrayList<Piloto> pilotos = new ArrayList(); //vetor para salvar o que esta armazenado
@@ -78,10 +82,11 @@ public class ControllerArquivo {
         write.close();
     }
     
-    /**Método para escrever os adms no arquivo
+    /**Método para remover carro do arquivo
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param caminho String - caminho onde estara o arquivo
     * @param id String - id do carro a ser excluido
+     * @throws java.io.IOException
     */
     public static void removerCarro(String caminho , String id) throws IOException{
         ArrayList<Carro> carros = new ArrayList();
@@ -103,6 +108,7 @@ public class ControllerArquivo {
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param caminho String - caminho onde estara o arquivo
     * @param gerenciador ControllerGerenciador - instancia do controller para salvar 
+     * @throws java.io.FileNotFoundException 
     */
     public static void leitorPiloto(String caminho , ControllerGerenciador gerenciador) throws FileNotFoundException, IOException{
         BufferedReader read = new BufferedReader(new FileReader(caminho));
@@ -117,6 +123,7 @@ public class ControllerArquivo {
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param caminho String - caminho onde estara o arquivo
     * @param gerenciador ControllerGerenciador - instancia do controller para salvar 
+     * @throws java.io.FileNotFoundException 
     */
     public static void leitorCarro(String caminho , ControllerGerenciador gerenciador) throws FileNotFoundException, IOException{
         BufferedReader read = new BufferedReader(new FileReader(caminho));
@@ -131,6 +138,7 @@ public class ControllerArquivo {
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param caminho String - caminho onde estara o arquivo
     * @param gerenciador ControllerGerenciador - instancia do controller para salvar 
+     * @throws java.io.FileNotFoundException 
     */
     public static void leitorAdm(String caminho , ControllerGerenciador gerenciador) throws FileNotFoundException, IOException{
         BufferedReader read = new BufferedReader(new FileReader(caminho));

@@ -1,7 +1,6 @@
 package cliente;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -9,29 +8,62 @@ import java.net.Socket;
  * @author gabriel
  */
 public class Cliente {
+    
+    /**Atributo responsável por guardar o ip da máquina que o cliente irá se conectar.
+    */
     private String host;
+    
+    /**Atributo responsável por guardar a porta do servidor para conexão.
+     */
     private int porta;
+    
+    /**Atributo responsável por guardar o socket do cliente.
+     */
     Socket cliente;
     
+    /**Construtor da classe Cliente que é responsável por criar um novo cliente no sistema e conectá-lo ao servidor  
+    * @param host String -Ip da máquina ao qual o cliente irá se conectar
+    * @param porta int    - Porta do servidor para conexão
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto 
+    * @throws java.io.IOException 
+    */
     public Cliente (String host, int porta) throws IOException {
         this.host = host;
         this.porta = porta;
         this.conexao();
     }
     
+    /**Método para conectar o cliente ao servidor, este método é ao clicar um novo objeto do tipo Cliente.
+    *  @author Samuel Vitorio Lima e Gabriel Sá Barreto 
+    */
     private void conexao() throws IOException{
         cliente = new Socket(this.host, this.porta);
         System.out.println("O cliente se conectou ao servidor!");
     }
         
+    /**
+     * Método que retorna o objeto socket que está vinculado ao cliente
+     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+     * @return 
+     */
     public Socket getCliente() {
         return cliente;
     }
 
+    /**
+     * Método para configurar o objeto socket que está vinculado ao cliente.
+     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+     * @param cliente 
+     */
     public void setCliente(Socket cliente) {
         this.cliente = cliente;
     }
 
+    /**
+     * Método responsável por fechar a conexão com o servidor.
+     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+     * @throws IOException 
+     */
     public void fecharConexão() throws IOException{
         cliente.close();
     }

@@ -20,13 +20,29 @@ import model.*;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
     
+    /**
+     * Atributo controller que gerencia algumas ações a serem realizadas no sistema.
+     */
     private static ControllerGerenciador gerenciador = new ControllerGerenciador();
-    private static ControllerRede rede               = new ControllerRede();
-    private static ControllerCorrida corrida         = new ControllerCorrida();
+    
+    /**
+     * Atributo controller que gerencia o envio dos dados desejados.
+     */
+    private static ControllerRede rede = new ControllerRede();
+    
+    /**
+     * Atributo controller que gerencia ações da corrida.
+     */
+    private static ControllerCorrida corrida = new ControllerCorrida();
+    
+    /**
+     * Atributo cliente responsável por fazer conexão com o servidor.
+     */
     private static Cliente adm;
     
     /**
      * Creates new form TelaPrincipal
+     * @throws java.io.IOException
      */
     public TelaPrincipal() throws IOException {
         initComponents();
@@ -1017,11 +1033,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /*
         MÉTODOS QUE CHAMAM AS TELAS PARA SEREM VISUALIZADAS E OUTROS MÉTODOS REPONSÃVEIS PELAS AÇÕES DOS BUTÕES
     */
+    /**
+     * Método que exibit a tela de cadastro de adm.
+     * @param evt 
+     */
     private void cadAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadAdmActionPerformed
         CardLayout cl = (CardLayout) JpPrincipal.getLayout();
         cl.show(JpPrincipal, "Cadastro de novo Administrador");      
     }//GEN-LAST:event_cadAdmActionPerformed
 
+    /**
+     * Método que exibi tela de cadastro carro.
+     * @param evt 
+     */
     private void CadCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadCarroActionPerformed
         CardLayout cl = (CardLayout) JpPrincipal.getLayout();
         cl.show(JpPrincipal, "Cadastro de novo Carro");
@@ -1031,16 +1055,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_outrasOpcoesActionPerformed
 
+    /**
+     * Método que exibi tela de cadastro de piloto.
+     * @param evt 
+     */
     private void cadPilotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadPilotoActionPerformed
         CardLayout cl = (CardLayout) JpPrincipal.getLayout();
         cl.show(JpPrincipal, "Cadastro de Piloto");
     }//GEN-LAST:event_cadPilotoActionPerformed
 
+    /**
+     * Método que exibi tela inicial do adm.
+     * @param evt 
+     */
     private void home_pageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_home_pageActionPerformed
          CardLayout cl = (CardLayout) JpPrincipal.getLayout();
          cl.show(JpPrincipal, "home");
     }//GEN-LAST:event_home_pageActionPerformed
 
+    /**
+     * Método responsável por remover um carro que está cadastrado.
+     * @param evt 
+     */
     private void removeCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCarroActionPerformed
         CardLayout cl = (CardLayout) JpPrincipal.getLayout();
         cl.show(JpPrincipal, "Remover carro");
@@ -1058,11 +1094,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeCarroActionPerformed
 
+    /**
+     * Método que exibit tela de remover piloto.
+     * @param evt 
+     */
     private void removePilotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removePilotoActionPerformed
        CardLayout cl = (CardLayout) JpPrincipal.getLayout();
        cl.show(JpPrincipal, "Remover piloto");
     }//GEN-LAST:event_removePilotoActionPerformed
 
+    /**
+     * Método que exibi tela de criar corrida, exibi os pilotos e carros cadastrado no sistema e pega
+     * os dados escritos e envia aos controllers para o devido tratamento.
+     * @param evt 
+     */
     private void cadCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadCorridaActionPerformed
         CardLayout cl = (CardLayout) JpPrincipal.getLayout();
         cl.show(JpPrincipal, "Cadastrar corrida");
@@ -1098,16 +1143,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }       
     }//GEN-LAST:event_cadCorridaActionPerformed
 
+    /**
+     * Método que exibi tela de rank de pilotos.
+     * @param evt 
+     */
     private void visualizarRankActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarRankActionPerformed
         CardLayout cl = (CardLayout) JpPrincipal.getLayout();
         cl.show(JpPrincipal, "Rank de pilotos");
     }//GEN-LAST:event_visualizarRankActionPerformed
 
+    /**
+     * Método que exibi tela de gerenciar um corrida.
+     * @param evt 
+     */
     private void gerenciarRaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciarRaceActionPerformed
         CardLayout cl = (CardLayout) JpPrincipal.getLayout();
         cl.show(JpPrincipal, "Gerenciar Corrida");
     }//GEN-LAST:event_gerenciarRaceActionPerformed
 
+    /**
+     * Método que exibi todos os pilotos cadastrados no sistema.
+     * @param evt 
+     */
     private void pilotosRegistersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pilotosRegistersActionPerformed
         CardLayout cl = (CardLayout) JpPrincipal.getLayout();
         cl.show(JpPrincipal, "Pilotos Cadastrados");
@@ -1130,7 +1187,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pilotosRegistersActionPerformed
 
-    /*Evento responsável por salvar um novo Adm cadastrado*/
+    /**
+     * Método que envia um pacote ao servidor para salvar um novo adm no sistema.
+     * @param evt 
+     */
     private void salvarAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarAdmActionPerformed
         String nome  = nomeAdm.getText();
         String senha = new String(senhaAdm.getPassword()).trim();
@@ -1143,6 +1203,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_salvarAdmActionPerformed
 
+    /**
+     * Método que envia um pacote ao servidor para salvar um novo carro no sistema.
+     * @param evt 
+     */
     private void salvarCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarCarroActionPerformed
         String id     = idCarro.getText();
         String equipe = equipeCarro.getText();
@@ -1155,6 +1219,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_salvarCarroActionPerformed
 
+    /**
+     * Método que envia um pacote ao servidor para salvar um novo piloto no sistema.
+     * @param evt 
+     */
     private void salvarPilotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarPilotoActionPerformed
         String nome = nomePiloto.getText();
         if(!gerenciador.existePiloto(nome)){
@@ -1165,6 +1233,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_salvarPilotoActionPerformed
 
+    /**
+     * Método que envia um pacote ao servidor para remover um piloto do sistema.
+     * @param evt 
+     */
     private void removerPilotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerPilotoActionPerformed
         String piloto = pilotoRemover.getText();
         if(gerenciador.existePiloto(piloto)){
@@ -1176,6 +1248,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removerPilotoActionPerformed
     
+    /**
+     * Método para realizar logout do cliente.
+     * @param evt 
+     */
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         rede.enviarDado(adm.getCliente(), "", "00"); //pacote para informar ao servidor que o cliente está sendo desconectado
         try {
@@ -1185,7 +1261,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Erro ao desconectar!");
         }
     }//GEN-LAST:event_logoutActionPerformed
-
+    /**
+     * Método que envia um pacote ao servidor para remover um carro do sistema.
+     * @param evt 
+     */
     private void removerCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerCarroActionPerformed
         if(removeCar.getSelectedRow() != -1){
             String carroId = removeCar.getValueAt(removeCar.getSelectedRow(),0).toString(); //pega a linha do carro selecionado na tabela
@@ -1199,7 +1278,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }     
     }//GEN-LAST:event_removerCarroActionPerformed
 
-    /*Método para associar um piloto a um carro e enviar os dados ao servidor*/
+    /**
+     * Método que confirma a associação entre um carro e um piloto para uma corrida ou qualificação.
+     * @param evt 
+     */
     private void confirmarPilotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarPilotoActionPerformed
         if(!corrida.isNull()){ //se já tiver uma corrida cadastrada
             if(( escolherPiloto.getSelectedRow() != -1) && (escolherCarro.getSelectedRow() != -1)){//verifica se alguma linha das tabelas foram selecionadas
@@ -1221,13 +1303,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_confirmarPilotoActionPerformed
 
+    /**
+     * Método para a criação de uma nova corrida enviando o número de voltas desejada para a corrida
+     * e o evento de qualificação.
+     * @param evt 
+     */
     private void criarCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarCorridaActionPerformed
         int voltasRace   = gerenciador.strToInt(voltasCorrida.getText(),0);
         int qualificacao = gerenciador.strToInt(voltasQualificacao.getText(),0);
         if( (qualificacao == 0) || (voltasRace == 0) ){
             JOptionPane.showMessageDialog(null,"Preencha os campos de volta!" );
         }else{
-            if(corrida.isNull()){
+            if(corrida.isNull()){//verifica se já existe uma corrida cadastrada no sistema
                 //envio de cadastro de uma corrida
                 rede.enviarDado(adm.getCliente() , corrida.cadastrarCorrida(voltasRace).toString() , "30");
                 JOptionPane.showMessageDialog(null,"Corrida criada com sucesso!");
@@ -1239,7 +1326,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_criarCorridaActionPerformed
 
-    
+    /**
+     * Método que envia um sinal para o ínicio de uma corrida.
+     * @param evt 
+     */
     private void comecarCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comecarCorridaActionPerformed
         if(corrida.isNull()){
             JOptionPane.showMessageDialog(null,"Desculpe, mas não existe corrida cadastrada.");
@@ -1248,6 +1338,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_comecarCorridaActionPerformed
 
+    /**
+     * Método que envia um pacote para pausar uma corrida.
+     * @param evt 
+     */
     private void pausarCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pausarCorridaActionPerformed
         if(corrida.isNull()){
             JOptionPane.showMessageDialog(null,"Desculpe, mas não existe corrida cadastrada.");
@@ -1256,6 +1350,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pausarCorridaActionPerformed
 
+    /**
+     * Método que envia um pacote para reiniciar uma corrida.
+     * @param evt 
+     */
     private void reiniciarCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reiniciarCorridaActionPerformed
         if(corrida.isNull()){
             JOptionPane.showMessageDialog(null,"Desculpe, mas não existe corrida cadastrada.");
@@ -1264,7 +1362,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_reiniciarCorridaActionPerformed
 
-    /*Método para login do cliente Administrador no sistema*/
+    /**Método que efetua um login do administrador.
+     * @param evt 
+     */
     private void loginAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginAdmActionPerformed
         String nomeAdm  = userAdmLogin.getText();
         String senhaAdm = new String( senhaAdmLogin.getPassword()).trim();
@@ -1282,10 +1382,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         FIM DOS MÉTODOS QUE CHAMAM AS TELAS PARA SEREM VISUALIZADAS E OUTROS MÉTODOS REPONSÃVEIS PELAS AÇÕES DOS BUTÕES
     */
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Método que habilita ou desabilita o menu principal do administrador.
+     * @param mostrar 
+     */
     public void mostrarMenuPrincipal(boolean mostrar){
         menuPrincipal.setVisible(mostrar);
     }
     
+    /**
+     * Método que conecta o cliente administrador ao servidor.
+     * @throws IOException 
+     */
     public void conectarCliente() throws IOException{
         adm = new Cliente("127.0.0.1" , 12345); 
         adm.executa(); //conecta o cliente ADM ao servidor
@@ -1293,6 +1401,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
     public static void main(String args[]) throws IOException {
        

@@ -14,7 +14,7 @@ import java.net.Socket;
  */
 public class ControllerRede {
     
-    /**Método para retornar o recod geral
+    /**Método para enviar os pacotes desejados ao servidor.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param conexao Socket - obter a conexao com o server para enviar os pacotes para ele via TCP
     * @param dado String - o dado a ser enviado

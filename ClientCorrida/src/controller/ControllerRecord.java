@@ -18,7 +18,14 @@ import model.Volta;
  */
 public class ControllerRecord {
     
+    /**
+     * Atributo para lista de records.
+     */
     List<Record> records;
+    
+    /**
+     * Atributo para o record geral do sistema.
+     */
     Record geral;
     
     /**Método para iniciar a lista de record
@@ -120,7 +127,7 @@ public class ControllerRecord {
         records.clear();
     }
     
-    /**Método para retornar o recod geral
+    /**Método para retornar o record geral
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @return Record - retorna o record geral.
     */

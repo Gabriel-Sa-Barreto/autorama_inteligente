@@ -20,26 +20,48 @@ import java.util.List;
  * @author gabriel
  */
 public class Servidor implements Runnable {
+    
+    /**Atributo que guarda a porta de conexão do servidor.
+     */
     private int porta;
+    
+    /**Atributo que guarda a lista de cliente conectados com o servidor.
+     */
     private List<PrintStream> clientes;
+    
+    /**Atributo que guarda o objeto ServerSocket do servidor.
+     */
     private ServerSocket servidor;
+    
+    /**Atributo reponsável por gerenciar as ações que devem ser feitas de acordo aos pacotes recebidos pelos clientes.
+     */
     private static ControllerGerenciador gerenciador = new ControllerGerenciador();
     
+    /**Construtor que inicializa os atributos da classe
+     * @param porta  -parâmetro que informa a porta de conexão do servidor
+     * @throws java.io.IOException     
+    */
     public Servidor (int porta) throws IOException{
         this.porta = porta; //Porta ao qual o servidor irá se associar.
         this.clientes = new ArrayList<PrintStream>();
         criarConexão();
-        ControllerArquivo.leitorAdm("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\adms.txt",gerenciador);
-        ControllerArquivo.leitorCarro("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\carros.txt",gerenciador);
-        ControllerArquivo.leitorPiloto("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\pilotos.txt",gerenciador);
+        //ControllerArquivo.leitorAdm("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\adms.txt",gerenciador);
+        //ControllerArquivo.leitorCarro("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\carros.txt",gerenciador);
+        //ControllerArquivo.leitorPiloto("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\pilotos.txt",gerenciador);
         new Thread(this).start(); //executa a thread do servidor 
     }
     
+    /***Método que starta o servidor.
+     * @author Gabriel Sá Barreto Alves e Samuel Vitorio Lima
+     */
     private void criarConexão() throws IOException{
         servidor = new ServerSocket(this.porta);
         System.out.println("Porta 12345 aberta!");    
     }
 
+    /**Método da interface Runnable responsável por executar todas as atividades da thread quando for iniciada.
+     * @author Samuel Vitorio Lima e Gabriel Sá Barreto 
+     */
     @Override
     public void run() {
         while (true) {
@@ -73,11 +95,11 @@ public class Servidor implements Runnable {
         }
     }
     
+    /**Método que envia a todos os cliente conectados pacotes específicos para armazenamento de informações e outros dados.
+     */
     public synchronized void distribuiMensagem(String msg) throws IOException {
-        // envia msg para todo mundo
+        // envia msg a todos os clientes conectados
         for (PrintStream cliente : this.clientes) {
-            //cliente.println(opcao +";"+msg);
-            //System.out.println("entra");
             DataOutputStream saida = new DataOutputStream(cliente);
             saida.writeUTF(msg);
         }

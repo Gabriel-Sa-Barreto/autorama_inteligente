@@ -11,8 +11,6 @@ import model.Carro;
 import model.Corrida;
 import model.Piloto;
 import model.Administrador;
-import model.Record;
-//import model.Volta;
 
 /**
  *
@@ -31,7 +29,7 @@ public class ControllerPacotes {
         return recebido;
     }
     
-    /**Método para transformar o pacote em uma Piloto.
+    /**Método para transformar o pacote em um Piloto.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param pacote String - pacote enviado pelo server.
     * @return Piloto - piloto enviado pelo server
@@ -42,7 +40,7 @@ public class ControllerPacotes {
         return piloto;
     }
     
-     /**Método para transformar o pacote em uma Administrador.
+     /**Método para transformar o pacote em um Administrador.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param pacote String - pacote enviado pelo server.
     * @return Administrador - administrador enviado pelo server
@@ -52,17 +50,9 @@ public class ControllerPacotes {
         Administrador adm = new Administrador(dadosAdm[1],dadosAdm[2]);
         return adm;
     }
+ 
     
-    /*public Volta transformarVolta(String pacote , List<Carro> competidores){
-        String volta[] = pacote.split(";");
-        Carro carro = carro(competidores , volta[1]);
-        if(carro == null)
-            return null;
-        Volta recebida = new Volta(carro , volta[2]);
-        return recebida;
-    }*/
-    
-    /**Método para transformar o pacote em uma Carro.
+    /**Método para transformar o pacote em um Carro.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param pacote String - pacote enviado pelo server.
     * @return Carro - carro enviado pelo server
@@ -77,11 +67,6 @@ public class ControllerPacotes {
         return car;
     }
     
-    /*public Record transformarRecord(String pacote){
-        String record[] = pacote.split(";");
-        Record geral = new Record(record[1] , record[2] , record[3]);
-        return geral;
-    }*/
     
     /**Método para transformar o pacote em uma Volta.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
