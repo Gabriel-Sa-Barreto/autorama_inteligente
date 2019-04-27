@@ -20,10 +20,20 @@ import multiclient.Servidor;
  */
 public class ControllerGerenciador {
     
+    /**Lista que guarda a todos os carros cadastrados no sistema.
+     */
     private static List<Carro> carros;
+    
+    /**Lista que guarda a todos os pilotos cadastrados no sistema.
+     */
     private static List<Piloto> pilotos;
+    
+    /**Lista que guarda a todos os administradores cadastrados no sistema.
+     */
     private static List<Administrador> adms;
 
+    /**Construtor que inicializa as listas de adm, carros e pilotos.
+     */
     public ControllerGerenciador() {
         carros = new ArrayList<>();
         pilotos = new ArrayList<>();
@@ -85,7 +95,7 @@ public class ControllerGerenciador {
         adms.forEach(u -> System.out.println(u.getNome()));
     }
     
-    /**Método para verificar se ja existe um piloto cadastrado com aquele nome
+    /**Método para verificar se ja existe um adm cadastrado com aquele nome
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param nome String - nome do adm
     * @param senha String - senha do adm
@@ -144,7 +154,7 @@ public class ControllerGerenciador {
         carros.removeIf( u -> u.getId().equals(id));
     }
     
-    /**Método para remover um carro cadastrado com aquele id
+    /**Método para atualizar os dados dos cliente novos que se conectaram ao servidor.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param servidor Servidor - poder chamar o metodo para enviar os dados solicitados
     */

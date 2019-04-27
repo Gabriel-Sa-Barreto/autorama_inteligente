@@ -210,7 +210,7 @@ public class ControllerCorrida {
         }
     }
     
-    /**Método para adicionar um competidor na corrida.
+    /**Método para adicionar um recorde geral do circuito do autorama.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param geral Record - receber o record geral do jogo via server.
     */
@@ -247,7 +247,7 @@ public class ControllerCorrida {
         }
     }
     
-    /**Método private para auxiliar na conversao de String para int
+    /**Método private para auxiliar na verificação do tempo de uma volta feito por um carro.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param anterior Volta - volta anterior.
     * @param posterior Volta - volta a ser inserida.

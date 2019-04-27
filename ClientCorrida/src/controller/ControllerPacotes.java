@@ -45,7 +45,7 @@ public class ControllerPacotes {
         return recebida;
     }
     
-    /**Método para transformar o pacote em uma Carro.
+    /**Método para transformar o pacote em um Carro.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param pacote String - pacote enviado pelo server.
     * @param competidores List - lista com os competidores da corrida.
@@ -62,7 +62,7 @@ public class ControllerPacotes {
         return null;
     }
     
-    /**Método para transformar o pacote em uma Volta.
+    /**Método para transformar o pacote em dados de record.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param pacote String - pacote enviado pelo server.
     * @return Record  - record recebido
@@ -73,7 +73,7 @@ public class ControllerPacotes {
         return geral;
     }
     
-    /**Método para transformar o pacote em uma Volta.
+    /**Método para transformar o pacote em uma ação que será realizada.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param pacote String - pacote enviado pelo server.
     * @return String  - o tipo do pacote
@@ -97,7 +97,7 @@ public class ControllerPacotes {
         }
     }
     
-    /**Método private para auxiliar na conversao de String para int
+    /**Método private para retornar um carro desejado.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param carros List - a lista de competidores que estam na corrida.
     * @param id int - o id do carro a ser pesquisado.

@@ -13,7 +13,11 @@ import java.net.Socket;
  * @author lsjsa
  */
 public class ControllerRede {
-     
+    
+    /**Método responsável por enviar pacotes ao servidor
+     * @param conexao - parâmatro do objeto socket do cliente 
+     * @param pacote  - pacote a ser enviado no formato de uma string
+    */
     public void enviarDado(Socket conexao , String pacote){
         try{
             DataOutputStream saida = new DataOutputStream(conexao.getOutputStream());

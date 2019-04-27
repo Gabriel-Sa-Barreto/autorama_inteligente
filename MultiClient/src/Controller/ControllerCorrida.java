@@ -17,6 +17,9 @@ import model.Corrida;
  */
 public class ControllerCorrida {
     
+    /**
+     * Atributo para guardar dados da corrida.
+     */
     private static Corrida corrida = null;
     
     

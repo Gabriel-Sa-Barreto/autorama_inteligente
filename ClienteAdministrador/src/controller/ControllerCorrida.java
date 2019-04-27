@@ -17,6 +17,9 @@ import model.Piloto;
  */
 public class ControllerCorrida {
     
+    /**
+     * Atributo responsável por guardar informações da corrida em andamento.
+     */
     private static Corrida corrida = null;
     
     /**Método para cadastrar a corrida.
@@ -29,7 +32,7 @@ public class ControllerCorrida {
         return nova;
     }
     
-    /**Método para cadastrar a corrida.
+    /**Método para salvar uma corrida.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param nova Corrida - salvar a corrida recebida pelo server
     */

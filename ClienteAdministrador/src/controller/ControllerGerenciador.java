@@ -20,11 +20,24 @@ import model.Piloto;
  */
 public class ControllerGerenciador {
     
+    /**
+     * Lista que guarda todos os carros cadastrados no sistema.
+     */
     private static List<Carro> carros;
+    
+    /**
+     * Lista que guarda todos os pilotos cadastrados no sistema.
+     */
     private static List<Piloto> pilotos;
+    
+    /**
+     * Lista que guarda todos os carros administradores no sistema.
+     */
     private static List<Administrador> adms;
 
-    
+    /**
+     * Controller que inicializa todos as lista da classe.
+     */
     public ControllerGerenciador() {
         //por ser recurso compartilhado o recurso usamos o Collection.synchronizedList
         carros = Collections.synchronizedList(new ArrayList<Carro>());

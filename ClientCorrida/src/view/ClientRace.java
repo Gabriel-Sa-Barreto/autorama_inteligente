@@ -10,16 +10,10 @@ import controller.ControllerCorrida;
 import controller.ControllerRede;
 import java.awt.CardLayout;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import model.PainelCorrida;
 import model.Qualificacao;
-import model.Record;
-import model.Volta;
 
 /**
  *
@@ -431,7 +425,7 @@ public class ClientRace extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         corrida = new ControllerCorrida();
         rede = new ControllerRede();
-        Cliente cliente = new Cliente("192.168.25.3",12345);
+        Cliente cliente = new Cliente("127.0.0.1",12345);
         cliente.executa();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

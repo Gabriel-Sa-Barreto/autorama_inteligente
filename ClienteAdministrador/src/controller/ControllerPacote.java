@@ -43,7 +43,7 @@ public class ControllerPacote {
         return car;
     }
     
-    /**Método para transformar o pacote em uma Piloto.
+    /**Método para transformar o pacote em um Piloto.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param pacote String - pacote enviado pelo server.
     * @return Piloto - piloto enviado pelo server
@@ -59,7 +59,7 @@ public class ControllerPacote {
         return novo;
     }
     
-    /**Método para transformar o pacote em uma Administrador.
+    /**Método para transformar o pacote em um Administrador.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param pacote String - pacote enviado pelo server.
     * @return Administrador - administrador enviado pelo server
