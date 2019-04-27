@@ -5,3 +5,7 @@ real a corrida dos participantes, qualificação dos carros e tempo recorde de m
 em um celular, tablet ou computador.
 O circuito do autorama possui um sensor RFID ao qual retorna informações dos carros que passam por ele. Essas informaços são
 retiradas por um Raspberry PI Zero W e enviadas a um servidor local para analise e demonstração ao usuário cliente. 
+
+Passos para execução do sistema:
+
+	1
