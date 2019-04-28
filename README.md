@@ -12,7 +12,7 @@ Passos para execução do sistema:
 
 	1ª - Abra o projeto multiclient, abra a classe Servidor.java e TrataCliente.java e modifique o diretório ao qual os arquivos para salvar os dados serão colocados.
 	2ª - Execute o arquivo Multiclient.java do projeto multiclient para startar o servidor.
-	3ª - Execute o arquivo TelaPrincipal.java para logar como administrador.
+	3ª - Execute o arquivo TelaPrincipal.java para logar como administrador (user: Admin, Senha: admin123).
 	4ª - No projeto ClientCorrida, execute o arquivo ClientRace.java localizado no pacote view.
 	5ª - Como administrador, realize cadastro de carros e pilotos.
 	6ª - Como administrador, realize cadastro de corrida com a quantidade de voltas.
