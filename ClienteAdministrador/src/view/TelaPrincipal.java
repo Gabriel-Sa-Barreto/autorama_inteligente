@@ -1397,6 +1397,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public void conectarCliente() throws IOException{
         adm = new Cliente("127.0.0.1" , 12345); 
         adm.executa(); //conecta o cliente ADM ao servidor
+        //envia requisição pro servidor para atualizar os dados
+        rede.enviarDado(adm.getCliente() , "" ,"100");
     }
 
     /**

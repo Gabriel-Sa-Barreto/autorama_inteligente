@@ -4,6 +4,7 @@ import controller.ControllerCorrida;
 import controller.ControllerGerenciador;
 import controller.ControllerPacote;
 import java.io.*;
+import model.Administrador;
 
 /**
  *
@@ -69,14 +70,24 @@ public class Recebedor implements Runnable {
                 System.out.println(pacote);
                 opcao = pacotes.acao(pacote);
                 switch(opcao){
-                    case "11": //cadastrar carro
-                        gerenciador.salvarCarro(pacotes.transformarCarro(pacote));
+                    case "11"://cadastrar carro
+                        if(!gerenciador.existeCarro(pacotes.transformarCarro(pacote).getId())){
+                            //caso o carro não esteja cadastrado no sistema.
+                            gerenciador.salvarCarro(pacotes.transformarCarro(pacote));
+                        }
                         break;
-                    case "12": //cadastrar piloto
-                        gerenciador.salvarPiloto(pacotes.transformarPiloto(pacote));
+                    case "12"://cadastrar piloto
+                        if(!gerenciador.existePiloto(pacotes.transformarPiloto(pacote).getNome())){
+                            //caso o piloto não esteja cadastrado no sistema.
+                            gerenciador.salvarPiloto(pacotes.transformarPiloto(pacote));
+                        }
                         break;
                     case "13"://cadastrar adm
-                        gerenciador.salvarAdm(pacotes.transformarAdm(pacote));
+                        Administrador adm = pacotes.transformarAdm(pacote);
+                        if(!gerenciador.existeAdm(adm.getNome(), adm.getSenha())){
+                            //caso o adm não esteja cadastrado no sistema.
+                            gerenciador.salvarAdm(adm);
+                        }
                         break;
                     case "21"://remover piloto
                         gerenciador.removerPiloto(pacotes.transformarPiloto(pacote).getNome());
