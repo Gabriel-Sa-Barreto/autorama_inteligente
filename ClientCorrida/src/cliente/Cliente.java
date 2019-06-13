@@ -56,7 +56,7 @@ public class Cliente {
      */
     public void executa() throws UnknownHostException, IOException {
         // thread para receber mensagens do servidor
-        receive = new Recebedor(cliente.getInputStream());
+        receive = new Recebedor(cliente.getInputStream() , getCliente());
         new Thread(receive).start();
     }
 

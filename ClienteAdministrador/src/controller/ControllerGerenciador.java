@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import model.Administrador;
 import model.Carro;
 import model.Piloto;
+import model.Record;
 
 /**
  *
@@ -241,5 +242,18 @@ public class ControllerGerenciador {
         while(tblRemove.getRowCount() != 0){ //remover todas celulas da tabela
             tblRemove.removeRow(0);
         }            
+    }
+    
+    public void bateuRecord(Record record , String piloto){
+        for (Iterator<Piloto> it = pilotos.iterator(); it.hasNext();) {
+            Piloto verificar = it.next();
+            if(verificar.getNome().equals(piloto)){
+                Record realizado = verificar.getRecord();
+                if(realizado.compareTo(record.getTempo()) == 1){
+                    verificar.setRecord(record);
+                }           
+            }
+        }
+
     }
 }

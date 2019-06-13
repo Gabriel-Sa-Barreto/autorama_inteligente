@@ -104,6 +104,9 @@ public class Recebedor implements Runnable {
                     case "32"://salvar competidor
                         corrida.salvarCompetidor(pacotes.transformarCarro(pacote));
                         break;
+                    case "50"://verifica se bateu record
+                        gerenciador.bateuRecord(pacotes.transformarRecord(pacote), pacotes.nomePiloto(pacote));
+                        break;
                 }
             }catch(Exception ex){
                 System.out.println(ex.toString());

@@ -125,6 +125,9 @@ public class TrataCliente implements Runnable {
                         corridaController.pausar_reiniciar();
                         servidor.distribuiMensagem(pacote);
                         break;
+                    case "50":    
+                        servidor.distribuiMensagem(pacote);
+                        break;
                     case "00": //sai da thread do cliente (desconectar)
                         start = false;
                         break;

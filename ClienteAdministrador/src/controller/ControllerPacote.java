@@ -71,6 +71,18 @@ public class ControllerPacote {
         return novo;
     }
     
+    public Record transformarRecord(String pacote){
+        Record novo;
+        String record[] = pacote.split(";");
+        novo = new Record(record[1] , record[2]);
+        return novo;
+    }
+    
+    public String nomePiloto(String pacote){
+        String record[] = pacote.split(";");
+        return record[3];
+    }
+    
     
     /**Método para transformar o pacote em uma Volta.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
