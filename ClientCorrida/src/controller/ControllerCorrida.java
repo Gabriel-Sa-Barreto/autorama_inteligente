@@ -54,7 +54,7 @@ public class ControllerCorrida {
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param completada Volta - Uma volta enviada via pacote pelo server.
     */
-    public void voltaCompleta(Volta completada){
+    public void voltaCompleta(Volta completada ,  Socket socket){
 	List<Volta> voltas = getVoltas(); //pega a lista de voltas da corrida
         Volta volta;
         LocalDate data = LocalDate.now(); // a data atual
@@ -70,21 +70,28 @@ public class ControllerCorrida {
                 //record.adicionarRecord(completada, data.toString());
             }
             else{
-                // caso já possua uma volta na lista verifica se pelo tempo ele ja poderia ter dado uma volta
-                if(deuUmaVolta(completada , volta)){ //caso retorne true é porque já deu tempo de ter feito uma volta
-                    completada.setTempoVolta(tempoVolta(volta , completada)); // insere o tempo da volta via o calculo realizado pela função tempoVolta()
-                    completada.setQuantidade(volta.getQuantidade() - 1); // diminuir um em volta que faltam o piloto
-                    corrida.setCompletadas(volta.getQuantidade() - 1); // diminuir um em volta que faltam na corrida
-                    voltas.removeIf(u -> u.equals(completada)); //uso de lambda para a remoção da celula ja existente atraves do id
-                    voltas.add(completada); // adiciona a volta nova
-                    record.adicionarRecord(completada, data.toString()); //verifica se bateu o record
-                }
+                //verifica se já concluiu a corrida
+                if(volta.getQuantidade() != 0){
+                    // caso já possua uma volta na lista verifica se pelo tempo ele ja poderia ter dado uma volta
+                    if(deuUmaVolta(completada , volta)){ //caso retorne true é porque já deu tempo de ter feito uma volta
+                        completada.setTempoVolta(tempoVolta(volta , completada)); // insere o tempo da volta via o calculo realizado pela função tempoVolta()
+                        completada.setQuantidade(volta.getQuantidade() - 1); // diminuir um em volta que faltam o piloto
+                        corrida.setCompletadas(corrida.getCompletadas() + 1); // diminuir um em volta que faltam na corrida
+                        voltas.removeIf(u -> u.equals(completada)); //uso de lambda para a remoção da celula ja existente atraves do id
+                        voltas.add(completada); // adiciona a volta nova
+                        record.adicionarRecord(completada, data.toString()); //verifica se bateu o record
+                    }
+                }    
             }	
 	}
         voltas.sort(Comparator.comparingInt( u -> u.getQuantidade())); //uso de lambda para ordenar a lista via quantidade de voltas que faltam
         //mostrar no controle o gerenciamento das voltas via uso de lambda
         voltas.forEach(u -> System.out.println( "v id:" + u.getCarro().getId() + " " + "te: " + u.getTempoVolta() + " " + "volt: " + u.getQuantidade()));
         corrida.setVoltas(voltas); // devolve a lista modificada
+        if(corrida.getCompletadas() == corrida.getTotaisDeVoltas() * corrida.getCompetidores().size()){
+            corrida.setEstado(false);
+            linhaFinal(socket);
+        } 
     }
     
     /**Método para verificar se um carro já teria realizado uma volta.
@@ -132,12 +139,9 @@ public class ControllerCorrida {
     * @param socket Socket - O socket para o envio dos records.
     */
     public void linhaFinal(Socket socket){
-        if(corrida.getCompletadas() == 0){
-            corrida.setEstado(false); //encerrar corrida
             enviarRecords(socket); //enviar os records para o server
             corrida.limparCompetidores(); // limpar a lista de competidores
-            corrida.limparVoltas();// limpar a lista de voltas
-        }    
+            corrida.limparVoltas();// limpar a lista de voltas    
     }
     
     /**Método para quando o adm quiser pausar ou reiniciar corrida.
@@ -292,8 +296,8 @@ public class ControllerCorrida {
     */
     private void enviarRecords(Socket socket){
         List<Record> records = record.records();
-        for(Record record : records){
-            rede.enviarDado(socket, record.toString(), "50");
+        for(Record enviar : records){
+            rede.enviarDado(socket, enviar.toString(), "50");
         }
     }
 }

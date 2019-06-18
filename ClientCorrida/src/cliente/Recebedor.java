@@ -4,6 +4,7 @@ import controller.ControllerCorrida;
 import controller.ControllerPacotes;
 import model.Volta;
 import java.io.*;
+import java.net.Socket;
 
 /**
  *
@@ -14,8 +15,8 @@ public class Recebedor implements Runnable {
     /**
      * Atributo que receberá o Inputstream do servidor conectado.
      */
-    private InputStream servidor;
-    
+    private InputStream servidorIN;
+    private Socket servidorOUT;
     /**
      * Atributo que configura se as atividades da serão executadas.
      */
@@ -32,10 +33,12 @@ public class Recebedor implements Runnable {
     
     /**Construtor da classe Recebedor que inicia todos os atributos. 
      * @author Samuel Vitorio Lima e Gabriel Sá Barreto 
-     * @param servidor - Atributo responsável por recebdor o objeto InputStream do servidor
+     * @param entrada - Atributo responsável por recebdor o objeto InputStream do servidor
+     * @param saida - Atributo responsável por recebdor o objeto Socket do servidor
      */
-    public Recebedor(InputStream servidor) {
-        this.servidor = servidor;
+    public Recebedor(InputStream entrada , Socket saida) {
+        this.servidorIN = entrada;
+        this.servidorOUT = saida;
         this.start    = true;
         pacotes = new ControllerPacotes();
         corrida = new ControllerCorrida();
@@ -57,7 +60,7 @@ public class Recebedor implements Runnable {
     public void run() {
         while(start){
             String pacote , opcao;
-            DataInputStream entrada = new DataInputStream(this.servidor);
+            DataInputStream entrada = new DataInputStream(this.servidorIN);
             // recebe msgs do servidor e imprime na tela    
             try{
                 pacote = entrada.readUTF();
@@ -80,9 +83,10 @@ public class Recebedor implements Runnable {
                         break;
                     case "41":
                         Volta volta = pacotes.transformarVolta(pacote, corrida.competidores());
-                        if(volta != null && !corrida.estaPausado()){
+                        if(volta != null && !corrida.estaPausado() && corrida.partidaEmAdamento()){
+                            System.out.println("Foi");
                             ControllerCorrida.setPacoteSensor(true);
-                            corrida.voltaCompleta(volta);
+                            corrida.voltaCompleta(volta , servidorOUT);
                             ControllerCorrida.setPacoteSensor(false);
                         }
                         break;
