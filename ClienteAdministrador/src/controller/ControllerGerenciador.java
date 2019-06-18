@@ -249,11 +249,14 @@ public class ControllerGerenciador {
             Piloto verificar = it.next();
             if(verificar.getNome().equals(piloto)){
                 Record realizado = verificar.getRecord();
-                if(realizado.compareTo(record.getTempo()) == 1){
+                if(realizado != null){
+                    if(realizado.compareTo(record.getTempo()) == 1){
+                        verificar.setRecord(record);
+                    }           
+                }
+                else
                     verificar.setRecord(record);
-                }           
             }
         }
-
     }
 }

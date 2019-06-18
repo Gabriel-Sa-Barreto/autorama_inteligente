@@ -26,7 +26,7 @@ public class ClientCorrida {
     public static void main(String[] args) throws IOException {
         
         ControllerRede rede = new ControllerRede();
-        Cliente cliente = new Cliente("127.0.0.1",12345);
+        Cliente cliente = new Cliente("192.168.25.7",12345);
         cliente.executa();
         //ControllerPacotes pacotes = new ControllerPacotes();
         int i , laco = 0;

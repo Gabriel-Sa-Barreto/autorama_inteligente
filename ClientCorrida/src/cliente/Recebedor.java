@@ -83,11 +83,11 @@ public class Recebedor implements Runnable {
                         break;
                     case "41":
                         Volta volta = pacotes.transformarVolta(pacote, corrida.competidores());
-                        if(volta != null && !corrida.estaPausado()){
+                        if(volta != null && !corrida.estaPausado() && corrida.partidaEmAdamento()){
+                            System.out.println("Foi");
                             ControllerCorrida.setPacoteSensor(true);
-                            corrida.voltaCompleta(volta);
+                            corrida.voltaCompleta(volta , servidorOUT);
                             ControllerCorrida.setPacoteSensor(false);
-                            corrida.linhaFinal(servidorOUT);
                         }
                         break;
                 }
