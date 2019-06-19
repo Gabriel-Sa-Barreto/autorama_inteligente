@@ -11,6 +11,7 @@ import java.io.*;
 import Controller.ControllerPacotes;
 import Controller.ControllerGerenciador;
 import Controller.ControllerCorrida;
+import model.Piloto;
 
 /**
  *
@@ -125,7 +126,12 @@ public class TrataCliente implements Runnable {
                         corridaController.pausar_reiniciar();
                         servidor.distribuiMensagem(pacote);
                         break;
-                    case "50":    
+                    case "50":
+                        Piloto record = gerenciador.bateuRecord(pacotes.transformarRecord(pacote), pacotes.nomePiloto(pacote));
+                        if(record != null){
+                            ControllerArquivo.removerPiloto("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\pilotos.txt" ,record);
+                            ControllerArquivo.escreverPiloto("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\pilotos.txt" , record);
+                        }
                         servidor.distribuiMensagem(pacote);
                         break;
                     case "00": //sai da thread do cliente (desconectar)

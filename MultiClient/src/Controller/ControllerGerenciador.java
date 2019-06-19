@@ -12,6 +12,7 @@ import java.util.List;
 import model.Administrador;
 import model.Carro;
 import model.Piloto;
+import model.Record;
 import multiclient.Servidor;
 
 /**
@@ -168,5 +169,25 @@ public class ControllerGerenciador {
         for(Administrador adm : adms){
             servidor.distribuiMensagem("13;"+adm.toString());
         }
+    }
+    
+    public Piloto bateuRecord(Record record , String piloto){
+        for (Iterator<Piloto> it = pilotos.iterator(); it.hasNext();) {
+            Piloto verificar = it.next();
+            if(verificar.getNome().equals(piloto)){
+                Record realizado = verificar.getRecord();
+                if(realizado != null){
+                    if(realizado.compareTo(record.getTempo()) == 1){
+                        verificar.setRecord(record);
+                        return verificar;
+                    }
+                }
+                else{
+                    verificar.setRecord(record);
+                    return verificar;
+                }    
+            }
+        }
+        return null;
     }
 }

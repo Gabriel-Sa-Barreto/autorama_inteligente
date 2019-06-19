@@ -11,6 +11,7 @@ import model.Carro;
 import model.Corrida;
 import model.Piloto;
 import model.Administrador;
+import model.Record;
 
 /**
  *
@@ -106,6 +107,18 @@ public class ControllerPacotes {
                 return carro;
         }
         return null;
+    }
+    
+    public Record transformarRecord(String pacote){
+        Record novo;
+        String record[] = pacote.split(";");
+        novo = new Record(record[1] , record[2]);
+        return novo;
+    }
+    
+    public String nomePiloto(String pacote){
+        String record[] = pacote.split(";");
+        return record[3];
     }
     
     
