@@ -51,6 +51,9 @@ public class Piloto {
     
     @Override
     public String toString() {
-        return nome;
+        if(record != null)
+            return nome + ";" + record.getData() + ";" + record.getTempo();
+        else 
+            return nome;
     }
 }

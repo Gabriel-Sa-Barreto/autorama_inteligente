@@ -88,10 +88,16 @@ public class ControllerCorrida {
         //mostrar no controle o gerenciamento das voltas via uso de lambda
         voltas.forEach(u -> System.out.println( "v id:" + u.getCarro().getId() + " " + "te: " + u.getTempoVolta() + " " + "volt: " + u.getQuantidade()));
         corrida.setVoltas(voltas); // devolve a lista modificada
-        if(corrida.getCompletadas() == corrida.getTotaisDeVoltas() * corrida.getCompetidores().size()){
+        /*if(corrida.getCompletadas() == corrida.getTotaisDeVoltas() * corrida.getCompetidores().size()){
             corrida.setEstado(false);
             linhaFinal(socket);
-        } 
+        }*/
+        if(!voltas.isEmpty()){
+            if(voltas.get(0).getQuantidade() == 0){
+                corrida.setEstado(false);
+                linhaFinal(socket);
+            }
+        }
     }
     
     /**Método para verificar se um carro já teria realizado uma volta.

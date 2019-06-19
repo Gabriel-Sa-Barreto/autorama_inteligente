@@ -258,5 +258,6 @@ public class ControllerGerenciador {
                     verificar.setRecord(record);
             }
         }
+        
     }
 }
