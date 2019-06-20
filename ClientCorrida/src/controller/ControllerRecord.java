@@ -7,6 +7,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import model.Record;
@@ -58,7 +59,8 @@ public class ControllerRecord {
                 }    
             }
         }
-        records.forEach(u -> System.out.println("r" + u.getPiloto() + "t" + u.getTempo())); //mostrar os records obtido pelo console    
+        records.forEach(u -> System.out.println("r" + u.getPiloto() + "t" + u.getTempo())); //mostrar os records obtido pelo console
+        Collections.sort(records);
     }
     
     /**Método para verificar se bateu o record

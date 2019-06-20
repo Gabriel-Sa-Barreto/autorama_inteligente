@@ -43,6 +43,10 @@ public class ControllerCorrida {
         corrida.setComecou(true);
     }
     
+    public void terminarCorrida(){
+        corrida = null;
+    }
+    
     /**Método que salva um novo corredor na lista de competidores da nova corrida que será iniciada
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param carro Carro - salvar competidor

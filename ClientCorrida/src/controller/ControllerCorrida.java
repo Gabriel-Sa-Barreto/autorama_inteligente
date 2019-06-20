@@ -88,16 +88,16 @@ public class ControllerCorrida {
         //mostrar no controle o gerenciamento das voltas via uso de lambda
         voltas.forEach(u -> System.out.println( "v id:" + u.getCarro().getId() + " " + "te: " + u.getTempoVolta() + " " + "volt: " + u.getQuantidade()));
         corrida.setVoltas(voltas); // devolve a lista modificada
-        /*if(corrida.getCompletadas() == corrida.getTotaisDeVoltas() * corrida.getCompetidores().size()){
+        if(corrida.getCompletadas() == corrida.getTotaisDeVoltas() * corrida.getCompetidores().size()){
             corrida.setEstado(false);
             linhaFinal(socket);
-        }*/
-        if(!voltas.isEmpty()){
+        }
+        /*if(!voltas.isEmpty()){
             if(voltas.get(0).getQuantidade() == 0){
                 corrida.setEstado(false);
                 linhaFinal(socket);
             }
-        }
+        }*/
     }
     
     /**Método para verificar se um carro já teria realizado uma volta.
@@ -208,6 +208,14 @@ public class ControllerCorrida {
         return record.recordPiloto(piloto);
     }
     
+    public Record getRecord(int indice){
+        return record.records().get(indice);
+    }
+    
+    public boolean temRecord(){
+        return record.records().isEmpty();
+    }
+    
     /**Método para adicionar um competidor na corrida.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param carro Carro - o carro juntamente inserido com seu piloto na corrida.
@@ -305,5 +313,6 @@ public class ControllerCorrida {
         for(Record enviar : records){
             rede.enviarDado(socket, enviar.toString(), "50");
         }
+        rede.enviarDado(socket, "", "01"); // terminar a corrida
     }
 }

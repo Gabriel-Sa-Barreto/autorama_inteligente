@@ -973,7 +973,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="113" max="32767" attributes="0"/>
+                      <EmptySpace pref="128" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -1016,7 +1016,7 @@
                           </Group>
                           <Component id="jScrollPane3" alignment="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="24" max="32767" attributes="0"/>
+                      <EmptySpace pref="8" max="32767" attributes="0"/>
                       <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                   </Group>
@@ -1218,32 +1218,13 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable2">
+                <Component class="javax.swing.JTable" name="jRank">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="4" rowCount="18">
-                        <Column editable="true" title="Rank" type="java.lang.Object">
-                          <Data value="         1&#xaa;"/>
-                          <Data value="         2&#xaa;"/>
-                          <Data value="         3&#xaa;"/>
-                          <Data value="         4&#xaa;"/>
-                          <Data value="         5&#xaa;"/>
-                          <Data value="         6&#xaa;"/>
-                          <Data value="         7&#xaa;"/>
-                          <Data value="         8&#xaa;"/>
-                          <Data value="         9&#xaa;"/>
-                          <Data value="       10&#xaa;"/>
-                          <Data value="       11&#xaa;"/>
-                          <Data value="       12&#xaa;"/>
-                          <Data value="       13&#xaa;"/>
-                          <Data value="       14&#xaa;"/>
-                          <Data value="       15&#xaa;"/>
-                          <Data value="       16&#xaa;"/>
-                          <Data value="       17&#xaa;"/>
-                          <Data value="       18&#xaa;"/>
-                        </Column>
+                      <Table columnCount="4" rowCount="0">
+                        <Column editable="true" title="Rank" type="java.lang.Object"/>
                         <Column editable="true" title="Nome" type="java.lang.Object"/>
-                        <Column editable="true" title="Equipe" type="java.lang.Object"/>
+                        <Column editable="true" title="Data" type="java.lang.Object"/>
                         <Column editable="true" title="Volta mais r&#xe1;pida" type="java.lang.Object"/>
                       </Table>
                     </Property>
