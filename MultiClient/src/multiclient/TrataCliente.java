@@ -137,6 +137,11 @@ public class TrataCliente implements Runnable {
                     case "00": //sai da thread do cliente (desconectar)
                         start = false;
                         break;
+                    case "01":
+                        start = false;
+                        if(corridaController.comecouCorrida())
+                            corridaController.terminarCorrida();
+                        break;
                     case "41": //contagem de voltas do sensor
                         servidor.distribuiMensagem(pacote);
                         break;   

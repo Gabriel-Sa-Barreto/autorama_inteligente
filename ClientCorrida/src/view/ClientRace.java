@@ -50,10 +50,10 @@ public class ClientRace extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButtonSairHome = new javax.swing.JButton();
         JpQualificação = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabelQualificacao = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabelRecordQ = new javax.swing.JLabel();
+        jLabelAutorQ = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTQualificacao = new javax.swing.JTable();
         JpVoltarQualificação = new javax.swing.JButton();
@@ -149,17 +149,17 @@ public class ClientRace extends javax.swing.JFrame {
         JpQualificação.setBackground(java.awt.Color.lightGray);
         JpQualificação.setBorder(new javax.swing.border.MatteBorder(null));
 
-        jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
-        jLabel3.setText("Sessão de Qualificação:");
+        jLabelQualificacao.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        jLabelQualificacao.setText("Sessão de Qualificação:");
 
         jLabel4.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabel4.setText("Classificação:");
 
-        jLabel5.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
-        jLabel5.setText("Recorde:");
+        jLabelRecordQ.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        jLabelRecordQ.setText("Recorde:");
 
-        jLabel6.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
-        jLabel6.setText("Autor:");
+        jLabelAutorQ.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        jLabelAutorQ.setText("Autor:");
 
         jTQualificacao.setBorder(new javax.swing.border.MatteBorder(null));
         jTQualificacao.setModel(new javax.swing.table.DefaultTableModel(
@@ -207,11 +207,11 @@ public class ClientRace extends javax.swing.JFrame {
                             .addGroup(JpQualificaçãoLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel6))
+                                .addComponent(jLabelAutorQ))
                             .addGroup(JpQualificaçãoLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
+                                .addComponent(jLabelQualificacao)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel5)))
+                                .addComponent(jLabelRecordQ)))
                         .addGap(178, 178, 178)
                         .addComponent(jButtonSairQuali)))
                 .addContainerGap())
@@ -223,12 +223,12 @@ public class ClientRace extends javax.swing.JFrame {
                     .addGroup(JpQualificaçãoLayout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addGroup(JpQualificaçãoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabelQualificacao)
+                            .addComponent(jLabelRecordQ, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(JpQualificaçãoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabelAutorQ))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(JpQualificaçãoLayout.createSequentialGroup()
@@ -358,14 +358,12 @@ public class ClientRace extends javax.swing.JFrame {
         CardLayout cl = (CardLayout) JpClienteCorrida.getLayout();
         cl.show(JpClienteCorrida, "Tela de Qualificação");
         threadQualificacao();
-        corrida.linhaFinal(cliente.getCliente());
     }//GEN-LAST:event_btnQualificacaoActionPerformed
 
     private void btnCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCorridaActionPerformed
         CardLayout cl = (CardLayout) JpClienteCorrida.getLayout();
         cl.show(JpClienteCorrida, "Tela de Corrida");
         threadCorrida();
-        corrida.linhaFinal(cliente.getCliente());
     }//GEN-LAST:event_btnCorridaActionPerformed
 
     private void JpVoltarQualificaçãoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JpVoltarQualificaçãoActionPerformed
@@ -381,6 +379,7 @@ public class ClientRace extends javax.swing.JFrame {
     private void jButtonSairHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairHomeActionPerformed
         try {
             // TODO add your handling code here:
+            rede.enviarDado(cliente.getCliente(), "", "01");
             cliente.fecharConexão();
         } catch (IOException ex) {
             Logger.getLogger(ClientRace.class.getName()).log(Level.SEVERE, null, ex);
@@ -409,7 +408,7 @@ public class ClientRace extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSairClassActionPerformed
     
     private void threadQualificacao(){
-        threadQualificacao = new Qualificacao(corrida, jTQualificacao);
+        threadQualificacao = new Qualificacao(corrida, jTQualificacao , jLabelQualificacao , jLabelRecordQ , jLabelAutorQ);
         new Thread(threadQualificacao,"qualificacao").start();
     }
     
@@ -449,13 +448,13 @@ public class ClientRace extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSairQuali;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabelAutor;
+    private javax.swing.JLabel jLabelAutorQ;
     private javax.swing.JLabel jLabelClass;
+    private javax.swing.JLabel jLabelQualificacao;
     private javax.swing.JLabel jLabelRecord;
+    private javax.swing.JLabel jLabelRecordQ;
     private javax.swing.JLabel jLabelSessao;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

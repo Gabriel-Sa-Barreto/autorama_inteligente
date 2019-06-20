@@ -9,7 +9,7 @@ package model;
  *
  * @author lsjsa
  */
-public class Record {
+public class Record implements Comparable<Record>{
     
     private String piloto;
     private String data;
@@ -75,6 +75,29 @@ public class Record {
         catch (NumberFormatException e) {  // Se houver erro na conversão, retorna o valor padrão
             return padrao;
         }
+    }    
+
+    @Override
+    public int compareTo(Record r) {
+        String resultThis[] = this.getTempo().split(":"); //realizar o split para pegar separadamente os minutos e segundos do tempo
+	String resultComparar[] = r.getTempo().split(":");//realizar o split para pegar separadamente os minutos e segundos do tempo
+        int minutosThis = strToInt(resultThis[0] , 10); //transformar a String em int via funcao strToInt
+        int minutosComparar = strToInt(resultComparar[0] , 10);//transformar a String em int via funcao strToInt
+        int diferencaM = minutosThis - minutosComparar; // verificar a diferença de minutos entre as voltas
+        if(diferencaM == 0){
+            int secundosThis = strToInt(resultThis[1] , 10);//transformar a String em int via funcao strToInt
+            int secundosComparar = strToInt(resultComparar[1] , 10);//transformar a String em int via funcao strToInt
+            int diferencaS = secundosThis - secundosComparar;// verificar a diferença de segundos entre as voltas
+            if(diferencaS < 0)
+                return -1;
+            else if(diferencaS > 0)
+                return 1;
+            else
+                return -1;
+        }
+        else if(diferencaM < 0)
+            return -1;
+        else
+            return 1;
     }
-    
 }

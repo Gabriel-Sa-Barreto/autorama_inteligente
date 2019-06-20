@@ -8,6 +8,8 @@ import clientAdm.Cliente;
 import controller.*;
 import java.awt.CardLayout;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -125,7 +127,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         JpRank = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jRank = new javax.swing.JTable();
         JpgerenciarCorrida = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         comecarCorrida = new javax.swing.JButton();
@@ -262,7 +264,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addGroup(JpHomeLayout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addComponent(jLabel31)))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         JpHomeLayout.setVerticalGroup(
             JpHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -673,7 +675,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                                         .addComponent(criarCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(6, 6, 6))
                                 .addComponent(jLabel22)))))
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCriarCorridaLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel14)
@@ -708,7 +710,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(criarCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jLabel15)
                 .addGap(59, 59, 59))
         );
@@ -718,35 +720,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel16.setText("Rank de pilotos");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jRank.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"         1ª", null, null, null},
-                {"         2ª", null, null, null},
-                {"         3ª", null, null, null},
-                {"         4ª", null, null, null},
-                {"         5ª", null, null, null},
-                {"         6ª", null, null, null},
-                {"         7ª", null, null, null},
-                {"         8ª", null, null, null},
-                {"         9ª", null, null, null},
-                {"       10ª", null, null, null},
-                {"       11ª", null, null, null},
-                {"       12ª", null, null, null},
-                {"       13ª", null, null, null},
-                {"       14ª", null, null, null},
-                {"       15ª", null, null, null},
-                {"       16ª", null, null, null},
-                {"       17ª", null, null, null},
-                {"       18ª", null, null, null}
+
             },
             new String [] {
-                "Rank", "Nome", "Equipe", "Volta mais rápida"
+                "Rank", "Nome", "Data", "Volta mais rápida"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setMinWidth(5);
-            jTable2.getColumnModel().getColumn(0).setMaxWidth(70);
+        jScrollPane2.setViewportView(jRank);
+        if (jRank.getColumnModel().getColumnCount() > 0) {
+            jRank.getColumnModel().getColumn(0).setMinWidth(5);
+            jRank.getColumnModel().getColumn(0).setMaxWidth(70);
         }
 
         javax.swing.GroupLayout JpRankLayout = new javax.swing.GroupLayout(JpRank);
@@ -1150,6 +1135,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void visualizarRankActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarRankActionPerformed
         CardLayout cl = (CardLayout) JpPrincipal.getLayout();
         cl.show(JpPrincipal, "Rank de pilotos");
+        List<Piloto> pilotosCadastrados = gerenciador.getPilotos();
+        DefaultTableModel  mostrarPilotos = (DefaultTableModel) jRank.getModel();
+        synchronized(pilotosCadastrados){
+            Collections.sort(pilotosCadastrados);
+            int i = 1;
+            //iterador para percorrer a lista e mostrar os pilotos cadastrados
+            for (Iterator<Piloto> it = pilotosCadastrados.iterator(); it.hasNext();) {
+                Piloto piloto = it.next();
+                if(piloto.getRecord() == null){
+                    Object[] dados = {i , piloto.getNome(),"sem valor por enquanto" ,"sem valor por enquanto" };
+                    mostrarPilotos.addRow(dados); //adiciona nova linha na tabela de pilotos cadastrados.
+                }else{
+                    Object[] dados = {i , piloto.getNome(),piloto.getRecord().getData() , piloto.getRecord().getTempo()};
+                    mostrarPilotos.addRow(dados); //adiciona nova linha na tabela de pilotos cadastrados.
+                }
+                i++;
+            }
+        }
     }//GEN-LAST:event_visualizarRankActionPerformed
 
     /**
@@ -1395,7 +1398,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
      * @throws IOException 
      */
     public void conectarCliente() throws IOException{
-        adm = new Cliente("192.168.25.7" , 12345); 
+        adm = new Cliente("10.0.0.102" , 12345); 
         adm.executa(); //conecta o cliente ADM ao servidor
         //envia requisição pro servidor para atualizar os dados
         rede.enviarDado(adm.getCliente() , "" ,"100");
@@ -1473,12 +1476,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JTable jRank;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable2;
     private javax.swing.JPanel jpCadAdm;
     private javax.swing.JPanel jpCardCarro;
     private javax.swing.JPanel jpCriarCorrida;

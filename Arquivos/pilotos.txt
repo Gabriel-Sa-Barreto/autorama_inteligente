@@ -1,4 +1,4 @@
-Samuel
-Rafael
-Xande
 Gabriel;2019-06-19;0:42
+Xande;2019-06-19;0:25
+Samuel;2019-06-19;1:34
+Rafael;2019-06-20;0:19

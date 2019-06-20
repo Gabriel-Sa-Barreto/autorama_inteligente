@@ -8,6 +8,7 @@ package model;
 import controller.ControllerCorrida;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,11 +21,17 @@ public class Qualificacao implements Runnable {
     private ControllerCorrida corrida;
     private javax.swing.JTable jTQualificacao;
     private DefaultTableModel  qualificacao;
+    private JLabel sessao;
+    private JLabel record;
+    private JLabel autor;
     
-    public Qualificacao(ControllerCorrida corrida, javax.swing.JTable qualificacao){
+    public Qualificacao(ControllerCorrida corrida, javax.swing.JTable qualificacao , JLabel sessao , JLabel record ,JLabel autor ){
         this.corrida        = corrida;
         this.qualificacao   = (DefaultTableModel) qualificacao.getModel();
         this.jTQualificacao = qualificacao;
+        this.sessao = sessao;
+        this.record = record;
+        this.autor = autor;
     }   
     @Override
     public void run() {
@@ -36,12 +43,19 @@ public class Qualificacao implements Runnable {
                     //synchronized(voltas){
                         if(!voltas.isEmpty()){
                             int i = 0;
-                            //jLabelSessao.setText("Sessão de Qualificacao: " + voltas.get(0).getQuantidade() + "/" + corrida.quantidadeTotal());
                             for(Iterator<Volta> it2 = voltas.iterator(); it2.hasNext();){
                                 if(ControllerCorrida.isPacoteSensor()){
                                     Thread.sleep(1500);
                                     break;
                                 }else{
+                                    Record recorde = null;
+                                    if(!corrida.temRecord())
+                                        recorde = corrida.getRecord(0);
+                                    sessao.setText("Sessão de Qualificacao: " + voltas.get(0).getQuantidade() + "/" + corrida.quantidadeTotal());
+                                    if(recorde != null){
+                                        record.setText("Record: " + recorde.getTempo());
+                                        autor.setText("Autor: " + recorde.getPiloto());
+                                    }
                                     Volta volta = it2.next();
                                     String nome = volta.getCarro().getPiloto().getNome();
                                     jTQualificacao.setValueAt(i, i, 0);

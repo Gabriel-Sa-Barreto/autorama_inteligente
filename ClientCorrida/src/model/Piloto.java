@@ -9,7 +9,7 @@ package model;
  *
  * @author lsjsa
  */
-public class Piloto {
+public class Piloto{
     private String nome;
     private Record record;
 
@@ -52,4 +52,5 @@ public class Piloto {
     public String toString() {
         return nome;
     }
+
 }
