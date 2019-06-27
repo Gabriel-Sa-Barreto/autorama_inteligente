@@ -71,6 +71,17 @@ public class ControllerPacote {
         return novo;
     }
     
+    /**
+     * Método que retira do pacote de dados recebidos o ID do carro.
+     * @param pacote
+     * @return returna o ID do carro recebido pelo pacote de dados. 
+     */
+    public String pegaIDCarro(String pacote){
+        String received[] = pacote.split(";");
+        return received[1];
+    }
+    
+    
     public Record transformarRecord(String pacote){
         Record novo;
         String record[] = pacote.split(";");

@@ -37,6 +37,12 @@ public class ControllerGerenciador {
     private static List<Administrador> adms;
 
     /**
+     * Atributo que armazena o id de um carro requerido para possível cadastro.
+     */
+    private static String idCarroCad;
+    
+    
+    /**
      * Controller que inicializa todos as lista da classe.
      */
     public ControllerGerenciador() {
@@ -44,6 +50,7 @@ public class ControllerGerenciador {
         carros = Collections.synchronizedList(new ArrayList<Carro>());
         pilotos = Collections.synchronizedList(new ArrayList<Piloto>());
         adms = Collections.synchronizedList(new ArrayList<Administrador>());
+        idCarroCad = null;
     }
     
     /**Método para cadastrar carro.
@@ -259,4 +266,24 @@ public class ControllerGerenciador {
             }
         }
     }
+
+    /**
+     * Método para retornar o valor do atributo idCarroCad.
+     * @return String - idCarroCad 
+     */
+    public static String getIdCarroCad() {
+        return idCarroCad;
+    }
+
+    /**
+     * Método usado para configurar o atributo idCarroCad caso um id de um carro seja
+     * requerido para cadastro, caso não, aconselhá-se configurar com null.
+     * @param idCarroCad 
+     */
+    public static void setIdCarroCad(String idCarroCad) {
+        ControllerGerenciador.idCarroCad = idCarroCad;
+    }
+    
+    
+    
 }

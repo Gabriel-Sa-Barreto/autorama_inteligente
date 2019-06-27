@@ -32,6 +32,13 @@ public class ControllerGerenciador {
     /**Lista que guarda a todos os administradores cadastrados no sistema.
      */
     private static List<Administrador> adms;
+    
+    
+    /**
+     * Atributo para informar se uma leitura do sensor para cadastro de um carro foi requerida pelo 
+     * cliente adm.
+     */
+    private static boolean lerIDCarro;
 
     /**Construtor que inicializa as listas de adm, carros e pilotos.
      */
@@ -39,6 +46,7 @@ public class ControllerGerenciador {
         carros = new ArrayList<>();
         pilotos = new ArrayList<>();
         adms = new ArrayList<>();
+        lerIDCarro = false;
     }
     
     /**Método para cadastrar carro.
@@ -189,5 +197,22 @@ public class ControllerGerenciador {
             }
         }
         return null;
+    }
+
+    /**
+     * Retorna se a leitura do sensor para cadastro de um carro foi requerida pelo adm.
+     * @return boolean - lerIDCarro
+     */
+    public static boolean isLerIDCarro() {
+        return lerIDCarro;
+    }
+
+    /**
+     * Configura para false ou true o atributo que informa se a leitura do sensor
+     * para o cadastro de um carro foi requerida pelo cliente adm.
+     * @param lerIDCarro
+     */
+    public static void setLerIDCarro(boolean lerIDCarro) {
+        ControllerGerenciador.lerIDCarro = lerIDCarro;
     }
 }

@@ -15,6 +15,7 @@ public class MultiClient {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
         //Starta o servidor e prepara para novos clientes

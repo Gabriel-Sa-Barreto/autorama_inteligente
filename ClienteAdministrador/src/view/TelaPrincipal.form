@@ -469,12 +469,15 @@
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="numeroCarro" min="-2" pref="529" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="salvarCarro" min="-2" pref="118" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="158" max="-2" attributes="0"/>
+                                          <Component id="pegarIDCarro" min="-2" pref="145" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="numeroCarro" min="-2" pref="529" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="323" max="-2" attributes="0"/>
-                              <Component id="salvarCarro" min="-2" pref="118" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -502,8 +505,11 @@
                           <Component id="numeroCarro" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                      <Component id="salvarCarro" min="-2" pref="47" max="-2" attributes="0"/>
-                      <EmptySpace pref="168" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="pegarIDCarro" alignment="3" min="-2" pref="47" max="-2" attributes="0"/>
+                          <Component id="salvarCarro" alignment="3" min="-2" pref="47" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="170" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -553,6 +559,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="salvarCarroActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="pegarIDCarro">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Pegar ID"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pegarIDCarroActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

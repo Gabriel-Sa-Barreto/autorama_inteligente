@@ -68,6 +68,16 @@ public class ControllerPacotes {
         return car;
     }
     
+    /**
+     * Método que retira do pacote de dados recebidos o ID do carro.
+     * @param pacote
+     * @return returna o ID do carro recebido pelo pacote de dados. 
+     */
+    public String pegaIDCarro(String pacote){
+        String received[] = pacote.split(";");
+        return received[1];
+    }
+    
     
     /**Método para transformar o pacote em uma Volta.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto

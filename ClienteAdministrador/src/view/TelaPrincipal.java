@@ -9,7 +9,6 @@ import controller.*;
 import java.awt.CardLayout;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -85,6 +84,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         equipeCarro = new javax.swing.JTextField();
         numeroCarro = new javax.swing.JTextField();
         salvarCarro = new javax.swing.JButton();
+        pegarIDCarro = new javax.swing.JButton();
         jpCadAdm = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -301,6 +301,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        pegarIDCarro.setText("Pegar ID");
+        pegarIDCarro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pegarIDCarroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpCardCarroLayout = new javax.swing.GroupLayout(jpCardCarro);
         jpCardCarro.setLayout(jpCardCarroLayout);
         jpCardCarroLayout.setHorizontalGroup(
@@ -326,10 +333,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
                                 .addComponent(equipeCarro)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCardCarroLayout.createSequentialGroup()
                             .addContainerGap()
-                            .addComponent(numeroCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jpCardCarroLayout.createSequentialGroup()
-                        .addGap(323, 323, 323)
-                        .addComponent(salvarCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jpCardCarroLayout.createSequentialGroup()
+                                    .addComponent(salvarCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(158, 158, 158)
+                                    .addComponent(pegarIDCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(numeroCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpCardCarroLayout.setVerticalGroup(
@@ -350,8 +359,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(numeroCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
-                .addComponent(salvarCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pegarIDCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(salvarCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
 
         JpPrincipal.add(jpCardCarro, "Cadastro de novo Carro");
@@ -1034,10 +1045,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void CadCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadCarroActionPerformed
         CardLayout cl = (CardLayout) JpPrincipal.getLayout();
         cl.show(JpPrincipal, "Cadastro de novo Carro");
+        idCarro.setText(null);
+        //envia um pacote requerindo a leitura do sensor para um cadastro do carro.
+        rede.enviarDado(adm.getCliente() , "" ,"10");
     }//GEN-LAST:event_CadCarroActionPerformed
 
     private void outrasOpcoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outrasOpcoesActionPerformed
-        
+  
     }//GEN-LAST:event_outrasOpcoesActionPerformed
 
     /**
@@ -1381,6 +1395,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_loginAdmActionPerformed
 
+    /**
+     * Método para escrever na interface o ID do carro que será cadastrado no sistema.
+     * @param evt 
+     */
+    private void pegarIDCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pegarIDCarroActionPerformed
+        if(ControllerGerenciador.getIdCarroCad() != null){
+            idCarro.setText(ControllerGerenciador.getIdCarroCad());
+            ControllerGerenciador.setIdCarroCad(null);
+        }else{
+            JOptionPane.showMessageDialog(null,"ID ainda não disponível!!");
+        }
+    }//GEN-LAST:event_pegarIDCarroActionPerformed
+
     /*
         FIM DOS MÉTODOS QUE CHAMAM AS TELAS PARA SEREM VISUALIZADAS E OUTROS MÉTODOS REPONSÃVEIS PELAS AÇÕES DOS BUTÕES
     */
@@ -1398,7 +1425,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
      * @throws IOException 
      */
     public void conectarCliente() throws IOException{
-        adm = new Cliente("10.0.0.102" , 12345); 
+        adm = new Cliente("127.0.0.1" , 12345); 
         adm.executa(); //conecta o cliente ADM ao servidor
         //envia requisição pro servidor para atualizar os dados
         rede.enviarDado(adm.getCliente() , "" ,"100");
@@ -1494,6 +1521,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField numeroCarro;
     private javax.swing.JMenu outrasOpcoes;
     private javax.swing.JButton pausarCorrida;
+    private javax.swing.JButton pegarIDCarro;
     private javax.swing.JTextField pilotoRemover;
     private javax.swing.JPanel pilotosCad;
     private javax.swing.JMenu pilotosCadastrados;

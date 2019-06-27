@@ -70,6 +70,9 @@ public class Recebedor implements Runnable {
                 System.out.println(pacote);
                 opcao = pacotes.acao(pacote);
                 switch(opcao){
+                    case "09": //pacote com ID do carro para um possível cadastro.
+                        String iDCarro = pacotes.pegaIDCarro(pacote);
+                        ControllerGerenciador.setIdCarroCad(iDCarro);
                     case "11"://cadastrar carro
                         if(!gerenciador.existeCarro(pacotes.transformarCarro(pacote).getId())){
                             //caso o carro não esteja cadastrado no sistema.
