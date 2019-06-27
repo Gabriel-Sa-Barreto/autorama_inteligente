@@ -79,28 +79,28 @@ public class TrataCliente implements Runnable {
                     case "11": //cadastro de carro
                         gerenciador.cadastrarCarro(pacotes.transformarCarro(pacote));
                         servidor.distribuiMensagem(pacote);
-                        ControllerArquivo.escreverCarro("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\carros.txt" , pacotes.transformarCarro(pacote) );
+                        ControllerArquivo.escreverCarro("/home/gabriel/Documentos/Pbl Redes/autorama_inteligente/Arquivos/carros.txt" , pacotes.transformarCarro(pacote) );
                         break;
                     case "12": //cadastro de piloto
                         gerenciador.cadastrarPiloto(pacotes.transformarPiloto(pacote));
                         servidor.distribuiMensagem(pacote);
-                        ControllerArquivo.escreverPiloto("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\pilotos.txt" , pacotes.transformarPiloto(pacote));
+                        ControllerArquivo.escreverPiloto("/home/gabriel/Documentos/Pbl Redes/autorama_inteligente/Arquivos/pilotos.txt" , pacotes.transformarPiloto(pacote));
                         break;
                     case "13": //cadastro de adm
                         gerenciador.cadastrarAdministrador(pacotes.transformarAdm(pacote));
                         servidor.distribuiMensagem(pacote);
-                        ControllerArquivo.escreverAdm("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\adms.txt" , pacotes.transformarAdm(pacote));
+                        ControllerArquivo.escreverAdm("/home/gabriel/Documentos/Pbl Redes/autorama_inteligente/Arquivos/adms.txt" , pacotes.transformarAdm(pacote));
                         break;
                     case "21": //remoção de piloto
                         gerenciador.removerPiloto(pacotes.transformarPiloto(pacote).getNome());
                         servidor.distribuiMensagem(pacote);
-                        ControllerArquivo.removerPiloto("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\pilotos.txt" , pacotes.transformarPiloto(pacote));
+                        ControllerArquivo.removerPiloto("/home/gabriel/Documentos/Pbl Redes/autorama_inteligente/Arquivos/pilotos.txt" , pacotes.transformarPiloto(pacote));
                         break;
                     case "22": //remoção de carro
                         String dadosCarro[] = pacote.split(";");
                         gerenciador.removerCarro(dadosCarro[1]); //remove carro do sistema
                         servidor.distribuiMensagem(pacote);
-                        ControllerArquivo.removerCarro("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\carros.txt" ,dadosCarro[1]);
+                        ControllerArquivo.removerCarro("/home/gabriel/Documentos/Pbl Redes/autorama_inteligente/Arquivos\\carros.txt" ,dadosCarro[1]);
                         break;
                     case "30": //cadastro de corrida feito por um Adm
                         String voltasCorrida[] = pacote.split(";");
@@ -129,8 +129,8 @@ public class TrataCliente implements Runnable {
                     case "50":
                         Piloto record = gerenciador.bateuRecord(pacotes.transformarRecord(pacote), pacotes.nomePiloto(pacote));
                         if(record != null){
-                            ControllerArquivo.removerPiloto("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\pilotos.txt" ,record);
-                            ControllerArquivo.escreverPiloto("C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\Pbl Redes\\autorama_inteligente\\Arquivos\\pilotos.txt" , record);
+                            ControllerArquivo.removerPiloto("/home/gabriel/Documentos/Pbl Redes/autorama_inteligente/Arquivos/pilotos.txt" ,record);
+                            ControllerArquivo.escreverPiloto("/home/gabriel/Documentos/Pbl Redes/autorama_inteligente/Arquivos/pilotos.txt" , record);
                         }
                         servidor.distribuiMensagem(pacote);
                         break;

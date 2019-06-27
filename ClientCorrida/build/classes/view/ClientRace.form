@@ -379,7 +379,7 @@
                                       <Component id="jLabelAutor" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
-                                      <Component id="jLabelSessao" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelCorrida" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="jLabelRecord" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -399,7 +399,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabelSessao" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabelCorrida" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabelRecord" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -423,7 +423,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabelSessao">
+            <Component class="javax.swing.JLabel" name="jLabelCorrida">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Ubuntu" size="24" style="1"/>

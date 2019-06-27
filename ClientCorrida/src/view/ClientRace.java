@@ -59,7 +59,7 @@ public class ClientRace extends javax.swing.JFrame {
         JpVoltarQualificação = new javax.swing.JButton();
         jButtonSairQuali = new javax.swing.JButton();
         JpCorrida = new javax.swing.JPanel();
-        jLabelSessao = new javax.swing.JLabel();
+        jLabelCorrida = new javax.swing.JLabel();
         jLabelClass = new javax.swing.JLabel();
         jLabelRecord = new javax.swing.JLabel();
         jLabelAutor = new javax.swing.JLabel();
@@ -244,8 +244,8 @@ public class ClientRace extends javax.swing.JFrame {
         JpCorrida.setBackground(java.awt.Color.lightGray);
         JpCorrida.setBorder(new javax.swing.border.MatteBorder(null));
 
-        jLabelSessao.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
-        jLabelSessao.setText("Sessão de Corrida:");
+        jLabelCorrida.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        jLabelCorrida.setText("Sessão de Corrida:");
 
         jLabelClass.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabelClass.setText("Classificação:");
@@ -303,7 +303,7 @@ public class ClientRace extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabelAutor))
                             .addGroup(JpCorridaLayout.createSequentialGroup()
-                                .addComponent(jLabelSessao)
+                                .addComponent(jLabelCorrida)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabelRecord)))
                         .addGap(147, 147, 147)
@@ -317,7 +317,7 @@ public class ClientRace extends javax.swing.JFrame {
                     .addGroup(JpCorridaLayout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addGroup(JpCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelSessao)
+                            .addComponent(jLabelCorrida)
                             .addComponent(jLabelRecord))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(JpCorridaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -413,7 +413,7 @@ public class ClientRace extends javax.swing.JFrame {
     }
     
     private void threadCorrida(){
-        threadCorrida = new PainelCorrida(corrida, jTCorrida);
+        threadCorrida = new PainelCorrida(corrida, jTCorrida, jLabelCorrida, jLabelRecord, jLabelAutor);
         new Thread(threadCorrida,"corrida").start();
     }
     
@@ -424,7 +424,7 @@ public class ClientRace extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         corrida = new ControllerCorrida();
         rede = new ControllerRede();
-        Cliente cliente = new Cliente("192.168.25.7",12345);
+        Cliente cliente = new Cliente("127.0.0.1",12345);
         cliente.executa();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -452,10 +452,10 @@ public class ClientRace extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelAutor;
     private javax.swing.JLabel jLabelAutorQ;
     private javax.swing.JLabel jLabelClass;
+    private javax.swing.JLabel jLabelCorrida;
     private javax.swing.JLabel jLabelQualificacao;
     private javax.swing.JLabel jLabelRecord;
     private javax.swing.JLabel jLabelRecordQ;
-    private javax.swing.JLabel jLabelSessao;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTCorrida;
