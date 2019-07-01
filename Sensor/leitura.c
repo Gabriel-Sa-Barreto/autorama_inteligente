@@ -440,6 +440,7 @@ if (TMR_ERROR_TAG_ID_BUFFER_FULL == ret)
                     {
                       goto end;
                     }
+                    cJSON_AddItemToObject(pacoteSensor, "id", id);
                     break;
             case TMR_TRD_METADATA_FLAG_RSSI:
                     printf("RSSI : %d\n", trd.rssi);
@@ -469,6 +470,7 @@ if (TMR_ERROR_TAG_ID_BUFFER_FULL == ret)
                     {
                       goto end;
                     }
+                    cJSON_AddItemToObject(pacoteSensor, "time", time);
                     printf("Timestamp : %s\n", timeStr);
                     break;
                 case TMR_TRD_METADATA_FLAG_PHASE:
