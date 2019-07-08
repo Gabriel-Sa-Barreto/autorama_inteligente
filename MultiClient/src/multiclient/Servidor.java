@@ -45,9 +45,9 @@ public class Servidor implements Runnable {
         this.porta = porta; //Porta ao qual o servidor irá se associar.
         this.clientes = new ArrayList<PrintStream>();
         criarConexão();
-        ControllerArquivo.leitorAdm("/home/gabriel/Documentos/PBL Redes/autorama_inteligente/Arquivos/adms.txt",gerenciador);
-        ControllerArquivo.leitorCarro("/home/gabriel/Documentos/PBL Redes/autorama_inteligente/Arquivos/carros.txt",gerenciador);
-        ControllerArquivo.leitorPiloto("/home/gabriel/Documentos/PBL Redes/autorama_inteligente/Arquivos/pilotos.txt",gerenciador);
+        ControllerArquivo.leitorAdm("/home/tec502/Documentos/autorama_inteligente-sam-sensor/Arquivos/adms.txt",gerenciador);
+        ControllerArquivo.leitorCarro("/home/tec502/Documentos/autorama_inteligente-sam-sensor/Arquivos/carros.txt",gerenciador);
+        ControllerArquivo.leitorPiloto("/home/tec502/Documentos/autorama_inteligente-sam-sensor/Arquivos/pilotos.txt",gerenciador);
         new Thread(this).start(); //executa a thread do servidor 
     }
     

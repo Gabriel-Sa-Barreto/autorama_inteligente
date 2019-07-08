@@ -85,6 +85,9 @@ public class ControllerPacotes {
     * @return String  - o tipo do pacote
     */
     public String acao(String pacote){
+        if(pacote.startsWith(" ")){
+            pacote = pacote.substring(1);   
+        }
         String receber[] = pacote.split(";");
         return receber[0];
     }
