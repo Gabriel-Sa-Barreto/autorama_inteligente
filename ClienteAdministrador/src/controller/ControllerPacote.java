@@ -24,7 +24,7 @@ public class ControllerPacote {
     */
     public Corrida transformarCorrida(String pacote){
         String corrida[] = pacote.split(";");
-        Corrida recebido = new Corrida(strToInt(corrida[1] , 10));
+        Corrida recebido = new Corrida(strToInt(corrida[1].trim() , 10));
         return recebido;
     }
     
@@ -35,7 +35,7 @@ public class ControllerPacote {
     */
     public Carro transformarCarro(String pacote){
         String carro[] = pacote.split(";");
-        Carro car = new Carro(carro[1] , carro[2] , carro[3]);
+        Carro car = new Carro(carro[1].trim() , carro[2].trim() , carro[3].trim());
         if(carro.length == 5){
             Piloto piloto = new Piloto(carro[4]);
             car.setPiloto(piloto);
@@ -51,9 +51,9 @@ public class ControllerPacote {
     public Piloto transformarPiloto(String pacote){
         Piloto novo;
         String piloto[] = pacote.split(";");
-        novo = new Piloto(piloto[1]);
+        novo = new Piloto(piloto[1].trim());
         if(piloto.length == 4){
-            Record record = new Record(piloto[2] , piloto[3]);
+            Record record = new Record(piloto[2].trim() , piloto[3].trim());
             novo.setRecord(record);
         }
         return novo;
@@ -67,7 +67,7 @@ public class ControllerPacote {
     public Administrador transformarAdm(String pacote){
         Administrador novo;
         String adm[] = pacote.split(";");
-        novo = new Administrador(adm[1] , adm[2]);
+        novo = new Administrador(adm[1].trim() , adm[2].trim());
         return novo;
     }
     
@@ -78,20 +78,20 @@ public class ControllerPacote {
      */
     public String pegaIDCarro(String pacote){
         String received[] = pacote.split(";");
-        return received[1];
+        return received[1].trim();
     }
     
     
     public Record transformarRecord(String pacote){
         Record novo;
         String record[] = pacote.split(";");
-        novo = new Record(record[1] , record[2]);
+        novo = new Record(record[1].trim() , record[2].trim());
         return novo;
     }
     
     public String nomePiloto(String pacote){
         String record[] = pacote.split(";");
-        return record[3];
+        return record[3].trim();
     }
     
     
@@ -101,8 +101,17 @@ public class ControllerPacote {
     * @return String  - o tipo do pacote
     */
     public String acao(String pacote){
+        String action = null;
         String receber[] = pacote.split(";");
-        return receber[0];
+        try{
+            int num = Integer.parseInt(receber[0]);
+        }catch(NumberFormatException e){
+            action = receber[0];
+            action = action.substring(2);
+        }
+        if(action == null)
+            return receber[0];
+        return action;
     }
     
     /**Método private para auxiliar na conversao de String para int

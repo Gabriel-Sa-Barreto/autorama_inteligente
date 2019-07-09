@@ -26,7 +26,7 @@ public class ControllerPacotes {
     */
     public Corrida transformarCorrida(String pacote){
         String corrida[] = pacote.split(";");
-        Corrida recebido = new Corrida(strToInt(corrida[1] , 10));
+        Corrida recebido = new Corrida(strToInt(corrida[1].trim() , 10));
         return recebido;
     }
     
@@ -37,7 +37,7 @@ public class ControllerPacotes {
     */
     public Piloto transformarPiloto(String  pacote){
         String dadosPiloto[] = pacote.split(";");
-        Piloto piloto = new Piloto(dadosPiloto[1]);
+        Piloto piloto = new Piloto(dadosPiloto[1].trim());
         return piloto;
     }
     
@@ -48,7 +48,7 @@ public class ControllerPacotes {
     */
     public Administrador transformarAdm(String  pacote){
         String dadosAdm[] = pacote.split(";");
-        Administrador adm = new Administrador(dadosAdm[1],dadosAdm[2]);
+        Administrador adm = new Administrador(dadosAdm[1].trim(),dadosAdm[2].trim());
         return adm;
     }
  
@@ -60,9 +60,9 @@ public class ControllerPacotes {
     */
     public Carro transformarCarro(String pacote){
         String carro[] = pacote.split(";");
-        Carro car = new Carro(carro[1] , carro[2] , carro[3]);
+        Carro car = new Carro(carro[1].trim() , carro[2].trim() , carro[3].trim());
         if(carro.length == 5){ //caso seja um pacote para competidor de uma corrida que seja iniciada
-            Piloto carPiloto = new Piloto(carro[4]);
+            Piloto carPiloto = new Piloto(carro[4].trim());
             car.setPiloto(carPiloto);
         }
         return car;
@@ -75,7 +75,7 @@ public class ControllerPacotes {
      */
     public String pegaIDCarro(String pacote){
         String received[] = pacote.split(";");
-        return received[1];
+        return received[1].trim();
     }
     
     
@@ -85,11 +85,17 @@ public class ControllerPacotes {
     * @return String  - o tipo do pacote
     */
     public String acao(String pacote){
-        if(pacote.startsWith(" ")){
-            pacote = pacote.substring(1);   
-        }
+        String action = null;
         String receber[] = pacote.split(";");
-        return receber[0];
+        try{
+            int num = Integer.parseInt(receber[0]);
+        }catch(NumberFormatException e){
+            action = receber[0];
+            action = action.substring(2);
+        }
+        if(action == null)
+            return receber[0];
+        return action;
     }
     
     /**Método auxiliar na conversao de String para int
@@ -125,13 +131,13 @@ public class ControllerPacotes {
     public Record transformarRecord(String pacote){
         Record novo;
         String record[] = pacote.split(";");
-        novo = new Record(record[1] , record[2]);
+        novo = new Record(record[1].trim() , record[2].trim());
         return novo;
     }
     
     public String nomePiloto(String pacote){
         String record[] = pacote.split(";");
-        return record[3];
+        return record[3].trim();
     }
     
     
