@@ -26,7 +26,7 @@ public class ControllerPacotes {
     */
     public Corrida transformarCorrida(String pacote){
         String corrida[] = pacote.split(";"); //os dados são dividos por ";" por isso a realização do split
-        Corrida recebido = new Corrida(strToInt(corrida[1] , 10)); // cadastro da corrida com a quantidade de voltas
+        Corrida recebido = new Corrida(strToInt(corrida[1].trim(), 10)); // cadastro da corrida com a quantidade de voltas
         return recebido;
     }
     
@@ -38,10 +38,10 @@ public class ControllerPacotes {
     */
     public Volta transformarVolta(String pacote , List<Carro> competidores){
         String volta[] = pacote.split(";");
-        Carro carro = carro(competidores , volta[1]); //verificação se aquele carro esta na corrida
+        Carro carro = carro(competidores , volta[1].trim() ); //verificação se aquele carro esta na corrida
         if(carro == null) //se for null é porque não esta na corrida
             return null;
-        Volta recebida = new Volta(carro , volta[2]); // insere a volta
+        Volta recebida = new Volta(carro , volta[2].trim() ); // insere a volta
         return recebida;
     }
     
@@ -53,9 +53,9 @@ public class ControllerPacotes {
     */
     public Carro transformarCarro(String pacote , List<Carro> competidores){
         String carro[] = pacote.split(";");
-        if(carro(competidores , carro[1]) == null){ //verificação se aquele carro esta na corrida
-            Carro competidor = new Carro(carro[1] , carro[2] , carro[3]); // cadastro da competidor
-            Piloto piloto = new Piloto(carro[4]); // cadastrado do piloto
+        if(carro(competidores , carro[1].trim() ) == null){ //verificação se aquele carro esta na corrida
+            Carro competidor = new Carro(carro[1].trim()  , carro[2].trim()  , carro[3].trim() ); // cadastro da competidor
+            Piloto piloto = new Piloto(carro[4].trim() ); // cadastrado do piloto
             competidor.setPiloto(piloto); //inserção do piloto no carro
             return competidor;
         }
@@ -69,7 +69,7 @@ public class ControllerPacotes {
     */
     public Record transformarRecord(String pacote){
         String record[] = pacote.split(";");
-        Record geral = new Record(record[1] , record[2] , record[3]); //cadastro do record 
+        Record geral = new Record(record[1].trim() , record[2].trim() , record[3].trim()); //cadastro do record 
         return geral;
     }
     
@@ -79,8 +79,17 @@ public class ControllerPacotes {
     * @return String  - o tipo do pacote
     */
     public String acao(String pacote){
+        String action = null;
         String receber[] = pacote.split(";");
-        return receber[0];
+        try{
+            int num = Integer.parseInt(receber[0]);
+        }catch(NumberFormatException e){
+            action = receber[0];
+            action = action.substring(2);
+        }
+        if(action == null)
+            return receber[0];
+        return action;
     }
     /**Método private para auxiliar na conversao de String para int
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto

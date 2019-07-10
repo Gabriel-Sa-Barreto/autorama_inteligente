@@ -1,4 +1,2 @@
-100000;Ferrari;123
 100001;Mercedes;456
-100002;Ferrari;789
 100003;Ferrari;101

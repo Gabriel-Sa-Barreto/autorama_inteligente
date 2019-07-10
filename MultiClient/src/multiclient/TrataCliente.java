@@ -72,91 +72,96 @@ public class TrataCliente implements Runnable {
         boolean start = true;
         while (start) {
             try {
-                String pacote = entrada.readUTF();
-                System.out.println(pacote);
-                acao = pacotes.acao(pacote); //devolve a ação que deve ser realizada.
-                switch(acao){
-                    case "10": //requerimento de leitura do sensor para o cadastro de um carro.
-                        ControllerGerenciador.setLerIDCarro(true);                    
-                        System.out.println("recebeu pacote 10");
-                        break;
-                    case "11": //cadastro de carro
-                        gerenciador.cadastrarCarro(pacotes.transformarCarro(pacote));
-                        servidor.distribuiMensagem(pacote);
-                        ControllerArquivo.escreverCarro("/home/gabriel/Documentos/PBL Redes/autorama_inteligente/Arquivos/carros.txt" , pacotes.transformarCarro(pacote) );
-                        break;
-                    case "12": //cadastro de piloto
-                        gerenciador.cadastrarPiloto(pacotes.transformarPiloto(pacote));
-                        servidor.distribuiMensagem(pacote);
-                        ControllerArquivo.escreverPiloto("/home/gabriel/Documentos/PBL Redes/autorama_inteligente/Arquivos/pilotos.txt" , pacotes.transformarPiloto(pacote));
-                        break;
-                    case "13": //cadastro de adm
-                        gerenciador.cadastrarAdministrador(pacotes.transformarAdm(pacote));
-                        servidor.distribuiMensagem(pacote);
-                        ControllerArquivo.escreverAdm("/home/gabriel/Documentos/PBL Redes/autorama_inteligente/Arquivos/adms.txt" , pacotes.transformarAdm(pacote));
-                        break;
-                    case "21": //remoção de piloto
-                        gerenciador.removerPiloto(pacotes.transformarPiloto(pacote).getNome());
-                        servidor.distribuiMensagem(pacote);
-                        ControllerArquivo.removerPiloto("/home/gabriel/Documentos/PBL Redes/autorama_inteligente/Arquivos/pilotos.txt" , pacotes.transformarPiloto(pacote));
-                        break;
-                    case "22": //remoção de carro
-                        String dadosCarro[] = pacote.split(";");
-                        gerenciador.removerCarro(dadosCarro[1]); //remove carro do sistema
-                        servidor.distribuiMensagem(pacote);
-                        ControllerArquivo.removerCarro("/home/gabriel/Documentos/PBL Redes/autorama_inteligente/Arquivos\\carros.txt" ,dadosCarro[1]);
-                        break;
-                    case "30": //cadastro de corrida feito por um Adm
-                        String voltasCorrida[] = pacote.split(";");
-                        int voltas = pacotes.strToInt(voltasCorrida[1], 10); //caso a conversão dê errado, um valor padrão de 10 voltas é colocado.
-                        corridaController.cadastrarCorrida(voltas);
-                        servidor.distribuiMensagem(pacote);
-                        break;
-                    case "31": //comecar corrida
-                        corridaController.comecarPartida();
-                        servidor.distribuiMensagem(pacote);
-                        break;
-                    case "32": //cadastro de corredor para a nova corrida
-                        if(!corridaController.comecouCorrida()){
-                            corridaController.salvarCompetidor(pacotes.transformarCarro(pacote));
+                byte receber[] = new byte[100];
+                int tamanho = entrada.read(receber);
+                if(tamanho != 0){
+                    String pacote = new String(receber, "ASCII");
+                    acao = pacotes.acao(pacote); //devolve a ação que deve ser realizada.
+                    switch(acao){
+                        case "10": //requerimento de leitura do sensor para o cadastro de um carro.
+                            ControllerGerenciador.setLerIDCarro(true);                    
+                            //System.out.println("recebeu pacote 10");
+                            break;
+                        case "11": //cadastro de carro
+                            gerenciador.cadastrarCarro(pacotes.transformarCarro(pacote));
                             servidor.distribuiMensagem(pacote);
-                        }
-                        break;
-                    case "33": //pausar
-                        corridaController.pausar_reiniciar();
-                        servidor.distribuiMensagem(pacote);
-                        break;
-                    case "34":  //reiniciar
-                        corridaController.pausar_reiniciar();
-                        servidor.distribuiMensagem(pacote);
-                        break;
-                    case "50":
-                        Piloto record = gerenciador.bateuRecord(pacotes.transformarRecord(pacote), pacotes.nomePiloto(pacote));
-                        if(record != null){
-                            ControllerArquivo.removerPiloto("/home/gabriel/Documentos/PBL Redes/autorama_inteligente/Arquivos/pilotos.txt" ,record);
-                            ControllerArquivo.escreverPiloto("/home/gabriel/Documentos/PBL Redes/autorama_inteligente/Arquivos/pilotos.txt" , record);
-                        }
-                        servidor.distribuiMensagem(pacote);
-                        break;
-                    case "00": //sai da thread do cliente (desconectar)
-                        start = false;
-                        break;
-                    case "01":
-                        start = false;
-                        if(corridaController.comecouCorrida())
-                            corridaController.terminarCorrida();
-                        break;
-                    case "41": //contagem de voltas do sensor
-                        if(ControllerGerenciador.isLerIDCarro()){//caso um pedido de leitura do sensor para ler o ID de um carro foi requerido pelo adm.
-                            String ID = "09;" + pacotes.pegaIDCarro(pacote);
-                            servidor.distribuiMensagem(ID);
-                            ControllerGerenciador.setLerIDCarro(false); //depois de atendido o pedido, configura novamente como false.
-                        }
-                        servidor.distribuiMensagem(pacote);
-                        break;   
-                    case "100"://atualização dos dados para os clientes
-                       gerenciador.atualizarCliente(servidor);
-                       break;    
+                            ControllerArquivo.escreverCarro("../Arquivos/carros.txt" , pacotes.transformarCarro(pacote) );
+                            //C:\\Users\\lsjsa\\OneDrive\\Área de Trabalho\\Codigo\\PBL Redes\\autorama_inteligente\\Arquivos\\carros.txt
+                            break;
+                        case "12": //cadastro de piloto
+                            gerenciador.cadastrarPiloto(pacotes.transformarPiloto(pacote));
+                            servidor.distribuiMensagem(pacote);
+                            ControllerArquivo.escreverPiloto("../Arquivos/pilotos.txt" , pacotes.transformarPiloto(pacote));
+                            break;
+                        case "13": //cadastro de adm
+                            gerenciador.cadastrarAdministrador(pacotes.transformarAdm(pacote));
+                            servidor.distribuiMensagem(pacote);
+                            ControllerArquivo.escreverAdm("../Arquivos/adms.txt" , pacotes.transformarAdm(pacote));
+                            break;
+                        case "21": //remoção de piloto
+                            gerenciador.removerPiloto(pacotes.transformarPiloto(pacote).getNome());
+                            //System.out.println("Foi");
+                            servidor.distribuiMensagem(pacote);
+                            ControllerArquivo.removerPiloto("../Arquivos/pilotos.txt" , pacotes.transformarPiloto(pacote));
+                            break;
+                        case "22": //remoção de carro
+                            String dadosCarro[] = pacote.split(";");
+                            gerenciador.removerCarro(dadosCarro[1]); //remove carro do sistema
+                            servidor.distribuiMensagem(pacote);
+                            ControllerArquivo.removerCarro("../Arquivos/carros.txt" ,dadosCarro[1]);
+                            break;
+                        case "30": //cadastro de corrida feito por um Adm
+                            String voltasCorrida[] = pacote.split(";");
+                            int voltas = pacotes.strToInt(voltasCorrida[1], 10); //caso a conversão dê errado, um valor padrão de 10 voltas é colocado.
+                            corridaController.cadastrarCorrida(voltas);
+                            servidor.distribuiMensagem(pacote);
+                            break;
+                        case "31": //comecar corrida
+                            corridaController.comecarPartida();
+                            servidor.distribuiMensagem(pacote);
+                            break;
+                        case "32": //cadastro de corredor para a nova corrida
+                            if(!corridaController.comecouCorrida()){
+                                corridaController.salvarCompetidor(pacotes.transformarCarro(pacote));
+                                servidor.distribuiMensagem(pacote);
+                            }
+                            break;
+                        case "33": //pausar
+                            corridaController.pausar_reiniciar();
+                            servidor.distribuiMensagem(pacote);
+                            break;
+                        case "34":  //reiniciar
+                            corridaController.pausar_reiniciar();
+                            servidor.distribuiMensagem(pacote);
+                            break;
+                        case "50":
+                            Piloto record = gerenciador.bateuRecord(pacotes.transformarRecord(pacote), pacotes.nomePiloto(pacote));
+                            if(record != null){
+                                ControllerArquivo.removerPiloto("../Arquivos/pilotos.txt" ,record);
+                                ControllerArquivo.escreverPiloto("../Arquivos/pilotos.txt" , record);
+                            }
+                            servidor.distribuiMensagem(pacote);
+                            break;
+                        case "00": //sai da thread do cliente (desconectar)
+                            start = false;
+                            break;
+                        case "01":
+                            start = false;
+                            if(corridaController.comecouCorrida())
+                                corridaController.terminarCorrida();
+                            break;
+                        case "41": //contagem de voltas do sensor
+                            if(ControllerGerenciador.isLerIDCarro()){//caso um pedido de leitura do sensor para ler o ID de um carro foi requerido pelo adm.
+                                String ID = "09;" + pacotes.pegaIDCarro(pacote);
+                                servidor.distribuiMensagem(ID);
+                                ControllerGerenciador.setLerIDCarro(false); //depois de atendido o pedido, configura novamente como false.
+                            }
+                            servidor.distribuiMensagem(pacote);
+                            break;   
+                        case "100"://atualização dos dados para os clientes
+                           gerenciador.atualizarCliente(servidor);
+                           break;    
+                    }
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
