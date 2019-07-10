@@ -424,7 +424,7 @@ public class ClientRace extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         corrida = new ControllerCorrida();
         rede = new ControllerRede();
-        Cliente cliente = new Cliente("172.16.103.4",12345);
+        Cliente cliente = new Cliente("172.16.203.2",12345);
         cliente.executa();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

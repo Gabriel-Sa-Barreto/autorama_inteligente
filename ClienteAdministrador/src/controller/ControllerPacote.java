@@ -37,7 +37,7 @@ public class ControllerPacote {
         String carro[] = pacote.split(";");
         Carro car = new Carro(carro[1].trim() , carro[2].trim() , carro[3].trim());
         if(carro.length == 5){
-            Piloto piloto = new Piloto(carro[4]);
+            Piloto piloto = new Piloto(carro[4].trim());
             car.setPiloto(piloto);
         }    
         return car;
