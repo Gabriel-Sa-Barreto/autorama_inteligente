@@ -23,8 +23,14 @@ public class ClientRace extends javax.swing.JFrame {
     
     public static ControllerCorrida corrida = null;
     public static ControllerRede rede = null;
-    Cliente cliente;
+    
+    /**
+     * Atributo cliente responsável por fazer conexão com o servidor.
+     */
+    private static Cliente cliente;
+    
     Qualificacao threadQualificacao;
+    
     PainelCorrida threadCorrida;
     /**
      * Creates new form ClientRace
@@ -48,7 +54,7 @@ public class ClientRace extends javax.swing.JFrame {
         btnCorrida = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButtonSairHome = new javax.swing.JButton();
+        sairHome = new javax.swing.JButton();
         JpQualificação = new javax.swing.JPanel();
         jLabelQualificacao = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -97,10 +103,10 @@ public class ClientRace extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel2.setText("M.I Concorrência e Conectividade");
 
-        jButtonSairHome.setText("Sair");
-        jButtonSairHome.addActionListener(new java.awt.event.ActionListener() {
+        sairHome.setText("Sair");
+        sairHome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSairHomeActionPerformed(evt);
+                sairHomeActionPerformed(evt);
             }
         });
 
@@ -125,15 +131,15 @@ public class ClientRace extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addGap(173, 173, 173))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpMenuLayout.createSequentialGroup()
-                        .addComponent(jButtonSairHome)
-                        .addContainerGap())))
+                        .addComponent(sairHome)
+                        .addGap(24, 24, 24))))
         );
         JpMenuLayout.setVerticalGroup(
             JpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JpMenuLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButtonSairHome)
-                .addGap(47, 47, 47)
+                .addGap(17, 17, 17)
+                .addComponent(sairHome)
+                .addGap(36, 36, 36)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
@@ -378,20 +384,10 @@ public class ClientRace extends javax.swing.JFrame {
        cl.show(JpClienteCorrida, "Tela Principal");
     }//GEN-LAST:event_btnVoltarCorridaActionPerformed
 
-    private void jButtonSairHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairHomeActionPerformed
-        try {
-            // TODO add your handling code here:
-            rede.enviarDado(cliente.getCliente(), "", "01");
-            cliente.fecharConexão();
-        } catch (IOException ex) {
-            Logger.getLogger(ClientRace.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButtonSairHomeActionPerformed
-
     private void jButtonSairQualiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairQualiActionPerformed
+        rede.enviarDado(cliente.getCliente(),"", "00");
         // TODO add your handling code here:
         try {
-            // TODO add your handling code here:
             cliente.fecharConexão();
         } catch (IOException ex) {
             Logger.getLogger(ClientRace.class.getName()).log(Level.SEVERE, null, ex);
@@ -399,15 +395,24 @@ public class ClientRace extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSairQualiActionPerformed
 
     private void jButtonSairClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairClassActionPerformed
+        rede.enviarDado(cliente.getCliente(),"", "00");
         // TODO add your handling code here:
         try {
-            // TODO add your handling code here:
-            rede.enviarDado(cliente.getCliente(),"", "00");
             cliente.fecharConexão();
         } catch (IOException ex) {
             Logger.getLogger(ClientRace.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonSairClassActionPerformed
+
+    private void sairHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairHomeActionPerformed
+        rede.enviarDado(cliente.getCliente(),"", "00");
+        // TODO add your handling code here:
+        try {
+            cliente.fecharConexão();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientRace.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_sairHomeActionPerformed
     
     private void threadQualificacao(){
         threadQualificacao = new Qualificacao(corrida, jTQualificacao , jLabelQualificacao , jLabelRecordQ , jLabelAutorQ);
@@ -426,7 +431,7 @@ public class ClientRace extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         corrida = new ControllerCorrida();
         rede = new ControllerRede();
-        Cliente cliente = new Cliente("172.16.203.2",12345);
+        cliente = new Cliente("172.16.203.2",12345);
         cliente.executa();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -446,7 +451,6 @@ public class ClientRace extends javax.swing.JFrame {
     private javax.swing.JButton btnQualificacao;
     private javax.swing.JButton btnVoltarCorrida;
     private javax.swing.JButton jButtonSairClass;
-    private javax.swing.JButton jButtonSairHome;
     private javax.swing.JButton jButtonSairQuali;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -462,5 +466,6 @@ public class ClientRace extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTCorrida;
     private javax.swing.JTable jTQualificacao;
+    private javax.swing.JButton sairHome;
     // End of variables declaration//GEN-END:variables
 }

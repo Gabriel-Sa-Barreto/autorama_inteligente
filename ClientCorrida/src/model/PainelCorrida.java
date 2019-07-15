@@ -34,23 +34,23 @@ public class PainelCorrida implements Runnable {
     }   
     @Override
     public void run() {
-        while(corrida.partidaEmAdamento()){
+        try{
+            while(corrida.partidaEmAdamento()){
             try{
                 if(!ControllerCorrida.isPacoteSensor()){
                     painelCorrida.setRowCount(corrida.competidores().size());
                     List<Volta> voltas = corrida.getVoltas();
                     //synchronized(voltas){
-                        if(!voltas.isEmpty()){
-                            int i = 0;
-                            for(Iterator<Volta> it2 = voltas.iterator(); it2.hasNext();){
-                                if(ControllerCorrida.isPacoteSensor()){
-                                    Thread.sleep(1500);
-                                    break;
-                                }else{
-                                    
-                                    Record recorde = null;
-                                    if(!corrida.temRecord())
-                                        recorde = corrida.getRecord(0);
+                    if(!voltas.isEmpty()){
+                        int i = 0;
+                        for(Iterator<Volta> it2 = voltas.iterator(); it2.hasNext();){
+                            if(ControllerCorrida.isPacoteSensor()){
+                                Thread.sleep(1500);
+                                break;
+                            }else{
+                                Record recorde = null;
+                                if(!corrida.temRecord())
+                                    recorde = corrida.getRecord(0);
                                     sessao.setText("Sessão de Qualificacao: " + voltas.get(0).getQuantidade() + "/" + corrida.quantidadeTotal());
                                     if(recorde != null){
                                         record.setText("Record: " + recorde.getTempo());
@@ -72,12 +72,12 @@ public class PainelCorrida implements Runnable {
                                 }
                             }
                         }
-                    //}
-                    
-                }
-            }catch(Exception ex){
-            }    
+                    }
+                }catch(Exception ex){
+                }    
+            }
+        }catch(Exception e){
+        
         }
-    }
-    
+    }   
 }

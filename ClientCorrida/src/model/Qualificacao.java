@@ -9,6 +9,7 @@ import controller.ControllerCorrida;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,22 +35,23 @@ public class Qualificacao implements Runnable {
     }   
     @Override
     public void run() {
-         while(corrida.partidaEmAdamento()){
-            try{
-                if(!ControllerCorrida.isPacoteSensor()){
+        try{
+            while(corrida.partidaEmAdamento()){
+                try{
+                    if(!ControllerCorrida.isPacoteSensor()){
                     qualificacao.setRowCount(corrida.competidores().size());
                     List<Volta> voltas = corrida.getVoltas();
                     //synchronized(voltas){
-                        if(!voltas.isEmpty()){
-                            int i = 0;
-                            for(Iterator<Volta> it2 = voltas.iterator(); it2.hasNext();){
-                                if(ControllerCorrida.isPacoteSensor()){
-                                    Thread.sleep(1500);
-                                    break;
-                                }else{
-                                    Record recorde = null;
-                                    if(!corrida.temRecord())
-                                        recorde = corrida.getRecord(0);
+                    if(!voltas.isEmpty()){
+                        int i = 0;
+                        for(Iterator<Volta> it2 = voltas.iterator(); it2.hasNext();){
+                            if(ControllerCorrida.isPacoteSensor()){
+                                Thread.sleep(1500);
+                                break;
+                            }else{
+                                Record recorde = null;
+                                if(!corrida.temRecord())
+                                    recorde = corrida.getRecord(0);
                                     sessao.setText("Sessão de Qualificacao: " + voltas.get(0).getQuantidade() + "/" + corrida.quantidadeTotal());
                                     if(recorde != null){
                                         record.setText("Record: " + recorde.getTempo());
@@ -69,11 +71,12 @@ public class Qualificacao implements Runnable {
                                 }
                             }
                         }
-                    //}
-                    
-                }
-            }catch(Exception ex){
-            }    
+                    //} 
+                    }
+                }catch(Exception ex){
+                }    
+        }
+        }catch(Exception e){
         }
     }
     
