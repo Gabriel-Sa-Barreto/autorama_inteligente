@@ -166,11 +166,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel24.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel24.setText("Login");
 
+        userAdmLogin.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+
         jLabel26.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel26.setText("Usuário:");
 
         jLabel27.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel27.setText("Senha:");
+
+        senhaAdmLogin.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
 
         loginAdm.setText("Login");
         loginAdm.addActionListener(new java.awt.event.ActionListener() {
@@ -291,6 +295,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel7.setText("Número:");
 
+        idCarro.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        idCarro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idCarroActionPerformed(evt);
+            }
+        });
+
+        equipeCarro.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+
+        numeroCarro.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+
         salvarCarro.setText("Cadastrar");
         salvarCarro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -359,7 +374,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jpCardCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(pegarIDCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(salvarCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addContainerGap(172, Short.MAX_VALUE))
         );
 
         JpPrincipal.add(jpCardCarro, "Cadastro de novo Carro");
@@ -372,6 +387,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel2.setText("Senha:");
 
+        nomeAdm.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+
         salvarAdm.setText("Salvar");
         salvarAdm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -380,6 +397,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cadAdm.png"))); // NOI18N
+
+        senhaAdm.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jpCadAdmLayout = new javax.swing.GroupLayout(jpCadAdm);
         jpCadAdm.setLayout(jpCadAdmLayout);
@@ -432,6 +451,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel9.setText("Nome:");
 
+        nomePiloto.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+
         salvarPiloto.setText("Cadastrar");
         salvarPiloto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -474,6 +495,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         JpPrincipal.add(JpPiloto, "Cadastro de Piloto");
 
+        removeCar.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         removeCar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -530,6 +552,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel12.setText("Nome:");
+
+        pilotoRemover.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
 
         removerPiloto.setText("Remover");
         removerPiloto.addActionListener(new java.awt.event.ActionListener() {
@@ -605,6 +629,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        escolherPiloto.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         escolherPiloto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -626,6 +651,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jScrollPane5.setViewportView(escolherPiloto);
         escolherPiloto.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
+        escolherCarro.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         escolherCarro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -678,7 +704,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                                         .addComponent(criarCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(6, 6, 6))
                                 .addComponent(jLabel22)))))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCriarCorridaLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel14)
@@ -707,7 +733,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(criarCorrida, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addComponent(jLabel15)
                 .addGap(59, 59, 59))
         );
@@ -717,6 +743,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel16.setText("Rank de pilotos");
 
+        jRank.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jRank.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -814,6 +841,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         JpPrincipal.add(JpgerenciarCorrida, "Gerenciar Corrida");
 
+        verPilotosCadastrados.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         verPilotosCadastrados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -1426,6 +1454,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_voltasActionPerformed
 
+    private void idCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idCarroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idCarroActionPerformed
+
     /*
         FIM DOS MÉTODOS QUE CHAMAM AS TELAS PARA SEREM VISUALIZADAS E OUTROS MÉTODOS REPONSÃVEIS PELAS AÇÕES DOS BUTÕES
     */
@@ -1443,7 +1475,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
      * @throws IOException 
      */
     public void conectarCliente() throws IOException{
-        adm = new Cliente("172.16.203.2" , 12345); 
+        adm = new Cliente("127.0.0.1" , 12345); 
         adm.executa(); //conecta o cliente ADM ao servidor
         //envia requisição pro servidor para atualizar os dados
         rede.enviarDado(adm.getCliente() , "" ,"100");

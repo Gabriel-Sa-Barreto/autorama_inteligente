@@ -162,6 +162,7 @@ public class ClientRace extends javax.swing.JFrame {
         jLabelAutorQ.setText("Autor:");
 
         jTQualificacao.setBorder(new javax.swing.border.MatteBorder(null));
+        jTQualificacao.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jTQualificacao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -256,6 +257,7 @@ public class ClientRace extends javax.swing.JFrame {
         jLabelAutor.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabelAutor.setText("Autor:");
 
+        jTCorrida.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jTCorrida.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
