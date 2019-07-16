@@ -30,7 +30,7 @@ public class GerarPacotesSensor {
        int idEscolhido;
        int i = 0;
        
-       Cliente cliente = new Cliente("127.0.0.1", 12345);
+       Cliente cliente = new Cliente("172.16.103.3", 12345);
        ControllerRede rede = new ControllerRede();
       
        while(i < 20){

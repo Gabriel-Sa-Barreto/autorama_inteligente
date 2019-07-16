@@ -101,7 +101,6 @@ public class ControllerGerenciador {
     */
     public synchronized void cadastrarAdministrador(Administrador adm){
         adms.add(adm); //salva um novo Adm em sua respectiva lista
-        adms.forEach(u -> System.out.println(u.getNome()));
     }
     
     /**Método para verificar se ja existe um adm cadastrado com aquele nome

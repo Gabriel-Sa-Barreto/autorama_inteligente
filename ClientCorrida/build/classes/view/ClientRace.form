@@ -288,7 +288,7 @@
                         <Column editable="true" title="Pos" type="java.lang.Object"/>
                         <Column editable="true" title="Piloto" type="java.lang.Object"/>
                         <Column editable="true" title="Equipe" type="java.lang.Object"/>
-                        <Column editable="true" title="Tempo de volta" type="java.lang.Object"/>
+                        <Column editable="true" title="Volta mais rapida" type="java.lang.Object"/>
                         <Column editable="true" title="Voltas" type="java.lang.Object"/>
                       </Table>
                     </Property>
@@ -475,8 +475,8 @@
                         <Column editable="true" title="Pos" type="java.lang.Object"/>
                         <Column editable="true" title="Piloto" type="java.lang.Object"/>
                         <Column editable="true" title="Equipe" type="java.lang.Object"/>
+                        <Column editable="true" title="Volta mais rapida" type="java.lang.Object"/>
                         <Column editable="true" title="Tempo de Volta" type="java.lang.Object"/>
-                        <Column editable="true" title="Volta mais r&#xe1;pida" type="java.lang.Object"/>
                         <Column editable="true" title="Voltas" type="java.lang.Object"/>
                       </Table>
                     </Property>

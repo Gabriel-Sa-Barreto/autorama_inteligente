@@ -174,7 +174,7 @@ public class ClientRace extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Pos", "Piloto", "Equipe", "Tempo de volta", "Voltas"
+                "Pos", "Piloto", "Equipe", "Volta mais rapida", "Voltas"
             }
         ));
         jTQualificacao.getTableHeader().setReorderingAllowed(false);
@@ -269,7 +269,7 @@ public class ClientRace extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Pos", "Piloto", "Equipe", "Tempo de Volta", "Volta mais rápida", "Voltas"
+                "Pos", "Piloto", "Equipe", "Volta mais rapida", "Tempo de Volta", "Voltas"
             }
         ));
         jTCorrida.getTableHeader().setReorderingAllowed(false);
@@ -431,7 +431,7 @@ public class ClientRace extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         corrida = new ControllerCorrida();
         rede = new ControllerRede();
-        cliente = new Cliente("172.16.203.2",12345);
+        cliente = new Cliente("172.16.103.3",12345);
         cliente.executa();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

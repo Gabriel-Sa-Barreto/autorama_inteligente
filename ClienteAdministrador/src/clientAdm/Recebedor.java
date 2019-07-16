@@ -67,7 +67,6 @@ public class Recebedor implements Runnable {
             DataInputStream entrada = new DataInputStream(this.servidor);
             try{
                 pacote = entrada.readUTF();
-                System.out.println(pacote);
                 opcao = pacotes.acao(pacote);
                 switch(opcao){
                     case "09": //pacote com ID do carro para um possível cadastro.

@@ -86,18 +86,11 @@ public class ControllerCorrida {
 	}
         voltas.sort(Comparator.comparingInt( u -> u.getQuantidade())); //uso de lambda para ordenar a lista via quantidade de voltas que faltam
         //mostrar no controle o gerenciamento das voltas via uso de lambda
-        voltas.forEach(u -> System.out.println( "v id:" + u.getCarro().getId() + " " + "te: " + u.getTempoVolta() + " " + "volt: " + u.getQuantidade()));
         corrida.setVoltas(voltas); // devolve a lista modificada
         if(corrida.getCompletadas() == corrida.getTotaisDeVoltas() * corrida.getCompetidores().size()){
             corrida.setEstado(false);
             linhaFinal(socket);
         }
-        /*if(!voltas.isEmpty()){
-            if(voltas.get(0).getQuantidade() == 0){
-                corrida.setEstado(false);
-                linhaFinal(socket);
-            }
-        }*/
     }
     
     /**Método para verificar se um carro já teria realizado uma volta.
@@ -109,7 +102,7 @@ public class ControllerCorrida {
     private boolean deuUmaVolta(Volta teste , Volta anterior){
 	String resultTest[] = teste.getTempo().split(":"); //realizar o split para pegar separadamente os minutos e segundos do tempo
 	String resultAnterior[] = anterior.getTempo().split(":");//realizar o split para pegar separadamente os minutos e segundos do tempo
-        int minutosTeste = strToInt(resultTest[1] , 10); //transformar a String em int via funcao strToInt
+        int minutosTeste = strToInt(resultTest[1] , 10); //transformar a String em int via funcao strToIntW
         int minutosAnterior = strToInt(resultAnterior[1] , 10);//transformar a String em int via funcao strToInt
         int diferencaM = minutosTeste - minutosAnterior; // verificar a diferença de minutos entre as voltas
         //se forem iguais os minutos vai para etapa de verificar os segundos
@@ -232,9 +225,9 @@ public class ControllerCorrida {
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param geral Record - receber o record geral do jogo via server.
     */
-    public void adicionarRecordGeral(Record geral){
+    /*public void adicionarRecordGeral(Record geral){
         record.cadastrarRecordGeral(geral);
-    }
+    }*/
     
     /**Método para retornar uma volta ja cadastrada na lista de voltas.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto

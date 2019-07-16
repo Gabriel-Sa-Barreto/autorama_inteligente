@@ -24,11 +24,6 @@ public class ControllerRecord {
      */
     List<Record> records;
     
-    /**
-     * Atributo para o record geral do sistema.
-     */
-    Record geral;
-    
     /**Método para iniciar a lista de record
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     */
@@ -51,15 +46,7 @@ public class ControllerRecord {
                 records.removeIf(u -> u.getPiloto().equals(volta.getCarro().getPiloto().getNome())); //remove o record antigo via lambda , com o criterio pelo nome do piloto
                 records.add(adicionar); //adiciona o record
             }
-            if(geral != null){ //verifica se tem um record geral cadastrado
-                if(bateuRecordGeral(volta.getTempo())){ //verifica se bateu o record geral
-                    geral.setData(data); // pega a data 
-                    geral.setPiloto(volta.getCarro().getPiloto().getNome()); //piloto
-                    geral.setTempo(volta.getTempo()); //e o tempo
-                }    
-            }
         }
-        records.forEach(u -> System.out.println("r" + u.getPiloto() + "t" + u.getTempo())); //mostrar os records obtido pelo console
         Collections.sort(records);
     }
     
@@ -97,23 +84,6 @@ public class ControllerRecord {
         return null;
     }
     
-    /**Método private para verificar se bateu record geral para verificar se bateu o record
-    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
-    * @param tempo String - o tempo a ser pesquisado
-    * @return boolean  - se bateu o record ou não
-    */
-    private boolean bateuRecordGeral(String tempo){
-        return (geral.compareTo(tempo) == -1);
-    }
-    
-    /**Método para verificar se bateu record geral para verificar se bateu o record
-    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
-    * @param novo Record - o record recebido pelo server
-    */
-    public void cadastrarRecordGeral(Record novo){
-        this.geral = novo; 
-    }
-    
     /**Método para retornar a lista de records da corrida.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @return List - retorna a lista de records.
@@ -129,11 +99,4 @@ public class ControllerRecord {
         records.clear();
     }
     
-    /**Método para retornar o record geral
-    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
-    * @return Record - retorna o record geral.
-    */
-    public Record recordGeral(){
-        return geral;
-    }
 }

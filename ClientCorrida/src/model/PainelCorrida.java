@@ -51,7 +51,7 @@ public class PainelCorrida implements Runnable {
                                 Record recorde = null;
                                 if(!corrida.temRecord())
                                     recorde = corrida.getRecord(0);
-                                    sessao.setText("Sessão de Qualificacao: " + voltas.get(0).getQuantidade() + "/" + corrida.quantidadeTotal());
+                                    sessao.setText("Sessão de Corrida: " + voltas.get(0).getQuantidade() + "/" + corrida.quantidadeTotal());
                                     if(recorde != null){
                                         record.setText("Record: " + recorde.getTempo());
                                         autor.setText("Autor: " + recorde.getPiloto());
@@ -62,9 +62,9 @@ public class PainelCorrida implements Runnable {
                                     jTCorrida.setValueAt(i, i, 0);
                                     jTCorrida.setValueAt(nome, i, 1);
                                     jTCorrida.setValueAt(volta.getCarro().getEquipe() , i, 2);
-                                    jTCorrida.setValueAt(volta.getTempoVolta() , i, 3);
+                                    jTCorrida.setValueAt(volta.getTempoVolta() , i, 4);
                                     if(corrida.getRecord(nome) != null)
-                                        jTCorrida.setValueAt(corrida.getRecord(nome) , i, 4);
+                                        jTCorrida.setValueAt(corrida.getRecord(nome) , i, 3);
                                     else
                                         jTCorrida.setValueAt("00:00" , i, 4);
                                     jTCorrida.setValueAt(volta.getQuantidade() , i, 5);
