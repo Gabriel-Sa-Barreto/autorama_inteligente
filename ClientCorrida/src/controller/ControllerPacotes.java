@@ -81,6 +81,8 @@ public class ControllerPacotes {
     public String acao(String pacote){
         String action = null;
         String receber[] = pacote.split(";");
+        //coversao da opção do cabeçalho do pacote de String para int
+        //verificar se veio com caracteres não esperados, o try catch trata essa situação
         try{
             int num = Integer.parseInt(receber[0]);
         }catch(NumberFormatException e){

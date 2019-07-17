@@ -128,6 +128,11 @@ public class ControllerPacotes {
         return null;
     }
     
+    /**Método para transformar o pacote em dados de record.
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param pacote String - pacote enviado pelo server.
+    * @return Record  - record recebido
+    */
     public Record transformarRecord(String pacote){
         Record novo;
         String record[] = pacote.split(";");
@@ -135,6 +140,11 @@ public class ControllerPacotes {
         return novo;
     }
     
+    /**Método para pegar o nome do piloto recebido pelo pacote.
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param pacote String - pacote enviado pelo server.
+    * @return String - nome do piloto que esta no pacote
+    */
     public String nomePiloto(String pacote){
         String record[] = pacote.split(";");
         return record[3].trim();

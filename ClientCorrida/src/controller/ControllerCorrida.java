@@ -201,10 +201,19 @@ public class ControllerCorrida {
         return record.recordPiloto(piloto);
     }
     
+    /**Método para pegar o record baseado na colocação do piloto.
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @param indice int - o indice da lista onde se deseja pegar o record.
+    * @return String - retorna o record do piloto na volta.
+    */
     public Record getRecord(int indice){
         return record.records().get(indice);
     }
     
+    /**Método para ver se a lista que armzena record está vazia
+    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
+    * @return String - retorna o record do piloto na volta.
+    */
     public boolean temRecord(){
         return record.records().isEmpty();
     }
@@ -221,13 +230,6 @@ public class ControllerCorrida {
         }
     }
     
-    /**Método para adicionar um recorde geral do circuito do autorama.
-    * @author Samuel Vitorio Lima e Gabriel Sá Barreto
-    * @param geral Record - receber o record geral do jogo via server.
-    */
-    /*public void adicionarRecordGeral(Record geral){
-        record.cadastrarRecordGeral(geral);
-    }*/
     
     /**Método para retornar uma volta ja cadastrada na lista de voltas.
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto

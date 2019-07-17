@@ -152,6 +152,7 @@ public class ControllerArquivo {
     /**Método para ler do arquivo a linha e criar instância de piloto quando o server for iniciado
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param linha String - caminho onde estara o arquivo
+    * @return Piloto - piloto criado através dos dados guardados no arquivo
     */
     private static Piloto salvarPiloto(String linha){
         String[] split = linha.split(";");
@@ -167,6 +168,7 @@ public class ControllerArquivo {
     /**Método para ler do arquivo a linha e criar instância de carro quando o server for iniciado
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param linha String - caminho onde estara o arquivo
+    * @return Carro - carro criado através dos dados guardados no arquivo
     */
     private static Carro salvarCarro(String linha){
         String[] split = linha.split(";");
@@ -178,6 +180,7 @@ public class ControllerArquivo {
     /**Método para ler do arquivo a linha e criar instância de administrador quando o server for iniciado
     * @author Samuel Vitorio Lima e Gabriel Sá Barreto
     * @param linha String - caminho onde estara o arquivo
+    * @return Administrador - administrador criado através dos dados guardados no arquivo
     */
     private static Administrador salvarAdm(String linha){
         String[] split = linha.split(";");
